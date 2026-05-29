@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hiring &amp; Onboarding Pack &mdash; Worvane — Worvane</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --cream:#FAF8F4;
+  --cream2:#F3EFE8;
+  --cream3:#EAE4D9;
+  --ink:#1A1714;
+  --ink70:rgba(26,23,20,0.7);
+  --ink45:rgba(26,23,20,0.45);
+  --ink20:rgba(26,23,20,0.2);
+  --ink08:rgba(26,23,20,0.08);
+  --ink04:rgba(26,23,20,0.04);
+  --gold:#B8952E;
+  --gold-l:#C9A84C;
+  --gold-pale:rgba(184,149,46,0.1);
+  --gold-border:rgba(184,149,46,0.28);
+  --navy:#080F1E;
+  --navy-mid:#1a2540;
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --sans:'Outfit',sans-serif;
+  --ease:cubic-bezier(0.4,0,0.2,1);
+  --r:4px;
+}
+
+html{scroll-behavior:smooth}
+body{
+  background:var(--cream);color:var(--ink);
+  font-family:var(--sans);font-weight:300;
+  min-height:100vh;overflow-x:hidden;
+}
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;opacity:0.6;
+}
+
+/* HEADER */
+header.land-hide{display:none}
+header{
+  position:sticky;top:0;z-index:100;
+  background:rgba(250,248,244,0.97);
+  backdrop-filter:blur(12px);
+  border-bottom:3px solid var(--gold);
+  padding:0 48px;height:140px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo img{height:44px;width:auto;display:block}
+.header-pill{
+  font-family:var(--sans);font-size:12px;font-weight:500;
+  letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--cream);background:var(--navy);
+  border:1px solid var(--navy);
+  padding:10px 24px;border-radius:100px;
+}
+
+/* SCREENS */
+.screen{
+  display:none;flex-direction:column;align-items:center;
+  min-height:100vh;padding:80px 24px 120px;
+  position:relative;z-index:1;
+}
+.screen.active{display:flex}
+
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(14px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* ── LANDING — Hormozi: one headline, one line, one button ── */
+#s-land{
+  justify-content:center;padding:0;min-height:100vh;
+  background:var(--cream);
+}
+.land-wrap{
+  display:flex;flex-direction:column;align-items:center;
+  justify-content:center;
+  text-align:center;
+  min-height:100vh;
+  padding:0 24px;
+  animation:fadeIn 0.7s var(--ease) both;
+}
+.land-logo{
+  height:220px;width:auto;display:block;
+  margin:0 auto 140px;
+  opacity:1;
+  filter:drop-shadow(0 1px 3px rgba(26,23,20,0.15));
+}
+.land-title{
+  font-family:var(--serif);
+  font-size:clamp(42px,6.5vw,82px);
+  font-weight:400;line-height:1.05;
+  letter-spacing:-0.02em;
+  color:var(--ink);
+  max-width:800px;
+  margin:0 auto 40px;
+}
+.land-title em{font-style:italic;color:var(--gold)}
+.land-btn{
+  display:inline-flex;align-items:center;gap:10px;
+  background:var(--navy);color:var(--cream);
+  font-family:var(--sans);font-size:13px;font-weight:400;
+  letter-spacing:0.1em;text-transform:uppercase;
+  padding:16px 40px;border-radius:8px;
+  border:none;cursor:pointer;
+  transition:background 0.2s,transform 0.2s;
+}
+.land-btn:hover{background:var(--navy-mid);transform:translateY(-1px)}
+
+/* PROGRESS */
+.prog-wrap{max-width:640px;width:100%;margin-bottom:48px}
+.prog-top{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:10px;
+}
+.prog-label{
+  font-size:11px;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--gold);
+}
+.prog-count{font-size:12px;color:var(--gold)}
+.prog-track{height:2px;background:var(--ink08);border-radius:1px;overflow:hidden}
+.prog-fill{
+  height:100%;background:var(--navy);
+  transition:width 0.5s var(--ease);border-radius:1px;
+}
+
+/* QUESTION */
+.q-wrap{max-width:640px;width:100%}
+.q-area{
+  font-size:11px;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--gold);font-weight:400;margin-bottom:14px;
+}
+.q-text{
+  font-family:var(--serif);font-size:clamp(24px,4vw,34px);
+  font-weight:400;line-height:1.25;color:var(--ink);margin-bottom:12px;
+}
+.q-hint{
+  font-size:13px;font-weight:300;color:var(--ink70);
+  line-height:1.6;margin-bottom:28px;
+}
+
+/* Options */
+.opts{display:flex;flex-direction:column;gap:10px;margin-bottom:32px}
+.opt{
+  display:flex;align-items:center;gap:14px;
+  padding:15px 18px;border-radius:var(--r);
+  border:1.5px solid var(--ink08);background:var(--cream);
+  cursor:pointer;transition:border-color 0.18s,background 0.18s;
+  text-align:left;width:100%;font-family:var(--sans);
+}
+.opt:hover{border-color:var(--gold-border);background:var(--gold-pale)}
+.opt.sel{border-color:var(--gold);background:var(--gold-pale)}
+.opt-radio{
+  width:16px;height:16px;border-radius:50%;
+  border:1.5px solid var(--ink20);flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  transition:all 0.18s;
+}
+.opt.sel .opt-radio{border-color:var(--gold);background:var(--gold)}
+.opt.sel .opt-radio::after{
+  content:'';width:5px;height:5px;border-radius:50%;background:var(--cream);
+}
+.opt-txt{font-size:14px;color:var(--ink70);line-height:1.4;font-weight:300}
+.opt.sel .opt-txt{color:var(--ink)}
+.other-box{margin-top:8px}
+
+/* Scale */
+.scale-btns{display:flex;gap:8px;margin-bottom:10px}
+.sc-btn{
+  flex:1;padding:14px 6px;border-radius:var(--r);
+  border:1.5px solid var(--ink08);background:var(--cream);
+  cursor:pointer;font-family:var(--serif);font-size:20px;
+  color:var(--ink45);transition:all 0.18s;text-align:center;
+}
+.sc-btn:hover{border-color:var(--gold-border);color:var(--ink)}
+.sc-btn.sel{border-color:var(--gold);background:var(--gold-pale);color:var(--ink)}
+.scale-labels{display:flex;justify-content:space-between;margin-bottom:32px}
+.sc-label{font-size:11px;color:var(--ink45)}
+
+/* Yes/No */
+.yn-btns{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:32px}
+.yn-btn{
+  flex:1;min-width:120px;padding:14px 16px;border-radius:var(--r);
+  border:1.5px solid var(--ink08);background:var(--cream);
+  cursor:pointer;font-family:var(--sans);font-size:13px;
+  color:var(--ink70);transition:all 0.18s;font-weight:300;
+}
+.yn-btn:hover{border-color:var(--gold-border);background:var(--gold-pale);color:var(--ink)}
+.yn-btn.sel{border-color:var(--gold);background:var(--gold-pale);color:var(--ink)}
+
+/* Text input */
+.f-input{
+  width:100%;padding:14px 18px;
+  background:var(--cream);
+  border:1.5px solid var(--ink08);border-radius:var(--r);
+  font-family:var(--sans);font-size:14px;font-weight:300;
+  color:var(--ink);resize:vertical;line-height:1.6;
+  transition:border-color 0.15s;
+}
+.f-input:focus{outline:none;border-color:var(--gold)}
+.f-input::placeholder{color:var(--ink45)}
+
+/* Navigation */
+.q-nav{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-top:32px;width:100%;
+}
+.btn-back{
+  background:none;border:1px solid var(--ink20);cursor:pointer;
+  font-family:var(--sans);font-size:13px;font-weight:300;
+  letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--ink45);padding:12px 24px;border-radius:100px;
+  transition:border-color 0.15s,color 0.15s;
+}
+.btn-back:hover{color:var(--ink)}
+.btn-next{
+  background:var(--navy);color:var(--cream);
+  border:none;cursor:pointer;
+  font-family:var(--sans);font-size:13px;font-weight:400;
+  letter-spacing:0.1em;text-transform:uppercase;
+  padding:12px 32px;border-radius:100px;
+  transition:background 0.15s,opacity 0.15s;
+}
+.btn-next:hover{background:var(--navy-mid);transform:translateY(-1px)}
+.btn-next:disabled{opacity:0.35;cursor:not-allowed;transform:none}
+
+/* LOADING */
+.load-screen-inner{
+  display:flex;flex-direction:column;align-items:center;
+  justify-content:center;text-align:center;
+  max-width:480px;width:100%;
+}
+.load-ring{
+  width:52px;height:52px;border-radius:50%;
+  border:3px solid var(--ink08);border-top-color:var(--gold);
+  animation:spin 1s linear infinite;margin:0 auto 32px;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.load-title{
+  font-family:var(--serif);font-size:26px;font-weight:400;
+  color:var(--ink);margin-bottom:10px;
+}
+.load-sub{font-size:14px;color:var(--ink45);font-weight:300;line-height:1.7;margin-bottom:28px}
+.load-steps{width:100%;display:flex;flex-direction:column;gap:14px;text-align:left}
+.l-row{display:flex;align-items:center;gap:14px}
+.l-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;transition:background 0.3s}
+.l-dot.wait{background:var(--ink08)}
+.l-dot.act{background:var(--gold);width:10px;height:10px;animation:pulse 1s ease infinite;box-shadow:0 0 6px rgba(184,149,46,0.5)}
+.l-dot.done{background:var(--navy)}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+.l-txt{font-size:13px;font-weight:300;transition:color 0.3s}
+.l-txt.wait{color:var(--ink45)}
+.l-txt.act{color:var(--ink);font-weight:400}
+.l-txt.done{color:var(--ink45);text-decoration:line-through}
+
+/* RESULTS — shared */
+.results-inner{max-width:720px;width:100%;margin:0 auto}
+.res-head{
+  width:100%;padding-bottom:28px;
+  border-bottom:1px solid var(--ink08);margin-bottom:40px;
+}
+.res-eye{
+  font-size:11px;letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:10px;
+}
+.res-name{
+  font-family:var(--serif);font-size:clamp(26px,4vw,40px);
+  font-weight:400;color:var(--navy);margin-bottom:6px;
+}
+.res-meta{font-size:13px;color:var(--ink45)}
+
+/* Rec block */
+.rec,.rec-card{
+  background:var(--navy);color:#fff;
+  border-radius:var(--r);padding:40px;
+  margin-bottom:16px;
+}
+.rec-eye{
+  font-size:10px;letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--gold-l);margin-bottom:16px;opacity:0.85;
+}
+.rec-title{
+  font-family:var(--serif);font-size:clamp(20px,3vw,28px);
+  font-weight:400;color:#fff;margin-bottom:14px;line-height:1.25;
+}
+.rec-body{
+  font-size:14px;font-weight:300;line-height:1.75;
+  color:rgba(255,255,255,0.7);margin-bottom:28px;
+}
+.rec-actions{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.btn-rec,.btn-gold{
+  display:inline-flex;align-items:center;
+  background:var(--gold);color:var(--navy);
+  font-family:var(--sans);font-size:12px;font-weight:500;
+  letter-spacing:0.04em;padding:12px 22px;border-radius:2px;
+  text-decoration:none;transition:opacity 0.15s,transform 0.15s;
+}
+.btn-rec:hover,.btn-gold:hover{opacity:0.9;transform:translateY(-1px)}
+.btn-rec-ghost,.btn-ghost{
+  font-family:var(--sans);font-size:12px;font-weight:300;
+  color:rgba(255,255,255,0.5);text-decoration:none;
+  border-bottom:1px solid rgba(255,255,255,0.2);padding-bottom:2px;
+  transition:color 0.15s;
+}
+.btn-rec-ghost:hover,.btn-ghost:hover{color:rgba(255,255,255,0.85)}
+
+/* Pro teaser */
+.pro-teaser,.pro-card{
+  background:var(--cream2);border:1px solid var(--gold-border);
+  border-radius:var(--r);padding:32px;margin-bottom:24px;
+}
+.pro-eye{
+  font-size:10px;letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:10px;
+}
+.pro-title{
+  font-family:var(--serif);font-size:22px;font-weight:400;
+  color:var(--ink);margin-bottom:10px;
+}
+.pro-body{
+  font-size:14px;font-weight:300;line-height:1.75;
+  color:var(--ink70);
+}
+.pro-steps{margin:20px 0}
+.pro-steps-label{
+  font-size:11px;letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:14px;
+}
+.pro-step{
+  display:flex;align-items:flex-start;gap:14px;
+  padding:10px 0;border-bottom:1px solid var(--ink08);
+}
+.pro-step-circle{
+  width:24px;height:24px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;flex-shrink:0;
+  background:var(--cream3);border:1px solid var(--ink08);color:var(--ink45);
+}
+.pro-step-done-circle{background:var(--navy);border-color:var(--navy);color:#fff}
+.pro-step-text{font-size:13px;font-weight:300;color:var(--ink70);line-height:1.5;padding-top:4px}
+.pro-value{font-size:13px;color:var(--ink45);margin-bottom:20px}
+.pro-actions{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.btn-pro-join{
+  display:inline-flex;align-items:center;
+  background:var(--navy);color:var(--cream);
+  font-family:var(--sans);font-size:12px;font-weight:400;
+  letter-spacing:0.05em;padding:12px 22px;border-radius:2px;
+  text-decoration:none;transition:background 0.15s,transform 0.15s;
+}
+.btn-pro-join:hover{background:var(--navy-mid);transform:translateY(-1px)}
+.btn-pro-ghost{
+  font-family:var(--sans);font-size:12px;font-weight:300;
+  color:var(--ink45);text-decoration:none;
+  border-bottom:1px solid var(--ink20);padding-bottom:2px;
+  transition:color 0.15s;
+}
+.btn-pro-ghost:hover{color:var(--ink)}
+
+/* Disclaimer / note */
+.disclaimer,.note{
+  font-size:12px;color:var(--ink45);line-height:1.7;
+  padding-top:20px;border-top:1px solid var(--ink08);
+}
+.disclaimer a,.note a{color:var(--ink45);text-decoration:underline}
+
+/* Tabs */
+.tabs{
+  display:flex;width:100%;
+  border-bottom:2px solid var(--navy);margin-bottom:32px;
+}
+.tab{
+  background:none;border:none;cursor:pointer;
+  font-family:var(--sans);font-size:12px;font-weight:400;
+  letter-spacing:0.06em;text-transform:uppercase;
+  color:var(--ink45);padding:12px 20px;
+  border-bottom:2px solid transparent;margin-bottom:-2px;
+  transition:color 0.15s,border-color 0.15s;white-space:nowrap;
+}
+.tab:hover{color:var(--gold)}
+.tab.on{color:var(--navy);border-bottom-color:var(--navy);font-weight:500}
+.tab-panel{display:none}
+.tab-panel.on{display:block}
+
+/* Cards */
+.card{
+  background:var(--cream);border:1px solid var(--ink08);
+  border-radius:var(--r);margin-bottom:16px;overflow:hidden;
+}
+.card-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 20px 14px;border-bottom:1px solid var(--ink08);
+}
+.card-title{font-family:var(--serif);font-size:16px;font-weight:400;color:var(--ink)}
+.card-tag{
+  font-size:10px;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--gold);background:var(--gold-pale);
+  padding:4px 10px;border-radius:100px;border:1px solid var(--gold-border);
+}
+.card-body{
+  padding:20px;font-size:13px;font-weight:300;line-height:1.85;
+  color:var(--ink70);white-space:pre-wrap;min-height:60px;
+}
+.copy-bar{
+  padding:10px 20px;border-top:1px solid var(--ink08);
+  background:var(--cream2);display:flex;justify-content:flex-end;
+}
+.btn-copy{
+  display:flex;align-items:center;gap:6px;
+  background:none;border:1px solid var(--ink08);border-radius:var(--r);
+  font-family:var(--sans);font-size:11px;font-weight:400;
+  letter-spacing:0.06em;color:var(--ink45);
+  padding:6px 14px;cursor:pointer;transition:border-color 0.15s,color 0.15s;
+}
+.btn-copy:hover{border-color:var(--navy);color:var(--navy)}
+.btn-copy svg{width:13px;height:13px}
+
+/* Capture */
+.cap-ring{
+  width:64px;height:64px;border-radius:50%;
+  background:var(--gold-pale);border:1.5px solid var(--gold-border);
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:28px;
+}
+.cap-ring svg{width:26px;height:26px;stroke:var(--gold);fill:none;stroke-width:1.5}
+.cap-title{
+  font-family:var(--serif);font-size:30px;font-weight:400;
+  color:var(--ink);margin-bottom:12px;text-align:center;
+}
+.cap-sub{
+  font-size:15px;font-weight:300;line-height:1.7;
+  color:var(--ink70);text-align:center;margin-bottom:32px;
+}
+.f-group{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;width:100%}
+.f-label{font-size:12px;font-weight:400;letter-spacing:0.04em;color:var(--ink70)}
+.btn-gen{
+  width:100%;padding:15px;margin-top:8px;
+  background:var(--navy);color:var(--cream);
+  border:none;border-radius:2px;cursor:pointer;
+  font-family:var(--sans);font-size:14px;font-weight:400;
+  letter-spacing:0.05em;
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  transition:background 0.15s;
+}
+.btn-gen:hover{background:var(--navy-mid)}
+.cap-note{font-size:12px;color:var(--ink45);line-height:1.6;text-align:center;margin-top:16px}
+.cap-note a{color:var(--ink45);text-decoration:underline}
+
+/* Audit-specific results */
+.score-hero{
+  display:flex;align-items:flex-start;gap:36px;
+  background:var(--cream2);border:1px solid var(--ink08);
+  border-radius:var(--r);padding:32px;margin-bottom:28px;
+}
+.score-circle-wrap{position:relative;flex-shrink:0}
+.score-inner{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+}
+.score-n{
+  font-family:var(--serif);font-size:28px;font-weight:500;
+  line-height:1;color:var(--navy);
+}
+.score-d{font-size:11px;color:var(--ink45);margin-top:2px}
+.score-txt h3{
+  font-family:var(--serif);font-size:20px;font-weight:400;
+  color:var(--ink);margin-bottom:10px;line-height:1.3;
+}
+.score-txt p{font-size:14px;font-weight:300;line-height:1.7;color:var(--ink70)}
+.score-note{
+  font-size:12px;color:var(--ink70);line-height:1.6;
+  border-left:2px solid var(--gold);
+  padding:0 0 0 16px;margin-bottom:36px;
+}
+.areas{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:40px}
+.area-card{
+  padding:20px 22px;background:var(--cream);
+  border:1px solid var(--ink08);border-radius:var(--r);
+}
+.area-name{
+  font-size:11px;letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:10px;
+}
+.area-num{
+  font-family:var(--serif);font-size:32px;font-weight:400;
+  color:var(--navy);margin-bottom:10px;
+}
+.area-bar{height:2px;background:var(--ink08);border-radius:1px;overflow:hidden;margin-bottom:8px}
+.area-fill{height:100%;background:var(--gold);border-radius:1px;transition:width 1s var(--ease)}
+.area-status{font-size:12px;color:var(--ink45)}
+.findings{margin-bottom:40px}
+.find-title{
+  font-size:11px;letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:20px;
+}
+.finding{
+  display:flex;align-items:flex-start;gap:20px;
+  padding:18px 0;border-bottom:1px solid var(--ink08);
+}
+.find-n{
+  font-family:var(--serif);font-size:13px;color:var(--navy);
+  font-weight:400;min-width:24px;letter-spacing:0.04em;margin-top:2px;
+}
+.find-t{font-size:15px;font-weight:300;line-height:1.6;color:var(--ink)}
+
+/* Mobile */
+@media(max-width:600px){
+  header{padding:0 20px}
+  .areas{grid-template-columns:1fr}
+  .score-hero{flex-direction:column;align-items:center;text-align:center}
+  .tabs{overflow-x:auto}
+  .tab{padding:10px 14px;font-size:11px}
+  .rec-actions,.pro-actions{flex-direction:column;align-items:flex-start}
+}
+.score-hero{display:flex;align-items:flex-start;gap:36px;background:var(--cream2);border:1px solid var(--ink08);border-radius:var(--r);padding:32px;margin-bottom:28px}
+.score-circle-wrap{position:relative;flex-shrink:0}
+.score-inner{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.score-n{font-family:var(--serif);font-size:28px;font-weight:500;line-height:1;color:var(--navy)}
+.score-d{font-size:11px;color:var(--ink45);margin-top:2px}
+.score-txt h3{font-family:var(--serif);font-size:20px;font-weight:400;color:var(--ink);margin-bottom:10px;line-height:1.3}
+.score-txt p{font-size:14px;font-weight:300;line-height:1.7;color:var(--ink70)}
+.score-note{font-size:12px;color:var(--ink70);line-height:1.6;border-left:2px solid var(--gold);padding:0 0 0 16px;margin-bottom:36px}
+.areas{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:40px}
+.area-card{padding:20px 22px;background:var(--cream);border:1px solid var(--ink08);border-radius:var(--r)}
+.area-name{font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.area-num{font-family:var(--serif);font-size:32px;font-weight:400;color:var(--navy);margin-bottom:10px}
+.area-bar{height:2px;background:var(--ink08);border-radius:1px;overflow:hidden;margin-bottom:8px}
+.area-fill{height:100%;background:var(--gold);border-radius:1px;transition:width 1s}
+.area-status{font-size:12px;color:var(--ink45)}
+.findings{margin-bottom:40px}
+.find-title{font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);margin-bottom:20px}
+.finding{display:flex;align-items:flex-start;gap:20px;padding:18px 0;border-bottom:1px solid var(--ink08)}
+.find-n{font-family:var(--serif);font-size:13px;color:var(--navy);font-weight:400;min-width:24px;letter-spacing:0.04em;margin-top:2px}
+.find-t{font-size:15px;font-weight:300;line-height:1.6;color:var(--ink)}
+.cap-ring{width:64px;height:64px;border-radius:50%;background:var(--gold-pale);border:1.5px solid var(--gold-border);display:flex;align-items:center;justify-content:center;margin-bottom:28px}
+.cap-ring svg{width:26px;height:26px;stroke:var(--gold);fill:none;stroke-width:1.5}
+.cap-title{font-family:var(--serif);font-size:30px;font-weight:400;color:var(--ink);margin-bottom:12px;text-align:center}
+.cap-sub{font-size:15px;font-weight:300;line-height:1.7;color:var(--ink70);text-align:center;margin-bottom:32px}
+.f-group{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;width:100%}
+.f-label{font-size:12px;font-weight:400;letter-spacing:0.04em;color:var(--ink70)}
+.f-input{width:100%;padding:13px 16px;background:var(--cream);border:1.5px solid var(--ink08);border-radius:var(--r);font-family:var(--sans);font-size:14px;font-weight:300;color:var(--ink);transition:border-color 0.15s}
+.f-input:focus{outline:none;border-color:var(--gold)}
+.f-input::placeholder{color:var(--ink45)}
+.btn-gen{width:100%;padding:15px;margin-top:8px;background:var(--navy);color:var(--cream);border:none;border-radius:2px;cursor:pointer;font-family:var(--sans);font-size:14px;font-weight:400;letter-spacing:0.05em;display:flex;align-items:center;justify-content:center;gap:10px;transition:background 0.15s}
+.btn-gen:hover{background:var(--navy-mid)}
+.cap-note{font-size:12px;color:var(--ink45);line-height:1.6;text-align:center;margin-top:16px}
+.cap-note a{color:var(--ink45);text-decoration:underline}
+.rec{background:var(--navy);color:#fff;border-radius:var(--r);padding:40px;margin-bottom:16px}
+.rec-eye{font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold-l);margin-bottom:16px;opacity:0.85}
+.rec-title{font-family:var(--serif);font-size:clamp(20px,3vw,28px);font-weight:400;color:#fff;margin-bottom:14px;line-height:1.25}
+.rec-body{font-size:14px;font-weight:300;line-height:1.75;color:rgba(255,255,255,0.7);margin-bottom:28px}
+.rec-actions{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.btn-rec{display:inline-flex;align-items:center;background:var(--gold);color:var(--navy);font-family:var(--sans);font-size:12px;font-weight:500;letter-spacing:0.04em;padding:12px 22px;border-radius:2px;text-decoration:none;transition:opacity 0.15s,transform 0.15s}
+.btn-rec:hover{opacity:0.9;transform:translateY(-1px)}
+.btn-rec-ghost{font-family:var(--sans);font-size:12px;font-weight:300;color:rgba(255,255,255,0.5);text-decoration:none;border-bottom:1px solid rgba(255,255,255,0.2);padding-bottom:2px;transition:color 0.15s}
+.btn-rec-ghost:hover{color:rgba(255,255,255,0.85)}
+.pro-teaser{background:var(--cream2);border:1px solid var(--gold-border);border-radius:var(--r);padding:32px;margin-bottom:24px}
+.pro-eye{font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.pro-title{font-family:var(--serif);font-size:22px;font-weight:400;color:var(--ink);margin-bottom:10px}
+.pro-body{font-size:14px;font-weight:300;line-height:1.75;color:var(--ink70)}
+.disclaimer{font-size:12px;color:var(--ink45);line-height:1.7;padding-top:20px;border-top:1px solid var(--ink08)}
+.disclaimer a{color:var(--ink45);text-decoration:underline}
+@media(max-width:600px){.areas{grid-template-columns:1fr}.score-hero{flex-direction:column;align-items:center;text-align:center}}
+
+
+.q-textarea{width:100%;padding:14px 16px;background:var(--cream);border:1.5px solid var(--ink08);border-radius:var(--r);font-family:var(--sans);font-size:14px;font-weight:300;color:var(--ink);line-height:1.6;resize:vertical;transition:border-color 0.15s}
+.q-textarea:focus{outline:none;border-color:var(--gold)}
+.q-textarea::placeholder{color:var(--ink45)}
+.opt-btn{width:100%;text-align:left;padding:14px 18px;background:var(--cream);border:1.5px solid var(--ink08);border-radius:var(--r);font-family:var(--sans);font-size:14px;font-weight:300;color:var(--ink70);cursor:pointer;transition:border-color 0.15s,background 0.15s;margin-bottom:8px;display:block}
+.opt-btn:hover{border-color:var(--gold-border);background:var(--gold-pale)}
+.opt-btn.selected{border-color:var(--gold);background:var(--gold-pale);color:var(--ink);font-weight:400}
+.opts-list{display:flex;flex-direction:column;margin-bottom:24px}
+.btn-primary{display:inline-flex;align-items:center;background:var(--navy);color:var(--cream);font-family:var(--sans);font-size:13px;font-weight:500;padding:12px 26px;border-radius:var(--r);border:none;cursor:pointer;letter-spacing:0.05em;transition:opacity 0.15s}
+.btn-primary:hover{opacity:0.88}
+.btn-primary:disabled{opacity:0.4;cursor:not-allowed}
+.btn-ghost{background:transparent;color:var(--ink45);font-family:var(--sans);font-size:13px;padding:12px 18px;border-radius:var(--r);border:1px solid var(--ink08);cursor:pointer;transition:all 0.15s}
+.btn-ghost:hover{border-color:var(--gold-border);color:var(--ink)}
+.score-table{width:100%;border-collapse:collapse;background:var(--cream2);border-radius:var(--r);overflow:hidden;border:1px solid var(--ink08);margin-bottom:16px}
+.score-table th{padding:10px 14px;text-align:left;background:var(--cream2);border-bottom:1px solid var(--ink08);font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--gold);font-weight:400}
+.score-table td{padding:10px 14px;border-bottom:1px solid var(--ink08);font-size:13px;color:var(--ink70);font-weight:300}
+.copy-all-bar{display:flex;justify-content:flex-end;margin-bottom:16px}
+
+
+.header-all-tools{font-family:var(--sans);font-size:12px;font-weight:300;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink45);text-decoration:none;padding:8px 16px;border:1px solid var(--ink08);border-radius:100px;transition:all 0.15s;margin-right:12px}.header-all-tools:hover{color:var(--ink);border-color:var(--ink20)}
+</style>
+</head>
+<body>
+
+<header class="land-hide">
+  <a class="logo" href="#"><img src="Worvane_Logo.png" alt="Worvane" style="height:auto;width:180px;display:block;"></a>
+  <a href="#" class="header-all-tools">All tools</a><div class="header-pill">Hiring &amp; Onboarding Pack</div>
+</header>
+
+<div class="screen active" id="s-land"><div class="land-wrap">
+  <img src="Worvane_Logo.png" alt="Worvane" class="land-logo">
+  <h1 class="land-title">Hire better.<br>Onboard <em>faster.</em></h1>
+  <button class="land-btn" id="btn-start">Build my hiring pack &rarr;</button>
+</div></div>
+
+<div class="screen" id="s-intake">
+  <div class="prog-wrap">
+    <div class="prog-top"><span class="prog-label">Your role</span><span class="prog-count" id="q-count">Question 1 of 8</span></div>
+    <div class="prog-track"><div class="prog-fill" id="prog-fill" style="width:12.5%"></div></div>
+  </div>
+  <p style="font-size:12px;color:var(--ink45);font-weight:300;letter-spacing:0.02em;text-align:center;margin:28px 0 32px;padding:0 8px">The more specific your answers, the better your hiring pack will attract the right person and screen out the wrong ones.</p>
+  <div id="q-container" style="width:100%;max-width:640px;"></div>
+</div>
+
+<div class="screen" id="s-load"><div class="load-screen-inner">
+  <div class="load-ring"></div>
+  <h2 class="load-title">Building your hiring pack&hellip;</h2>
+  <p class="load-sub">An HR consultant charges &pound;500+ to write a hiring pack. You are getting yours in 30 seconds.</p>
+  <p style="font-size:13px;color:var(--ink);font-weight:300;font-style:italic;line-height:1.6;margin-bottom:24px;max-width:360px">Most job ads attract the wrong people. You are about to have one that filters for the right ones.</p>
+  <div class="load-steps">
+    <div class="l-row"><div class="l-dot wait" id="ld1"></div><span class="l-txt wait" id="lt1">Reading your role requirements</span></div>
+    <div class="l-row"><div class="l-dot wait" id="ld2"></div><span class="l-txt wait" id="lt2">Writing the job advertisement</span></div>
+    <div class="l-row"><div class="l-dot wait" id="ld3"></div><span class="l-txt wait" id="lt3">Building your interview framework</span></div>
+    <div class="l-row"><div class="l-dot wait" id="ld4"></div><span class="l-txt wait" id="lt4">Creating the onboarding document</span></div>
+  </div>
+
+  <p style="font-size:11px;color:var(--ink45);margin-top:24px;letter-spacing:0.04em">Your responses are private and never shared.</p>
+</div></div>
+
+<div class="screen" id="s-results">
+  <div class="results-inner" style="max-width:760px">
+  <div class="res-head">
+    <div class="res-eye">Hiring &amp; Onboarding Pack &middot; Worvane</div>
+    <div class="res-name" id="r-name">Your Hiring Pack</div>
+    <div class="res-meta" id="r-meta">Generated today &middot; Worvane</div>
+    <button onclick="window.location.reload()" style="margin-top:12px;background:none;border:1px solid var(--ink08);border-radius:100px;padding:7px 16px;font-family:var(--sans);font-size:12px;font-weight:300;letter-spacing:0.06em;color:var(--ink45);cursor:pointer;transition:all 0.15s" onmouseover="this.style.borderColor='var(--gold-border)';this.style.color='var(--ink)'" onmouseout="this.style.borderColor='var(--ink08)';this.style.color='var(--ink45)'">&#8635; Regenerate</button>
+  </div>
+  <div class="tabs">
+    <button class="tab on" data-tab="ad">Job Ad</button>
+    <button class="tab" data-tab="interview">Interview</button>
+    <button class="tab" data-tab="scoring">Scoring</button>
+    <button class="tab" data-tab="onboarding">Onboarding</button>
+  </div>
+  <div class="tab-panel on" id="panel-ad">
+    <div class="card"><div class="card-head"><div class="card-title" id="ad-title">Job Advertisement</div><div class="card-tag">Ready to post</div></div><div class="card-body" id="ad-body"></div><div class="copy-bar"><button class="btn-copy" data-target="ad-body"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>Copy</button></div></div>
+  </div>
+  <div class="tab-panel" id="panel-interview">
+    <div class="card"><div class="card-head"><div class="card-title">Interview question bank</div><div class="card-tag">Questions</div></div><div class="card-body" id="interview-questions"></div><div class="copy-bar"><button class="btn-copy" id="copy-questions"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>Copy all questions</button></div></div>
+  </div>
+  <div class="tab-panel" id="panel-scoring">
+    <div class="card"><div class="card-head"><div class="card-title">Candidate scoring rubric</div><div class="card-tag">Score 1&ndash;5 per criterion</div></div><div class="card-body" style="padding:0"><table class="score-table" id="score-table"><thead><tr><th>Criterion</th><th>What to look for</th><th style="text-align:center">Weight</th></tr></thead><tbody id="score-tbody"></tbody></table></div><div class="copy-bar"><button class="btn-copy" id="copy-rubric"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>Copy rubric</button></div></div>
+  </div>
+  <div class="tab-panel" id="panel-onboarding">
+    <div class="card"><div class="card-head"><div class="card-title">Day-one onboarding document</div><div class="card-tag">For your new hire</div></div><div class="card-body" id="onboarding-body"></div><div class="copy-bar"><button class="btn-copy" data-target="onboarding-body"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>Copy</button></div></div>
+  </div>
+        <div class="rec-card">
+      <div class="rec-eye">Worvane Recommendation</div>
+      <div class="rec-title">New hire sorted. Now document what they are walking into.</div>
+      <div class="rec-body">Your hiring pack will bring the right person in. The next priority is making sure the processes they inherit are documented clearly enough for them to run without constant input from you. The SOP Builder will help you turn your core operations into structured, professional procedures your new hire can follow from day one. Every week without documented processes is a week your new hire is learning by guessing instead of following a system.</div>
+      <div class="rec-actions"><a href="#" class="btn-gold">Get SOP Builder — £69 <span style="opacity:0.65;font-size:11px;font-weight:300">(replaces &pound;500+ of HR consulting)</span></a><a href="#" class="btn-ghost">Get Full Diagnostic — £197</a></div>
+    </div>
+    <div class="pro-card">
+      <div class="pro-top"><div class="pro-eye">Worvane Pro</div></div>
+      <div class="pro-title">You are one purchase away from Worvane Pro</div>
+      <div class="pro-body">As a Worvane client, you are one purchase away from Pro. Purchase any one more tool and you unlock Worvane Pro &mdash; unlimited access to <strong>every tool in the suite, quarterly re-diagnostics to track your progress, and monthly strategy updates</strong> tailored to your business. All for &pound;97 per month. For most clients that is less than a single hour of consulting.</div>
+      <div class="pro-steps"><div class="pro-steps-label">Your path to Pro</div>
+        <div class="pro-step"><div class="pro-step-circle pro-step-done-circle">&#10003;</div><div class="pro-step-text">Complete your free audit &mdash; <span style="color:var(--gold)">done</span></div></div>
+        <div class="pro-step"><div class="pro-step-circle pro-step-done-circle">&#10003;</div><div class="pro-step-text">First Worvane tool purchased &mdash; <span style="color:var(--gold)">done</span></div></div>
+        <div class="pro-step"><div class="pro-step-circle">2</div><div class="pro-step-text">Purchase one more tool &mdash; Pro unlocks</div></div></div>
+      <div class="pro-value">All tools individually: <strong>&pound;586</strong>. Worvane Pro: <strong>&pound;97/month</strong>.</div>
+      <div class="pro-actions"><a href="#" class="btn-pro-join">Join Worvane Pro &mdash; &pound;97/month</a><a href="#" class="btn-pro-ghost">See everything included &rarr;</a></div>
+    </div>
+        <div class="note"><span style="color:var(--ink45);font-size:12px">AI-generated from your responses. Ensure compliance with UK employment law before use. Questions? <a href="mailto:hello@worvane.co" style="color:var(--ink45)">hello@worvane.co</a></span><div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--ink08)"><span style="font-size:13px;color:var(--ink45)">Not happy with your output? The most common reason is vague answers. Go back, add more detail, and regenerate &mdash; the difference is significant.</span></div></div>
+  </div>
+</div>
+
+<script>
+
+
+(function(){
+
+var hdr=document.querySelector('header');
+function showScreen(id){
+  var hdr=document.querySelector('header'); if(hdr){ id==='s-land'?hdr.classList.add('land-hide'):hdr.classList.remove('land-hide'); }
+  if(hdr){ hdr.style.display=id==='s-land'?'none':''; }
+  document.querySelectorAll('.screen').forEach(function(s){ s.classList.remove('active'); });
+  var el=document.getElementById(id);
+  if(el){ el.classList.add('active'); window.scrollTo({top:0,behavior:'smooth'}); }
+}
+
+var ans={}, qIdx=0;
+
+var questions=[
+  {id:'q1',area:'The role',type:'text', ph:'e.g. Operations Manager — to take day-to-day running off my plate so I can focus on growth',
+   text:'What role are you hiring for, and what is the main purpose of this position in your business?',
+   hint:'Include the job title and the key outcome you need this person to deliver.'},
+  {id:'q2',area:'The role',type:'text', ph:'e.g. 1. Manage client relationships and weekly check-ins. 2. Oversee the fulfilment team. 3. Handle supplier communications. 4. Report on project progress weekly',
+   text:'What are the 3–5 core responsibilities this person will own day-to-day?',
+   hint:'Think about what a successful week looks like for someone in this role.'},
+  {id:'q3',area:'Requirements',type:'text', ph:'e.g. At least 3 years managing a small team. Strong communicator. Comfortable with project management tools like Notion or Asana. No formal degree required',
+   text:'What experience, skills, or qualifications are essential for this role?',
+   hint:'Separate must-haves from nice-to-haves if you can.'},
+  {id:'q4',area:'Your business',type:'text', ph:'e.g. A 12-person e-commerce brand based in Manchester. We sell homeware online. Fast-moving, collaborative culture — we value ownership and initiative over hierarchy',
+   text:'Briefly describe your business — what you do, your size, and your culture.',
+   hint:'This shapes how the job ad is written and what kind of candidate it attracts.'},
+  {id:'q5',area:'Compensation',type:'text', ph:'e.g. £32,000–£38,000 depending on experience, plus performance bonus after 6 months',
+   text:'What is the salary range or compensation structure for this role?',
+   hint:'Include any bonuses, commission, or benefits you are offering.'},
+  {id:'q6',area:'Working arrangements',type:'opts',
+   text:'What are the working arrangements for this role?',
+   opts:['Full-time office based','Full-time remote','Full-time hybrid','Part-time','Freelance / contractor']},
+  {id:'q7',area:'Interview process',type:'text', ph:'e.g. Someone who takes ownership without being told twice. Comfortable with ambiguity. Calm under pressure. Gets things done rather than just planning to get things done',
+   text:'What are the most important qualities or traits you are looking for beyond the job spec?',
+   hint:'Think about attitude, work style, values fit — the things that make someone great rather than just capable.'},
+  {id:'q8',area:'Onboarding',type:'text', ph:'e.g. Has taken ownership of at least two client accounts independently. Has run their first team meeting without me. Understands our processes well enough to improve them',
+   text:'What does success look like for this person in their first 30 days?',
+   hint:'What would they need to learn, do, or achieve to be on track?'}
+];
+
+function renderQuestion(i){
+  var q=questions[i];
+  if(!q) return;
+  document.getElementById('q-count').textContent='Question '+(i+1)+' of '+questions.length;
+  var prog=document.getElementById('prog-fill');
+  if(prog) prog.style.width=(((i+1)/questions.length)*100)+'%';
+  var container=document.getElementById('q-container');
+  if(!container) return;
+
+  var html='<div class="q-area">'+q.area+'</div>';
+  html+='<div class="q-text">'+q.text+'</div>';
+  if(q.hint) html+='<div class="q-hint">'+q.hint+'</div>';
+
+  if(q.type==='opts'){
+    html+='<div class="opts-list" id="opts-list">';
+    q.opts.forEach(function(opt,oi){
+      var sel=ans[q.id]===oi?' selected':'';
+      html+='<button class="opt-btn'+sel+'" data-idx="'+oi+'">'+opt+'</button>';
+    });
+    html+='</div>';
+  } else {
+    html+='<textarea id="ta-main" class="q-textarea" placeholder="'+q.hint+'" rows="4">'+( ans[q.id]||'')+'</textarea>';
+  }
+
+  html+='<div class="q-nav">';
+  html+='<button class="btn-ghost" id="btn-back"'+(i===0?' style="display:none"':'')+'>Back</button>';
+  html+='<button class="btn-primary" id="btn-next"'+(ans[q.id]===undefined&&q.type!=='opts'?' disabled':'')+'>'+( i===questions.length-1?'Generate my hiring pack':'Next')+'</button>';
+  html+='</div>';
+  container.innerHTML=html;
+
+  if(q.type==='opts'){
+    container.querySelectorAll('.opt-btn').forEach(function(btn){
+      btn.addEventListener('click',function(){
+        ans[q.id]=parseInt(btn.getAttribute('data-idx'));
+        container.querySelectorAll('.opt-btn').forEach(function(b){ b.classList.remove('selected'); });
+        btn.classList.add('selected');
+        container.querySelector('#btn-next').disabled=false;
+      });
+    });
+  } else {
+    var ta=container.querySelector('#ta-main');
+    if(ta){
+      ta.addEventListener('input',function(){
+        ans[q.id]=ta.value;
+        container.querySelector('#btn-next').disabled=!ta.value.trim();
+      });
+      if(ans[q.id]) container.querySelector('#btn-next').disabled=false;
+    }
+  }
+
+  container.querySelector('#btn-next').addEventListener('click',function(){
+    if(q.type==='text') ans[q.id]=container.querySelector('#ta-main').value;
+    if(i<questions.length-1){ qIdx++; renderQuestion(qIdx); }
+    else { runLoading(); }
+  });
+  if(i>0){
+    container.querySelector('#btn-back').addEventListener('click',function(){ qIdx--; renderQuestion(qIdx); });
+  }
+}
+
+function runLoading(){
+  showScreen('s-load');
+  var steps=[{d:'ld1',t:'lt1'},{d:'ld2',t:'lt2'},{d:'ld3',t:'lt3'},{d:'ld4',t:'lt4'}];
+  steps.forEach(function(s){ document.getElementById(s.d).className='l-dot wait'; document.getElementById(s.t).className='l-txt wait'; });
+  var delays=[400,4000,9000,16000];
+  steps.forEach(function(s,i){
+    setTimeout(function(){
+      if(i>0){ document.getElementById(steps[i-1].d).className='l-dot done'; document.getElementById(steps[i-1].t).className='l-txt done'; }
+      document.getElementById(s.d).className='l-dot act'; document.getElementById(s.t).className='l-txt act';
+    },delays[i]);
+  });
+  buildOutput();
+}
+
+function buildOutput(){
+  var role=ans.q1||'this role';
+  var responsibilities=ans.q2||'key responsibilities';
+  var requirements=ans.q3||'the required skills';
+  var business=ans.q4||'our business';
+  var compensation=ans.q5||'competitive salary';
+  var arrangement=ans.q6!==undefined?['full-time office based','full-time remote','full-time hybrid','part-time','freelance/contractor'][ans.q6]:'full-time';
+  var qualities=ans.q7||'strong work ethic and positive attitude';
+  var success=ans.q8||'settled into the role and delivering value';
+
+  var prompt=[
+    'You are an experienced HR consultant and hiring specialist writing a complete hiring pack for a UK small business owner. This is a premium paid product. Everything must be specific, professional, and immediately usable.',
+    '',
+    'THE ROLE: '+role,
+    'RESPONSIBILITIES: '+responsibilities,
+    'REQUIREMENTS: '+requirements,
+    'THE BUSINESS: '+business,
+    'COMPENSATION: '+compensation,
+    'WORKING ARRANGEMENT: '+arrangement,
+    'DESIRED QUALITIES: '+qualities,
+    'SUCCESS IN FIRST 30 DAYS: '+success,
+    '',
+    'Write the following. Return ONLY a valid JSON object with exactly these keys: job_ad, scoring_rubric, onboarding_doc',
+    '',
+    'JOB_AD: A complete, compelling job advertisement ready to post. Include: attention-grabbing headline, role overview, key responsibilities (bullet points), what we are looking for, what we offer, how to apply. Write it to attract high-quality candidates who are a genuine fit. Tone: professional but human. Length: 400-600 words.',
+    '',
+    'SCORING_RUBRIC: A structured candidate scoring rubric for this specific role. Format as a table with 6-8 criteria, each scored 1-5. Include: criteria name, what a score of 1 looks like, what a score of 5 looks like, weight/importance. Make criteria specific to this role, not generic.',
+    '',
+    'ONBOARDING_DOC: A complete day-one onboarding document for the new hire. Include: welcome message, what to do on day one (hour by hour), key contacts, systems access checklist, 30-day goals, who to go to for what. Make it warm but structured. Length: 400-500 words.',
+    '',
+    'CRITICAL: Return ONLY a raw JSON object. No markdown. No code blocks. No backticks. No preamble. First character must be { and last must be }.',
+  ].join('\n');
+
+  fetch('/.netlify/functions/generate',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({model:'claude-sonnet-4-5-20250929',max_tokens:4000,messages:[{role:'user',content:prompt}]})
+  })
+  .then(function(r){ return r.json(); })
+  .then(function(data){
+    var raw=data.content&&data.content[0]?data.content[0].text:'';
+    raw=raw.replace(/^```json\s*/i,'').replace(/^```\s*/i,'').replace(/```\s*$/i,'').trim();
+    var parsed;
+    try{ parsed=JSON.parse(raw); }
+    catch(e){ parsed={job_ad:'Error parsing response. Please try again.',scoring_rubric:'',onboarding_doc:''}; }
+
+    document.getElementById('ad-body').innerText=parsed.job_ad||'';
+    document.getElementById('score-tbody').innerText=parsed.scoring_rubric||'';
+    document.getElementById('onboarding-body').innerText=parsed.onboarding_doc||'';
+
+    showScreen('s-results');
+  })
+  .catch(function(){
+    document.getElementById('ad-body').innerText='Connection error. Please try again.';
+    showScreen('s-results');
+  });
+}
+
+document.getElementById('btn-start').addEventListener('click',function(){ showScreen('s-intake'); renderQuestion(0); });
+
+document.querySelectorAll('.tab').forEach(function(tab){
+  tab.addEventListener('click',function(){
+    var t=tab.getAttribute('data-tab');
+    document.querySelectorAll('.tab').forEach(function(b){ b.classList.remove('on'); });
+    document.querySelectorAll('.tab-panel').forEach(function(p){ p.classList.remove('on'); });
+    tab.classList.add('on');
+    document.getElementById('panel-'+t).classList.add('on');
+  });
+});
+
+document.querySelectorAll('.btn-copy').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    var el=document.getElementById(btn.getAttribute('data-target'));
+    if(!el) return;
+    navigator.clipboard.writeText(el.innerText).then(function(){
+      var orig=btn.innerHTML;
+      btn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Copied';
+      btn.style.color='var(--gold)';
+      setTimeout(function(){ btn.innerHTML=orig; btn.style.color=''; },2000);
+    });
+  });
+});
+
+window.showScreen = showScreen;
+
+})();
+
+</script>
+</body>
+</html>

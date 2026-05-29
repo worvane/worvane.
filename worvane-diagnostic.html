@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Full Business Diagnostic &mdash; Worvane — Worvane</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --cream:#FAF8F4;
+  --cream2:#F3EFE8;
+  --cream3:#EAE4D9;
+  --ink:#1A1714;
+  --ink70:rgba(26,23,20,0.7);
+  --ink45:rgba(26,23,20,0.45);
+  --ink20:rgba(26,23,20,0.2);
+  --ink08:rgba(26,23,20,0.08);
+  --ink04:rgba(26,23,20,0.04);
+  --gold:#B8952E;
+  --gold-l:#C9A84C;
+  --gold-pale:rgba(184,149,46,0.1);
+  --gold-border:rgba(184,149,46,0.28);
+  --navy:#080F1E;
+  --navy-mid:#1a2540;
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --sans:'Outfit',sans-serif;
+  --ease:cubic-bezier(0.4,0,0.2,1);
+  --r:4px;
+}
+
+html{scroll-behavior:smooth}
+body{
+  background:var(--cream);color:var(--ink);
+  font-family:var(--sans);font-weight:300;
+  min-height:100vh;overflow-x:hidden;
+}
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;opacity:0.6;
+}
+
+/* HEADER */
+header.land-hide{display:none}
+header{
+  position:sticky;top:0;z-index:100;
+  background:rgba(250,248,244,0.97);
+  backdrop-filter:blur(12px);
+  border-bottom:3px solid var(--gold);
+  padding:0 48px;height:140px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo img{height:44px;width:auto;display:block}
+.header-pill{
+  font-family:var(--sans);font-size:12px;font-weight:500;
+  letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--cream);background:var(--navy);
+  border:1px solid var(--navy);
+  padding:10px 24px;border-radius:100px;
+}
+
+/* SCREENS */
+.screen{
+  display:none;flex-direction:column;align-items:center;
+  min-height:100vh;padding:80px 24px 120px;
+  position:relative;z-index:1;
+}
+.screen.active{display:flex}
+
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(14px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* ── LANDING — Hormozi: one headline, one line, one button ── */
+#s-land{
+  justify-content:center;padding:0;min-height:100vh;
+  background:var(--cream);
+}
+.land-wrap{
+  display:flex;flex-direction:column;align-items:center;
+  justify-content:center;
+  text-align:center;
+  min-height:100vh;
+  padding:0 24px;
+  animation:fadeIn 0.7s var(--ease) both;
+}
+.land-logo{
+  height:220px;width:auto;display:block;
+  margin:0 auto 140px;
+  opacity:1;
+  filter:drop-shadow(0 1px 3px rgba(26,23,20,0.15));
+}
+.land-title{
+  font-family:var(--serif);
+  font-size:clamp(42px,6.5vw,82px);
+  font-weight:400;line-height:1.05;
+  letter-spacing:-0.02em;
+  color:var(--ink);
+  max-width:800px;
+  margin:0 auto 40px;
+}
+.land-title em{font-style:italic;color:var(--gold)}
+.land-btn{
+  display:inline-flex;align-items:center;gap:10px;
+  background:var(--navy);color:var(--cream);
+  font-family:var(--sans);font-size:13px;font-weight:400;
+  letter-spacing:0.1em;text-transform:uppercase;
+  padding:16px 40px;border-radius:8px;
+  border:none;cursor:pointer;
+  transition:background 0.2s,transform 0.2s;
+}
+.land-btn:hover{background:var(--navy-mid);transform:translateY(-1px)}
+
+/* PROGRESS */
+.prog-wrap{max-width:640px;width:100%;margin-bottom:48px}
+.prog-top{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:10px;
+}
+.prog-label{
+  font-size:11px;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--gold);
+}
+.prog-count{font-size:12px;color:var(--gold)}
+.prog-track{height:2px;background:var(--ink08);border-radius:1px;overflow:hidden}
+.prog-fill{
+  height:100%;background:var(--navy);
+  transition:width 0.5s var(--ease);border-radius:1px;
+}
+
+/* QUESTION */
+.q-wrap{max-width:640px;width:100%}
+.q-area{
+  font-size:11px;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--gold);font-weight:400;margin-bottom:14px;
+}
+.q-text{
+  font-family:var(--serif);font-size:clamp(24px,4vw,34px);
+  font-weight:400;line-height:1.25;color:var(--ink);margin-bottom:12px;
+}
+.q-hint{
+  font-size:13px;font-weight:300;color:var(--ink70);
+  line-height:1.6;margin-bottom:28px;
+}
+
+/* Options */
+.opts{display:flex;flex-direction:column;gap:10px;margin-bottom:32px}
+.opt{
+  display:flex;align-items:center;gap:14px;
+  padding:15px 18px;border-radius:var(--r);
+  border:1.5px solid var(--ink08);background:var(--cream);
+  cursor:pointer;transition:border-color 0.18s,background 0.18s;
+  text-align:left;width:100%;font-family:var(--sans);
+}
+.opt:hover{border-color:var(--gold-border);background:var(--gold-pale)}
+.opt.sel{border-color:var(--gold);background:var(--gold-pale)}
+.opt-radio{
+  width:16px;height:16px;border-radius:50%;
+  border:1.5px solid var(--ink20);flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  transition:all 0.18s;
+}
+.opt.sel .opt-radio{border-color:var(--gold);background:var(--gold)}
+.opt.sel .opt-radio::after{
+  content:'';width:5px;height:5px;border-radius:50%;background:var(--cream);
+}
+.opt-txt{font-size:14px;color:var(--ink70);line-height:1.4;font-weight:300}
+.opt.sel .opt-txt{color:var(--ink)}
+.other-box{margin-top:8px}
+
+/* Scale */
+.scale-btns{display:flex;gap:8px;margin-bottom:10px}
+.sc-btn{
+  flex:1;padding:14px 6px;border-radius:var(--r);
+  border:1.5px solid var(--ink08);background:var(--cream);
+  cursor:pointer;font-family:var(--serif);font-size:20px;
+  color:var(--ink45);transition:all 0.18s;text-align:center;
+}
+.sc-btn:hover{border-color:var(--gold-border);color:var(--ink)}
+.sc-btn.sel{border-color:var(--gold);background:var(--gold-pale);color:var(--ink)}
+.scale-labels{display:flex;justify-content:space-between;margin-bottom:32px}
+.sc-label{font-size:11px;color:var(--ink45)}
+
+/* Yes/No */
+.yn-btns{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:32px}
+.yn-btn{
+  flex:1;min-width:120px;padding:14px 16px;border-radius:var(--r);
+  border:1.5px solid var(--ink08);background:var(--cream);
+  cursor:pointer;font-family:var(--sans);font-size:13px;
+  color:var(--ink70);transition:all 0.18s;font-weight:300;
+}
+.yn-btn:hover{border-color:var(--gold-border);background:var(--gold-pale);color:var(--ink)}
+.yn-btn.sel{border-color:var(--gold);background:var(--gold-pale);color:var(--ink)}
+
+/* Text input */
+.f-input{
+  width:100%;padding:14px 18px;
+  background:var(--cream);
+  border:1.5px solid var(--ink08);border-radius:var(--r);
+  font-family:var(--sans);font-size:14px;font-weight:300;
+  color:var(--ink);resize:vertical;line-height:1.6;
+  transition:border-color 0.15s;
+}
+.f-input:focus{outline:none;border-color:var(--gold)}
+.f-input::placeholder{color:var(--ink45)}
+
+/* Navigation */
+.q-nav{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-top:32px;width:100%;
+}
+.btn-back{
+  background:none;border:1px solid var(--ink20);cursor:pointer;
+  font-family:var(--sans);font-size:13px;font-weight:300;
+  letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--ink45);padding:12px 24px;border-radius:100px;
+  transition:border-color 0.15s,color 0.15s;
+}
+.btn-back:hover{color:var(--ink)}
+.btn-next{
+  background:var(--navy);color:var(--cream);
+  border:none;cursor:pointer;
+  font-family:var(--sans);font-size:13px;font-weight:400;
+  letter-spacing:0.1em;text-transform:uppercase;
+  padding:12px 32px;border-radius:100px;
+  transition:background 0.15s,opacity 0.15s;
+}
+.btn-next:hover{background:var(--navy-mid);transform:translateY(-1px)}
+.btn-next:disabled{opacity:0.35;cursor:not-allowed;transform:none}
+
+/* LOADING */
+.load-screen-inner{
+  display:flex;flex-direction:column;align-items:center;
+  justify-content:center;text-align:center;
+  max-width:480px;width:100%;
+}
+.load-ring{
+  width:52px;height:52px;border-radius:50%;
+  border:3px solid var(--ink08);border-top-color:var(--gold);
+  animation:spin 1s linear infinite;margin:0 auto 32px;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.load-title{
+  font-family:var(--serif);font-size:26px;font-weight:400;
+  color:var(--ink);margin-bottom:10px;
+}
+.load-sub{font-size:14px;color:var(--ink45);font-weight:300;line-height:1.7;margin-bottom:28px}
+.load-steps{width:100%;display:flex;flex-direction:column;gap:14px;text-align:left}
+.l-row{display:flex;align-items:center;gap:14px}
+.l-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;transition:background 0.3s}
+.l-dot.wait{background:var(--ink08)}
+.l-dot.act{background:var(--gold);width:10px;height:10px;animation:pulse 1s ease infinite;box-shadow:0 0 6px rgba(184,149,46,0.5)}
+.l-dot.done{background:var(--navy)}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+.l-txt{font-size:13px;font-weight:300;transition:color 0.3s}
+.l-txt.wait{color:var(--ink45)}
+.l-txt.act{color:var(--ink);font-weight:400}
+.l-txt.done{color:var(--ink45);text-decoration:line-through}
+
+/* RESULTS — shared */
+.results-inner{max-width:720px;width:100%;margin:0 auto}
+.res-head{
+  width:100%;padding-bottom:28px;
+  border-bottom:1px solid var(--ink08);margin-bottom:40px;
+}
+.res-eye{
+  font-size:11px;letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:10px;
+}
+.res-name{
+  font-family:var(--serif);font-size:clamp(26px,4vw,40px);
+  font-weight:400;color:var(--navy);margin-bottom:6px;
+}
+.res-meta{font-size:13px;color:var(--ink45)}
+
+/* Rec block */
+.rec,.rec-card{
+  background:var(--navy);color:#fff;
+  border-radius:var(--r);padding:40px;
+  margin-bottom:16px;
+}
+.rec-eye{
+  font-size:10px;letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--gold-l);margin-bottom:16px;opacity:0.85;
+}
+.rec-title{
+  font-family:var(--serif);font-size:clamp(20px,3vw,28px);
+  font-weight:400;color:#fff;margin-bottom:14px;line-height:1.25;
+}
+.rec-body{
+  font-size:14px;font-weight:300;line-height:1.75;
+  color:rgba(255,255,255,0.7);margin-bottom:28px;
+}
+.rec-actions{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.btn-rec,.btn-gold{
+  display:inline-flex;align-items:center;
+  background:var(--gold);color:var(--navy);
+  font-family:var(--sans);font-size:12px;font-weight:500;
+  letter-spacing:0.04em;padding:12px 22px;border-radius:2px;
+  text-decoration:none;transition:opacity 0.15s,transform 0.15s;
+}
+.btn-rec:hover,.btn-gold:hover{opacity:0.9;transform:translateY(-1px)}
+.btn-rec-ghost,.btn-ghost{
+  font-family:var(--sans);font-size:12px;font-weight:300;
+  color:rgba(255,255,255,0.5);text-decoration:none;
+  border-bottom:1px solid rgba(255,255,255,0.2);padding-bottom:2px;
+  transition:color 0.15s;
+}
+.btn-rec-ghost:hover,.btn-ghost:hover{color:rgba(255,255,255,0.85)}
+
+/* Pro teaser */
+.pro-teaser,.pro-card{
+  background:var(--cream2);border:1px solid var(--gold-border);
+  border-radius:var(--r);padding:32px;margin-bottom:24px;
+}
+.pro-eye{
+  font-size:10px;letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:10px;
+}
+.pro-title{
+  font-family:var(--serif);font-size:22px;font-weight:400;
+  color:var(--ink);margin-bottom:10px;
+}
+.pro-body{
+  font-size:14px;font-weight:300;line-height:1.75;
+  color:var(--ink70);
+}
+.pro-steps{margin:20px 0}
+.pro-steps-label{
+  font-size:11px;letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:14px;
+}
+.pro-step{
+  display:flex;align-items:flex-start;gap:14px;
+  padding:10px 0;border-bottom:1px solid var(--ink08);
+}
+.pro-step-circle{
+  width:24px;height:24px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;flex-shrink:0;
+  background:var(--cream3);border:1px solid var(--ink08);color:var(--ink45);
+}
+.pro-step-done-circle{background:var(--navy);border-color:var(--navy);color:#fff}
+.pro-step-text{font-size:13px;font-weight:300;color:var(--ink70);line-height:1.5;padding-top:4px}
+.pro-value{font-size:13px;color:var(--ink45);margin-bottom:20px}
+.pro-actions{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.btn-pro-join{
+  display:inline-flex;align-items:center;
+  background:var(--navy);color:var(--cream);
+  font-family:var(--sans);font-size:12px;font-weight:400;
+  letter-spacing:0.05em;padding:12px 22px;border-radius:2px;
+  text-decoration:none;transition:background 0.15s,transform 0.15s;
+}
+.btn-pro-join:hover{background:var(--navy-mid);transform:translateY(-1px)}
+.btn-pro-ghost{
+  font-family:var(--sans);font-size:12px;font-weight:300;
+  color:var(--ink45);text-decoration:none;
+  border-bottom:1px solid var(--ink20);padding-bottom:2px;
+  transition:color 0.15s;
+}
+.btn-pro-ghost:hover{color:var(--ink)}
+
+/* Disclaimer / note */
+.disclaimer,.note{
+  font-size:12px;color:var(--ink45);line-height:1.7;
+  padding-top:20px;border-top:1px solid var(--ink08);
+}
+.disclaimer a,.note a{color:var(--ink45);text-decoration:underline}
+
+/* Tabs */
+.tabs{
+  display:flex;width:100%;
+  border-bottom:2px solid var(--navy);margin-bottom:32px;
+}
+.tab{
+  background:none;border:none;cursor:pointer;
+  font-family:var(--sans);font-size:12px;font-weight:400;
+  letter-spacing:0.06em;text-transform:uppercase;
+  color:var(--ink45);padding:12px 20px;
+  border-bottom:2px solid transparent;margin-bottom:-2px;
+  transition:color 0.15s,border-color 0.15s;white-space:nowrap;
+}
+.tab:hover{color:var(--gold)}
+.tab.on{color:var(--navy);border-bottom-color:var(--navy);font-weight:500}
+.tab-panel{display:none}
+.tab-panel.on{display:block}
+
+/* Cards */
+.card{
+  background:var(--cream);border:1px solid var(--ink08);
+  border-radius:var(--r);margin-bottom:16px;overflow:hidden;
+}
+.card-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 20px 14px;border-bottom:1px solid var(--ink08);
+}
+.card-title{font-family:var(--serif);font-size:16px;font-weight:400;color:var(--ink)}
+.card-tag{
+  font-size:10px;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--gold);background:var(--gold-pale);
+  padding:4px 10px;border-radius:100px;border:1px solid var(--gold-border);
+}
+.card-body{
+  padding:20px;font-size:13px;font-weight:300;line-height:1.85;
+  color:var(--ink70);white-space:pre-wrap;min-height:60px;
+}
+.copy-bar{
+  padding:10px 20px;border-top:1px solid var(--ink08);
+  background:var(--cream2);display:flex;justify-content:flex-end;
+}
+.btn-copy{
+  display:flex;align-items:center;gap:6px;
+  background:none;border:1px solid var(--ink08);border-radius:var(--r);
+  font-family:var(--sans);font-size:11px;font-weight:400;
+  letter-spacing:0.06em;color:var(--ink45);
+  padding:6px 14px;cursor:pointer;transition:border-color 0.15s,color 0.15s;
+}
+.btn-copy:hover{border-color:var(--navy);color:var(--navy)}
+.btn-copy svg{width:13px;height:13px}
+
+/* Capture */
+.cap-ring{
+  width:64px;height:64px;border-radius:50%;
+  background:var(--gold-pale);border:1.5px solid var(--gold-border);
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:28px;
+}
+.cap-ring svg{width:26px;height:26px;stroke:var(--gold);fill:none;stroke-width:1.5}
+.cap-title{
+  font-family:var(--serif);font-size:30px;font-weight:400;
+  color:var(--ink);margin-bottom:12px;text-align:center;
+}
+.cap-sub{
+  font-size:15px;font-weight:300;line-height:1.7;
+  color:var(--ink70);text-align:center;margin-bottom:32px;
+}
+.f-group{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;width:100%}
+.f-label{font-size:12px;font-weight:400;letter-spacing:0.04em;color:var(--ink70)}
+.btn-gen{
+  width:100%;padding:15px;margin-top:8px;
+  background:var(--navy);color:var(--cream);
+  border:none;border-radius:2px;cursor:pointer;
+  font-family:var(--sans);font-size:14px;font-weight:400;
+  letter-spacing:0.05em;
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  transition:background 0.15s;
+}
+.btn-gen:hover{background:var(--navy-mid)}
+.cap-note{font-size:12px;color:var(--ink45);line-height:1.6;text-align:center;margin-top:16px}
+.cap-note a{color:var(--ink45);text-decoration:underline}
+
+/* Audit-specific results */
+.score-hero{
+  display:flex;align-items:flex-start;gap:36px;
+  background:var(--cream2);border:1px solid var(--ink08);
+  border-radius:var(--r);padding:32px;margin-bottom:28px;
+}
+.score-circle-wrap{position:relative;flex-shrink:0}
+.score-inner{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+}
+.score-n{
+  font-family:var(--serif);font-size:28px;font-weight:500;
+  line-height:1;color:var(--navy);
+}
+.score-d{font-size:11px;color:var(--ink45);margin-top:2px}
+.score-txt h3{
+  font-family:var(--serif);font-size:20px;font-weight:400;
+  color:var(--ink);margin-bottom:10px;line-height:1.3;
+}
+.score-txt p{font-size:14px;font-weight:300;line-height:1.7;color:var(--ink70)}
+.score-note{
+  font-size:12px;color:var(--ink70);line-height:1.6;
+  border-left:2px solid var(--gold);
+  padding:0 0 0 16px;margin-bottom:36px;
+}
+.areas{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:40px}
+.area-card{
+  padding:20px 22px;background:var(--cream);
+  border:1px solid var(--ink08);border-radius:var(--r);
+}
+.area-name{
+  font-size:11px;letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:10px;
+}
+.area-num{
+  font-family:var(--serif);font-size:32px;font-weight:400;
+  color:var(--navy);margin-bottom:10px;
+}
+.area-bar{height:2px;background:var(--ink08);border-radius:1px;overflow:hidden;margin-bottom:8px}
+.area-fill{height:100%;background:var(--gold);border-radius:1px;transition:width 1s var(--ease)}
+.area-status{font-size:12px;color:var(--ink45)}
+.findings{margin-bottom:40px}
+.find-title{
+  font-size:11px;letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:20px;
+}
+.finding{
+  display:flex;align-items:flex-start;gap:20px;
+  padding:18px 0;border-bottom:1px solid var(--ink08);
+}
+.find-n{
+  font-family:var(--serif);font-size:13px;color:var(--navy);
+  font-weight:400;min-width:24px;letter-spacing:0.04em;margin-top:2px;
+}
+.find-t{font-size:15px;font-weight:300;line-height:1.6;color:var(--ink)}
+
+/* Mobile */
+@media(max-width:600px){
+  header{padding:0 20px}
+  .areas{grid-template-columns:1fr}
+  .score-hero{flex-direction:column;align-items:center;text-align:center}
+  .tabs{overflow-x:auto}
+  .tab{padding:10px 14px;font-size:11px}
+  .rec-actions,.pro-actions{flex-direction:column;align-items:flex-start}
+}
+.score-hero{display:flex;align-items:flex-start;gap:36px;background:var(--cream2);border:1px solid var(--ink08);border-radius:var(--r);padding:32px;margin-bottom:28px}
+.score-circle-wrap{position:relative;flex-shrink:0}
+.score-inner{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.score-n{font-family:var(--serif);font-size:28px;font-weight:500;line-height:1;color:var(--navy)}
+.score-d{font-size:11px;color:var(--ink45);margin-top:2px}
+.score-txt h3{font-family:var(--serif);font-size:20px;font-weight:400;color:var(--ink);margin-bottom:10px;line-height:1.3}
+.score-txt p{font-size:14px;font-weight:300;line-height:1.7;color:var(--ink70)}
+.score-note{font-size:12px;color:var(--ink70);line-height:1.6;border-left:2px solid var(--gold);padding:0 0 0 16px;margin-bottom:36px}
+.areas{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:40px}
+.area-card{padding:20px 22px;background:var(--cream);border:1px solid var(--ink08);border-radius:var(--r)}
+.area-name{font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.area-num{font-family:var(--serif);font-size:32px;font-weight:400;color:var(--navy);margin-bottom:10px}
+.area-bar{height:2px;background:var(--ink08);border-radius:1px;overflow:hidden;margin-bottom:8px}
+.area-fill{height:100%;background:var(--gold);border-radius:1px;transition:width 1s}
+.area-status{font-size:12px;color:var(--ink45)}
+.findings{margin-bottom:40px}
+.find-title{font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);margin-bottom:20px}
+.finding{display:flex;align-items:flex-start;gap:20px;padding:18px 0;border-bottom:1px solid var(--ink08)}
+.find-n{font-family:var(--serif);font-size:13px;color:var(--navy);font-weight:400;min-width:24px;letter-spacing:0.04em;margin-top:2px}
+.find-t{font-size:15px;font-weight:300;line-height:1.6;color:var(--ink)}
+.cap-ring{width:64px;height:64px;border-radius:50%;background:var(--gold-pale);border:1.5px solid var(--gold-border);display:flex;align-items:center;justify-content:center;margin-bottom:28px}
+.cap-ring svg{width:26px;height:26px;stroke:var(--gold);fill:none;stroke-width:1.5}
+.cap-title{font-family:var(--serif);font-size:30px;font-weight:400;color:var(--ink);margin-bottom:12px;text-align:center}
+.cap-sub{font-size:15px;font-weight:300;line-height:1.7;color:var(--ink70);text-align:center;margin-bottom:32px}
+.f-group{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;width:100%}
+.f-label{font-size:12px;font-weight:400;letter-spacing:0.04em;color:var(--ink70)}
+.f-input{width:100%;padding:13px 16px;background:var(--cream);border:1.5px solid var(--ink08);border-radius:var(--r);font-family:var(--sans);font-size:14px;font-weight:300;color:var(--ink);transition:border-color 0.15s}
+.f-input:focus{outline:none;border-color:var(--gold)}
+.f-input::placeholder{color:var(--ink45)}
+.btn-gen{width:100%;padding:15px;margin-top:8px;background:var(--navy);color:var(--cream);border:none;border-radius:2px;cursor:pointer;font-family:var(--sans);font-size:14px;font-weight:400;letter-spacing:0.05em;display:flex;align-items:center;justify-content:center;gap:10px;transition:background 0.15s}
+.btn-gen:hover{background:var(--navy-mid)}
+.cap-note{font-size:12px;color:var(--ink45);line-height:1.6;text-align:center;margin-top:16px}
+.cap-note a{color:var(--ink45);text-decoration:underline}
+.rec{background:var(--navy);color:#fff;border-radius:var(--r);padding:40px;margin-bottom:16px}
+.rec-eye{font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold-l);margin-bottom:16px;opacity:0.85}
+.rec-title{font-family:var(--serif);font-size:clamp(20px,3vw,28px);font-weight:400;color:#fff;margin-bottom:14px;line-height:1.25}
+.rec-body{font-size:14px;font-weight:300;line-height:1.75;color:rgba(255,255,255,0.7);margin-bottom:28px}
+.rec-actions{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.btn-rec{display:inline-flex;align-items:center;background:var(--gold);color:var(--navy);font-family:var(--sans);font-size:12px;font-weight:500;letter-spacing:0.04em;padding:12px 22px;border-radius:2px;text-decoration:none;transition:opacity 0.15s,transform 0.15s}
+.btn-rec:hover{opacity:0.9;transform:translateY(-1px)}
+.btn-rec-ghost{font-family:var(--sans);font-size:12px;font-weight:300;color:rgba(255,255,255,0.5);text-decoration:none;border-bottom:1px solid rgba(255,255,255,0.2);padding-bottom:2px;transition:color 0.15s}
+.btn-rec-ghost:hover{color:rgba(255,255,255,0.85)}
+.pro-teaser{background:var(--cream2);border:1px solid var(--gold-border);border-radius:var(--r);padding:32px;margin-bottom:24px}
+.pro-eye{font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.pro-title{font-family:var(--serif);font-size:22px;font-weight:400;color:var(--ink);margin-bottom:10px}
+.pro-body{font-size:14px;font-weight:300;line-height:1.75;color:var(--ink70)}
+.disclaimer{font-size:12px;color:var(--ink45);line-height:1.7;padding-top:20px;border-top:1px solid var(--ink08)}
+.disclaimer a{color:var(--ink45);text-decoration:underline}
+@media(max-width:600px){.areas{grid-template-columns:1fr}.score-hero{flex-direction:column;align-items:center;text-align:center}}
+
+
+.exec-hero{background:var(--cream2);border:1px solid var(--ink08);border-radius:var(--r);padding:28px;margin-bottom:20px;display:flex;gap:24px;align-items:flex-start}
+.score-circ{position:relative;width:100px;height:100px;flex-shrink:0}
+.score-inner{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.score-n{font-family:var(--serif);font-size:28px;font-weight:500;color:var(--navy);line-height:1}
+.score-d{font-size:11px;color:var(--ink45);margin-top:2px}
+.exec-text h2{font-family:var(--serif);font-size:22px;font-weight:400;color:var(--ink);margin-bottom:8px}
+.exec-text p{font-size:13px;font-weight:300;line-height:1.7;color:var(--ink70)}
+.area-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px}
+.area-chip{background:var(--cream2);border:1px solid var(--ink08);border-radius:var(--r);padding:14px}
+.area-chip-name{font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink45);margin-bottom:6px}
+.area-chip-score{font-family:var(--serif);font-size:24px;font-weight:400;color:var(--navy);margin-bottom:8px}
+.area-chip-bar{height:2px;background:var(--ink08);border-radius:1px}
+.area-chip-fill{height:100%;background:var(--gold);border-radius:1px;transition:width 1s var(--ease)}
+.area-chip-status{font-size:11px;color:var(--ink45)}
+.crit-label{font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+.crit-item{background:var(--cream2);border:1px solid var(--ink08);border-left:3px solid var(--gold);border-radius:0 var(--r) var(--r) 0;padding:14px 18px;margin-bottom:10px}
+.crit-n{font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.crit-text{font-size:13px;color:var(--ink70);line-height:1.7}
+.priority-card{background:var(--navy);border:1px solid var(--gold-border);border-radius:var(--r);padding:24px;margin-bottom:20px}
+.priority-eye{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold-l);margin-bottom:8px}
+.priority-title{font-family:var(--serif);font-size:20px;font-weight:400;color:#fff;margin-bottom:8px}
+.priority-text{font-size:13px;color:rgba(255,255,255,0.7);line-height:1.7}
+.copy-section{display:flex;justify-content:flex-end;margin-top:12px;margin-bottom:16px}
+.narrative-card{background:var(--cream2);border:1px solid var(--ink08);border-radius:var(--r);padding:24px;margin-bottom:16px}
+.narrative-eye{font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+.narrative-text{font-size:14px;color:var(--ink70);line-height:1.85}
+.analysis-section{background:var(--cream);border:1px solid var(--ink08);border-radius:var(--r);margin-bottom:16px;overflow:hidden}
+.analysis-head{padding:18px 22px;border-bottom:1px solid var(--ink08);display:flex;align-items:center;justify-content:space-between}
+.analysis-score-badge{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.analysis-score-n{font-family:var(--serif);font-size:22px;font-weight:400;color:var(--navy)}
+.analysis-body{padding:20px;font-size:13px;font-weight:300;line-height:1.85;color:var(--ink70)}
+.plan-month{background:var(--cream2);border:1px solid var(--ink08);border-radius:var(--r);margin-bottom:14px;overflow:hidden}
+.tools-intro{font-size:13px;color:var(--ink70);line-height:1.7;margin-bottom:20px;padding:18px 20px;background:var(--cream2);border:1px solid var(--ink08);border-radius:var(--r)}
+.q-section{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.q-text{font-family:var(--serif);font-size:clamp(20px,3.2vw,28px);font-weight:400;line-height:1.3;color:var(--ink);margin-bottom:10px}
+.q-hint{font-size:13px;color:var(--ink45);margin-bottom:24px;line-height:1.6}
+.opts-list{display:flex;flex-direction:column;gap:10px;margin-bottom:28px}
+.opt-btn{width:100%;text-align:left;padding:14px 18px;background:var(--cream);border:1.5px solid var(--ink08);border-radius:var(--r);font-family:var(--sans);font-size:14px;font-weight:300;color:var(--ink70);cursor:pointer;transition:border-color 0.15s,background 0.15s}
+.opt-btn:hover{border-color:var(--gold-border);background:var(--gold-pale)}
+.opt-btn.selected{border-color:var(--gold);background:var(--gold-pale);color:var(--ink)}
+.q-nav{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
+.btn-back{background:transparent;color:var(--ink45);font-family:var(--sans);font-size:13px;padding:12px 18px;border-radius:var(--r);border:1px solid var(--ink08);cursor:pointer;transition:all 0.15s}
+.btn-next{display:flex;align-items:center;gap:8px;background:var(--navy);color:var(--cream);font-family:var(--sans);font-size:13px;font-weight:500;padding:12px 26px;border-radius:var(--r);border:none;cursor:pointer;letter-spacing:0.05em;transition:all 0.15s}
+.btn-next:disabled{opacity:0.4;cursor:not-allowed}
+@media(max-width:600px){.area-strip{grid-template-columns:1fr 1fr}.exec-hero{flex-direction:column}}
+
+
+.header-all-tools{font-family:var(--sans);font-size:12px;font-weight:300;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink45);text-decoration:none;padding:8px 16px;border:1px solid var(--ink08);border-radius:100px;transition:all 0.15s;margin-right:12px}.header-all-tools:hover{color:var(--ink);border-color:var(--ink20)}
+</style>
+</head>
+<body>
+
+<header class="land-hide">
+  <a class="logo" href="#"><img src="Worvane_Logo.png" alt="Worvane" style="height:auto;width:180px;display:block;"></a>
+  <a href="#" class="header-all-tools">All tools</a><div class="header-pill">Full Business Diagnostic</div>
+</header>
+
+<div class="screen active" id="s-land"><div class="land-wrap">
+  <img src="Worvane_Logo.png" alt="Worvane" class="land-logo">
+  <h1 class="land-title">Your business,<br><em>honestly</em> assessed.</h1>
+  <button class="land-btn" id="btn-start">Begin my diagnostic &rarr;</button>
+</div></div>
+
+<div class="screen" id="s-intake">
+  <div class="prog-wrap">
+    <div class="prog-top"><span class="prog-label">Your diagnostic</span><span class="prog-count" id="q-prog">Question 1 of 12</span></div>
+    <div class="prog-track"><div class="prog-fill" id="prog-fill" style="width:8.33%"></div></div>
+  </div>
+  <p style="font-size:12px;color:var(--ink45);font-weight:300;letter-spacing:0.02em;text-align:center;margin:28px 0 32px;padding:0 8px">Answer as honestly as you can. The more accurate your picture, the more useful your diagnostic will be.</p>
+  <div id="q-container" style="width:100%;max-width:640px;">
+    <div class="q-section" id="q-section"></div>
+    <div class="q-text" id="q-text"></div>
+    <div class="q-hint" id="q-hint"></div>
+    <div class="opts-list" id="opts-list"></div>
+    <textarea id="ta-main" class="f-input" rows="4" style="display:none;width:100%;margin-bottom:24px" placeholder=""></textarea>
+    <div class="q-nav">
+      <button class="btn-back" id="btn-back" style="display:none">← Back</button>
+      <button class="btn-next" id="btn-next" disabled>Continue →</button>
+    </div>
+  </div>
+</div>
+
+<div class="screen" id="s-load"><div class="load-screen-inner">
+  <div class="load-ring"></div>
+  <h2 class="load-title">Running your diagnostic&hellip;</h2>
+  <p class="load-sub">A business consultant charges &pound;2,000+ for a full diagnostic report. You are getting yours in under a minute.</p>
+  <p style="font-size:13px;color:var(--ink);font-weight:300;font-style:italic;line-height:1.6;margin-bottom:24px;max-width:360px">Most business owners have a feeling something is holding them back. You are about to find out what it actually is.</p>
+  <div class="load-steps">
+    <div class="l-row"><div class="l-dot wait" id="ld1"></div><span class="l-txt wait" id="lt1">Reading your business profile</span></div>
+    <div class="l-row"><div class="l-dot wait" id="ld2"></div><span class="l-txt wait" id="lt2">Scoring all four areas</span></div>
+    <div class="l-row"><div class="l-dot wait" id="ld3"></div><span class="l-txt wait" id="lt3">Analysing connections between areas</span></div>
+    <div class="l-row"><div class="l-dot wait" id="ld4"></div><span class="l-txt wait" id="lt4">Building your 90-day action plan</span></div>
+    <div class="l-row"><div class="l-dot wait" id="ld5"></div><span class="l-txt wait" id="lt5">Writing your recommendations</span></div>
+  </div>
+
+  <p style="font-size:11px;color:var(--ink45);margin-top:24px;letter-spacing:0.04em">Your responses are private and never shared.</p>
+</div></div>
+
+<div class="screen" id="s-results">
+  <div class="results-inner" style="max-width:760px">
+  <div class="res-head">
+    <div class="res-eye">Full Business Diagnostic &middot; Worvane</div>
+    <div class="res-name" id="r-name">Your Business Diagnostic</div>
+    <div class="res-meta" id="r-meta">Generated today &middot; Worvane</div>
+    <button onclick="window.location.reload()" style="margin-top:12px;background:none;border:1px solid var(--ink08);border-radius:100px;padding:7px 16px;font-family:var(--sans);font-size:12px;font-weight:300;letter-spacing:0.06em;color:var(--ink45);cursor:pointer;transition:all 0.15s" onmouseover="this.style.borderColor='var(--gold-border)';this.style.color='var(--ink)'" onmouseout="this.style.borderColor='var(--ink08)';this.style.color='var(--ink45)'">&#8635; Regenerate</button>
+  </div>
+  <div class="tabs">
+    <button class="tab on" data-tab="exec">Executive Summary</button>
+    <button class="tab" data-tab="analysis">Full Analysis</button>
+    <button class="tab" data-tab="plan">90-Day Plan</button>
+    <button class="tab" data-tab="tools">Tool Recommendations</button>
+  </div>
+  <div class="tab-panel on" id="panel-exec">
+    <div class="exec-hero"><div class="score-circ"><svg width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="44" fill="none" stroke="var(--ink08)" stroke-width="4"/><circle cx="50" cy="50" r="44" fill="none" stroke="#B8952E" stroke-width="3" stroke-dasharray="276.5" stroke-dashoffset="276.5" id="score-arc" stroke-linecap="round"/></svg><div class="score-inner"><div class="score-n" id="r-score">0</div><div class="score-d">/ 100</div></div></div><div class="exec-text"><h2 id="exec-headline">Analysing&hellip;</h2><p id="exec-summary">Your full diagnostic report is being prepared.</p></div></div>
+    <div class="area-strip"><div class="area-chip"><div class="area-chip-name">Sales</div><div class="area-chip-score" id="as-sales">-</div><div class="area-chip-bar"><div class="area-chip-fill" id="ab-sales" style="width:0%"></div></div><div class="area-chip-status" id="ast-sales"></div></div><div class="area-chip"><div class="area-chip-name">Marketing</div><div class="area-chip-score" id="as-mkt">-</div><div class="area-chip-bar"><div class="area-chip-fill" id="ab-mkt" style="width:0%"></div></div><div class="area-chip-status" id="ast-mkt"></div></div><div class="area-chip"><div class="area-chip-name">Operations</div><div class="area-chip-score" id="as-ops">-</div><div class="area-chip-bar"><div class="area-chip-fill" id="ab-ops" style="width:0%"></div></div><div class="area-chip-status" id="ast-ops"></div></div><div class="area-chip"><div class="area-chip-name">Strategy</div><div class="area-chip-score" id="as-str">-</div><div class="area-chip-bar"><div class="area-chip-fill" id="ab-str" style="width:0%"></div></div><div class="area-chip-status" id="ast-str"></div></div></div>
+    <div class="crit-label">Your three critical findings</div>
+    <div class="crit-item"><div class="crit-n">Finding 01</div><div class="crit-text" id="crit-1">-</div></div>
+    <div class="crit-item"><div class="crit-n">Finding 02</div><div class="crit-text" id="crit-2">-</div></div>
+    <div class="crit-item"><div class="crit-n">Finding 03</div><div class="crit-text" id="crit-3">-</div></div>
+    <div class="priority-card"><div class="priority-eye">Highest-impact action</div><div class="priority-title" id="priority-title">Your most important next step</div><div class="priority-text" id="priority-text">-</div></div>
+    <div class="copy-section"><button class="btn-copy" id="copy-exec"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>Copy executive summary</button></div>
+  </div>
+  <div class="tab-panel" id="panel-analysis">
+    <div class="narrative-card"><div class="narrative-eye">Strategic narrative</div><div class="narrative-text" id="narrative-text">-</div></div>
+    <div class="analysis-section" id="analysis-sales"></div>
+    <div class="analysis-section" id="analysis-mkt"></div>
+    <div class="analysis-section" id="analysis-ops"></div>
+    <div class="analysis-section" id="analysis-str"></div>
+    <div class="copy-section"><button class="btn-copy" id="copy-analysis"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>Copy full analysis</button></div>
+  </div>
+  <div class="tab-panel" id="panel-plan">
+    <div id="plan-month1" class="plan-month"></div>
+    <div id="plan-month2" class="plan-month"></div>
+    <div id="plan-month3" class="plan-month"></div>
+    <div class="copy-section"><button class="btn-copy" id="copy-plan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>Copy 90-day plan</button></div>
+  </div>
+  <div class="tab-panel" id="panel-tools">
+    <div class="tools-intro" id="tools-intro">Based on your diagnostic findings, here are the Worvane tools that would address your most significant gaps.</div>
+    <div id="tools-list"></div>
+  </div>
+        <div class="pro-card">
+      <div class="pro-top"><div class="pro-eye">Worvane Pro</div></div>
+      <div class="pro-title">You have earned your place in Worvane Pro</div>
+      <div class="pro-body">You have invested in understanding your business at the deepest level. As a Worvane client who has completed the Full Business Diagnostic, you now qualify for Worvane Pro &mdash; unlimited access to <strong>every tool in the suite, quarterly re-diagnostics to track your progress, and monthly strategy updates</strong> tailored to your business. All for &pound;97 per month. For most clients that is less than a single hour of consulting.</div>
+      <div class="pro-steps"><div class="pro-steps-label">Your qualification</div>
+        <div class="pro-step"><div class="pro-step-circle pro-step-done-circle">&#10003;</div><div class="pro-step-text">Complete your free audit &mdash; <span style="color:var(--gold)">done</span></div></div>
+        <div class="pro-step"><div class="pro-step-circle pro-step-done-circle">&#10003;</div><div class="pro-step-text">Invest in Worvane tools &mdash; <span style="color:var(--gold)">done</span></div></div>
+        <div class="pro-step"><div class="pro-step-circle pro-step-done-circle">&#10003;</div><div class="pro-step-text">Full Business Diagnostic completed &mdash; <span style="color:var(--gold)">Pro unlocked</span></div></div></div>
+      <div class="pro-value">All tools individually: <strong>&pound;586</strong>. Worvane Pro: <strong>&pound;97/month</strong>.</div>
+      <div class="pro-actions"><a href="#" class="btn-pro-join">Join Worvane Pro &mdash; &pound;97/month</a><a href="#" class="btn-pro-ghost">See everything included &rarr;</a></div>
+    </div>
+        <div class="note"><span style="color:var(--ink45);font-size:12px">AI-generated from your responses. Provided for strategic guidance only. Not professional legal, financial, or business advice. Questions? <a href="mailto:hello@worvane.co" style="color:var(--ink45)">hello@worvane.co</a></span><div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--ink08)"><span style="font-size:13px;color:var(--ink45)">Not happy with your output? The most common reason is vague answers. Go back, add more detail, and regenerate &mdash; the difference is significant.</span></div></div>
+  </div>
+</div>
+
+<script>
+
+
+(function(){
+
+// ── TEXT HELPER ──
+function clean(str, mode) {
+  if (!str) return '';
+  var s = str.split('\n')[0].trim();
+  var firstDot = s.indexOf('. ');
+  if (firstDot > 40) s = s.substring(0, firstDot);
+  s = s.replace(/^(e\.g\.?\s*|for example,?\s*|i\.e\.?\s*)/i, '');
+  s = s.replace(/\.{2,}$/, '').replace(/\s+$/, '');
+  if (mode === 'mid') {
+    s = s.replace(/^(I |We |My |Our )/i, '');
+    s = s.charAt(0).toLowerCase() + s.slice(1);
+  }
+  return s;
+}
+
+function copyToClipboard(btn, text){
+  var orig = btn.innerHTML;
+  var str = Array.isArray(text) ? text.join('\n\n---\n\n') : (text||'');
+  navigator.clipboard.writeText(str).then(function(){
+    btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Copied';
+    btn.style.color = 'var(--gold)';
+    setTimeout(function(){ btn.innerHTML = orig; btn.style.color = ''; }, 2000);
+  });
+}
+
+function clamp(v,lo,hi){ return Math.max(lo,Math.min(hi,v)); }
+function L1(str){ return (str||'').split('\n')[0].split('.')[0].trim(); }
+
+var ans = {}, qIdx = 0;
+
+var Qs = [
+  {id:'q1', section:'About your business', type:'text', ph:'e.g. A management consultancy helping mid-sized professional services firms improve their operations. 6 years old, 4 people including me, around £480k annual revenue',
+   text:'Describe your business &mdash; what do you do, who do you serve, and how long have you been operating?',
+   hint:'Be specific. Include your sector, your clients, and roughly how established you are.'},
+  {id:'q2', section:'Goals', type:'text', ph:'e.g. Hit £750k revenue by end of year. Hire a second senior consultant. Reduce my personal delivery hours from 80% to 50% so I can focus on business development',
+   text:'What are your primary goals for the business over the next 12 months?',
+   hint:'Think about revenue, growth, team, or the problems you most want to solve.'},
+  {id:'q3', section:'Sales', type:'text', ph:'e.g. We rarely win new clients proactively — almost everything comes from referrals. When we do pitch, our close rate is around 60–70% but the volume is too low and unpredictable',
+   text:'How does your business currently win clients? Describe your sales process.',
+   hint:'Walk through how a typical client finds you and decides to work with you.'},
+  {id:'q4', section:'Revenue', type:'opts',
+   text:'How would you describe your revenue trajectory over the past 12 months?',
+   opts:['Growing consistently','Inconsistent — peaks and troughs','Plateaued','Declining','Early stage — building from scratch']},
+  {id:'q5', section:'Marketing', type:'text', ph:'e.g. Mostly LinkedIn — I post inconsistently. Some referrals from existing clients. No paid advertising. Website gets traffic but converts poorly. No email list to speak of',
+   text:'What does your current marketing look like? Where are you visible to potential clients?',
+   hint:'Include online, offline, social media, referrals — anything you actively do.'},
+  {id:'q6', section:'Operations', type:'opts',
+   text:'How operationally dependent is the business on you personally?',
+   opts:['Almost entirely — I do everything','Mostly me with some help','Balanced — some delegation in place','Well delegated — team handles most things','Fully systemised — runs without me']},
+  {id:'q7', section:'Operations', type:'text', ph:'e.g. Everything flows through me. No documented processes. Delivery quality varies depending on who does the work. Onboarding new clients takes far too long',
+   text:'What are the biggest operational gaps or inefficiencies you are aware of?',
+   hint:'Think about processes that break down, tasks only you can do, or things that fall through the cracks.'},
+  {id:'q8', section:'Strategy', type:'opts',
+   text:'How clearly defined is your business strategy?',
+   opts:['No formal plan — reactive decisions','Vague direction but no written plan','Some structure but inconsistently followed','Clear plan, reviewed occasionally','Clear plan, reviewed regularly and driving decisions']},
+  {id:'q9', section:'Blockers', type:'text', ph:'e.g. I am the bottleneck. I cannot scale without hiring but I cannot hire without more revenue, and I cannot grow revenue because I am too busy delivering',
+   text:'What is the single biggest thing holding your business back right now?',
+   hint:'Be honest. The most useful answer here is often the one you have been avoiding.'},
+  {id:'q10', section:'Market', type:'text', ph:'e.g. We are seen as high quality but expensive. Clients who find us tend to stay, but we lose on price to cheaper competitors who overpromise and underdeliver',
+   text:'How would you describe your market position relative to competitors?',
+   hint:'Consider pricing, reputation, differentiation, and client perception.'},
+  {id:'q11', section:'Clients', type:'text', ph:'e.g. Best clients: ambitious MDs who trust the process and value expertise. Worst clients: those who want change but resist doing anything differently',
+   text:'Describe your best clients and your worst clients.',
+   hint:'What makes your best clients great to work with? What makes your worst clients difficult?'},
+  {id:'q12', section:'Attempts', type:'text', ph:'e.g. I hired a VA last year which helped with admin. I tried productising our offer but it never landed. I have read every business book going without acting on much of it',
+   text:'What have you already tried to address the problems you have described?',
+   hint:'What worked, what did not, and what have you not yet tried?'},
+];
+
+function showScreen(id){
+  var hdr=document.querySelector('header'); if(hdr){ id==='s-land'?hdr.classList.add('land-hide'):hdr.classList.remove('land-hide'); }
+  document.querySelectorAll('.screen').forEach(function(s){ s.classList.remove('active'); });
+  var el=document.getElementById(id);
+  if(el){ el.classList.add('active'); window.scrollTo({top:0,behavior:'smooth'}); }
+}
+
+function renderQ(idx){
+  var q=Qs[idx];
+  if(!q) return;
+  var prog=document.getElementById('q-prog');
+  if(prog) prog.textContent='Question '+(idx+1)+' of '+Qs.length;
+  var section=document.getElementById('q-section');
+  if(section) section.textContent=q.section;
+  var text=document.getElementById('q-text');
+  if(text) text.innerHTML=q.text;
+  var hint=document.getElementById('q-hint');
+  if(hint) hint.textContent=q.hint||'';
+  var optsEl=document.getElementById('opts-list');
+  var taMain=document.getElementById('ta-main');
+  var btnNext=document.getElementById('btn-next');
+  if(btnNext) btnNext.disabled=true;
+
+  if(q.type==='opts'){
+    if(taMain) taMain.style.display='none';
+    if(optsEl){
+      optsEl.style.display='';
+      optsEl.innerHTML='';
+      q.opts.forEach(function(opt,i){
+        var btn=document.createElement('button');
+        btn.className='opt-btn';
+        btn.textContent=opt;
+        if(ans[q.id]===i) btn.classList.add('selected');
+        btn.addEventListener('click',function(){
+          ans[q.id]=i;
+          optsEl.querySelectorAll('.opt-btn').forEach(function(b){ b.classList.remove('selected'); });
+          btn.classList.add('selected');
+          if(btnNext) btnNext.disabled=false;
+        });
+        optsEl.appendChild(btn);
+      });
+    }
+  } else {
+    if(optsEl) optsEl.style.display='none';
+    if(taMain){
+      taMain.style.display='';
+      taMain.value=ans[q.id]||'';
+      taMain.addEventListener('input',function(){ ans[q.id]=taMain.value; if(btnNext) btnNext.disabled=!taMain.value.trim(); });
+      if(ans[q.id]) if(btnNext) btnNext.disabled=false;
+    }
+  }
+
+  var btnBack=document.getElementById('btn-back');
+  if(btnBack){ btnBack.style.display=idx===0?'none':''; }
+}
+
+function runLoading(){
+  showScreen('s-load');
+  var steps=[{d:'ld1',t:'lt1'},{d:'ld2',t:'lt2'},{d:'ld3',t:'lt3'},{d:'ld4',t:'lt4'},{d:'ld5',t:'lt5'}];
+  steps.forEach(function(s){ document.getElementById(s.d).className='l-dot wait'; document.getElementById(s.t).className='l-txt wait'; });
+  var delays=[400,6000,14000,22000,32000];
+  steps.forEach(function(s,i){
+    setTimeout(function(){
+      if(i>0){ document.getElementById(steps[i-1].d).className='l-dot done'; document.getElementById(steps[i-1].t).className='l-txt done'; }
+      document.getElementById(s.d).className='l-dot act'; document.getElementById(s.t).className='l-txt act';
+    },delays[i]);
+  });
+  buildReport();
+}
+
+function buildReport() {
+  var biz     = ans.q1 || 'your business';
+  var goals   = ans.q2 || 'your goals';
+  var sales   = ans.q3 || 'your sales approach';
+  var mktg    = ans.q5 || 'your marketing';
+  var opsGaps = ans.q7 || 'operational gaps';
+  var blocker = ans.q9 || 'the main blocker';
+  var market  = ans.q10 || 'your market position';
+  var clients = ans.q11 || 'your client profile';
+  var tried   = ans.q12 || 'past attempts';
+
+  var revMap  = ['growing consistently','inconsistent with peaks and troughs','plateaued','declining','early stage'];
+  var rev     = ans.q4==='other'?(ans.q4_other||'inconsistent'):(typeof ans.q4==='number'?revMap[ans.q4]:'inconsistent');
+
+  var opsScore_raw = typeof ans.q6==='number' ? [10,28,50,70,88][ans.q6] : 40;
+  var strScore_raw = typeof ans.q8==='number' ? [10,22,38,60,82][ans.q8] : 35;
+
+  var salesScore = 35;
+  if(rev==='growing consistently') salesScore=70;
+  else if(rev==='inconsistent with peaks and troughs') salesScore=42;
+  else if(rev==='plateaued') salesScore=38;
+  else if(rev==='declining') salesScore=22;
+  else if(rev==='early stage') salesScore=30;
+  if(sales.toLowerCase().indexOf('referral')!==-1) salesScore-=8;
+  if(sales.toLowerCase().indexOf('no ')!==-1||sales.toLowerCase().indexOf('inconsistent')!==-1) salesScore-=5;
+  salesScore=clamp(salesScore,8,92);
+
+  var mktScore=30;
+  if(mktg.toLowerCase().indexOf('invisible')!==-1||mktg.toLowerCase().indexOf('nothing')!==-1) mktScore=18;
+  else if(mktg.toLowerCase().indexOf('consistent')!==-1||mktg.toLowerCase().indexOf('working')!==-1) mktScore=68;
+  else if(mktg.toLowerCase().indexOf('occasionally')!==-1||mktg.toLowerCase().indexOf('some')!==-1) mktScore=38;
+  mktScore=clamp(mktScore,8,92);
+
+  var opsScore=clamp(opsScore_raw,8,92);
+  var strScore=clamp(strScore_raw,8,92);
+  var overall=Math.round((salesScore+mktScore+opsScore+strScore)/4);
+
+  document.getElementById('r-score').textContent=overall;
+  document.getElementById('r-name').textContent=biz.split('\n')[0].split('.')[0].trim()+' \u2014 Business Diagnostic';
+  document.getElementById('r-meta').textContent='Completed today \u00b7 Worvane \u00b7 Confidential';
+
+  var arc=document.getElementById('score-arc');
+  setTimeout(function(){ arc.style.transition='stroke-dashoffset 1.4s cubic-bezier(0,0,0.2,1)'; arc.style.strokeDashoffset=276.5-(overall/100)*276.5; },200);
+
+  var hi=overall<42?0:overall<68?1:2;
+  document.getElementById('exec-headline').textContent=['Significant challenges \u2014 clear priorities identified','Solid foundations with key gaps to address','Good overall position with room to grow'][hi];
+  document.getElementById('exec-summary').textContent='Your diagnostic is being written now. The overall score of '+overall+'/100 reflects the information you shared. The full written analysis will appear in a moment.';
+
+  function setChip(nId,bId,sId,val){
+    document.getElementById(nId).textContent=val+'/100';
+    setTimeout(function(){ document.getElementById(bId).style.width=val+'%'; },400);
+    var el=document.getElementById(sId);
+    if(val<40){el.textContent='High priority';el.className='area-chip-status st-hi';}
+    else if(val<65){el.textContent='Needs attention';el.className='area-chip-status st-md';}
+    else{el.textContent='Good foundation';el.className='area-chip-status st-ok';}
+  }
+  setChip('as-sales','ab-sales','ast-sales',salesScore);
+  setChip('as-mkt','ab-mkt','ast-mkt',mktScore);
+  setChip('as-ops','ab-ops','ast-ops',opsScore);
+  setChip('as-str','ab-str','ast-str',strScore);
+
+  var areas=[{name:'Sales',s:salesScore},{name:'Marketing',s:mktScore},{name:'Operations',s:opsScore},{name:'Strategy',s:strScore}];
+  areas.sort(function(a,b){return a.s-b.s;});
+  var lowestArea=areas[0].name;
+  var highestArea=areas[areas.length-1].name;
+
+  var prompt=[
+    'You are a senior business consultant writing a full diagnostic report for a UK SME business owner. This is a premium \u00a3197 product. The analysis must feel like a real consultant reviewed their specific business \u2014 not a template with their details inserted.',
+    '',
+    'SCORES ALREADY CALCULATED (use these as the foundation for your analysis):',
+    'Sales & Revenue: '+salesScore+'/100',
+    'Marketing: '+mktScore+'/100',
+    'Operations: '+opsScore+'/100',
+    'Strategy & Goals: '+strScore+'/100',
+    'Overall: '+overall+'/100',
+    'Revenue situation: '+rev,
+    '',
+    'THE BUSINESS:',
+    biz,
+    '',
+    'THEIR GOALS:',
+    goals,
+    '',
+    'HOW THEY WIN CLIENTS (sales situation):',
+    sales,
+    '',
+    'THEIR MARKETING SITUATION:',
+    mktg,
+    '',
+    'OPERATIONAL GAPS:',
+    opsGaps,
+    '',
+    'THEIR MAIN BLOCKER:',
+    blocker,
+    '',
+    'THEIR MARKET AND COMPETITORS:',
+    market,
+    '',
+    'BEST AND WORST CLIENTS:',
+    clients,
+    '',
+    'WHAT THEY HAVE ALREADY TRIED:',
+    tried,
+    '',
+    'Write the following sections. Return ONLY a valid JSON object with exactly these keys: executive_summary, strategic_narrative, analysis_sales, analysis_marketing, analysis_operations, analysis_strategy, critical_findings, priority_action, action_plan, tool_recommendations.',
+    '',
+    'EXECUTIVE SUMMARY (key: executive_summary): Write a 2-3 paragraph executive summary of this business current position. Be direct and honest. Reference the scores but go beyond them.',
+    '',
+    'STRATEGIC NARRATIVE (key: strategic_narrative): Write the strategic narrative connecting all four areas. Identify the root cause chain. Write 4-5 substantial paragraphs that feel genuinely analytical.',
+    '',
+    'ANALYSIS - SALES (key: analysis_sales): Detailed analysis of their sales situation (score: '+salesScore+'/100). What is working, what is not and why, the specific consequence, and one priority action.',
+    '',
+    'ANALYSIS - MARKETING (key: analysis_marketing): Detailed analysis of their marketing situation (score: '+mktScore+'/100). Same structure.',
+    '',
+    'ANALYSIS - OPERATIONS (key: analysis_operations): Detailed analysis of their operational situation (score: '+opsScore+'/100). Same structure.',
+    '',
+    'ANALYSIS - STRATEGY (key: analysis_strategy): Detailed analysis of their strategic situation (score: '+strScore+'/100). Same structure.',
+    '',
+    'CRITICAL FINDINGS (key: critical_findings): Write exactly 3 critical findings in priority order. Each names a specific problem, explains root cause, and describes cost of leaving it unaddressed.',
+    '',
+    'PRIORITY ACTION (key: priority_action): The single highest-impact action this business should take in the next 7 days. Specific, executable, and chosen because it addresses the root cause.',
+    '',
+    'ACTION PLAN (key: action_plan): A 90-day action plan with week-by-week priorities for months 1, 2, and 3. Each month has a clear theme and 4 weekly priorities.',
+    '',
+    'TOOL RECOMMENDATIONS (key: tool_recommendations): Personalised recommendations from the Worvane suite in priority order based on diagnostic findings. Available tools: Sales Script Generator (\u00a349), Marketing Content Engine (\u00a349), SOP Builder (\u00a369), KPI Framework Generator (\u00a349), Hiring & Onboarding Pack (\u00a369), 90-Day Business Plan (\u00a369), Pricing Strategy Builder (\u00a349), Brand Messaging Framework (\u00a349).',
+    '',
+    'CRITICAL: Return ONLY a raw JSON object. No markdown. No code blocks. No backticks. No preamble. First character must be { and last must be }.',
+  ].join('\n');
+
+  fetch('/.netlify/functions/generate', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ model: 'claude-sonnet-4-5-20250929', max_tokens: 8000, messages: [{ role: 'user', content: prompt }] })
+  })
+  .then(function(r){ return r.json(); })
+  .then(function(data){
+    var raw=data.content&&data.content[0]&&data.content[0].text ? data.content[0].text : '';
+    raw=raw.replace(/^```json\s*/i,'').replace(/^```\s*/i,'').replace(/```\s*$/i,'').trim();
+    var parsed;
+    try { parsed=JSON.parse(raw); }
+    catch(e) {
+      document.getElementById('exec-summary').textContent='There was an issue generating your report. Please try again.';
+      showScreen('s-results'); return;
+    }
+
+    document.getElementById('exec-summary').textContent = parsed.executive_summary || '';
+
+    var findings = (parsed.critical_findings||'').split('\n\n');
+    ['crit-1','crit-2','crit-3'].forEach(function(id,i){
+      var el=document.getElementById(id);
+      if(el) el.innerHTML = findings[i] ? findings[i].replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>') : '';
+    });
+
+    document.getElementById('priority-title').textContent = 'Your highest-impact action';
+    document.getElementById('priority-text').textContent = parsed.priority_action || '';
+
+    document.getElementById('narrative-text').innerHTML = (parsed.strategic_narrative||'').split('\n\n').map(function(p){
+      return '<p style="margin-bottom:14px">'+p.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')+'</p>';
+    }).join('');
+
+    function buildAnalysis(id, title, score, text){
+      var statusText=score<40?'High priority':score<65?'Needs attention':'Good foundation';
+      var html='<div class="analysis-head"><div class="analysis-title">'+title+'</div>';
+      html+='<div class="analysis-score-badge"><div class="badge-score">'+score+'</div><div class="badge-label">/ 100</div></div></div>';
+      html+='<div class="analysis-body"><div class="analysis-sub">Status: '+statusText+'</div>';
+      html+='<div class="analysis-p" style="white-space:pre-wrap">'+text+'</div></div>';
+      document.getElementById(id).innerHTML=html;
+    }
+    buildAnalysis('analysis-sales','Sales & Revenue',salesScore,parsed.analysis_sales||'');
+    buildAnalysis('analysis-mkt','Marketing',mktScore,parsed.analysis_marketing||'');
+    buildAnalysis('analysis-ops','Operations',opsScore,parsed.analysis_operations||'');
+    buildAnalysis('analysis-str','Strategy & Goals',strScore,parsed.analysis_strategy||'');
+
+    var planText = parsed.action_plan || '';
+    function buildSimpleMonth(id,label,tag,text){
+      var el=document.getElementById(id); if(!el) return;
+      var html='<div class="plan-month-head"><div class="plan-month-title">'+label+'</div><div class="plan-month-tag">'+tag+'</div></div>';
+      html+='<div class="plan-wcontent" style="padding:20px;font-size:13px;color:var(--w60);line-height:1.8;white-space:pre-wrap">'+text+'</div>';
+      el.innerHTML=html;
+    }
+    var planParts=planText.split(/month\s*[23]/i);
+    buildSimpleMonth('plan-month1','Month 1','Foundation',planParts[0]||planText);
+    buildSimpleMonth('plan-month2','Month 2','Build',planParts[1]||'');
+    buildSimpleMonth('plan-month3','Month 3','Execute',planParts[2]||'');
+
+    document.getElementById('tools-intro').textContent='Based on your diagnostic findings, these are the Worvane tools that directly address your specific gaps, in priority order.';
+    document.getElementById('tools-list').innerHTML='<div style="font-size:13px;color:var(--w60);line-height:1.8;white-space:pre-wrap;padding:4px">'+(parsed.tool_recommendations||'')+'</div>';
+
+    document.getElementById('copy-exec').addEventListener('click',function(){
+      copyToClipboard(this,'BUSINESS DIAGNOSTIC \u2014 EXECUTIVE SUMMARY\n\nOverall: '+overall+'/100\nSales: '+salesScore+' | Marketing: '+mktScore+' | Operations: '+opsScore+' | Strategy: '+strScore+'\n\n'+(parsed.executive_summary||''));
+    });
+    document.getElementById('copy-analysis').addEventListener('click',function(){
+      copyToClipboard(this,[parsed.strategic_narrative,parsed.analysis_sales,parsed.analysis_marketing,parsed.analysis_operations,parsed.analysis_strategy].join('\n\n---\n\n'));
+    });
+    document.getElementById('copy-plan').addEventListener('click',function(){
+      copyToClipboard(this,parsed.action_plan||'');
+    });
+
+    showScreen('s-results');
+  })
+  .catch(function(){
+    document.getElementById('exec-summary').textContent='Connection error. Please check your connection and try again.';
+    showScreen('s-results');
+  });
+}
+
+document.getElementById('btn-start').addEventListener('click', function(){ showScreen('s-intake'); renderQ(0); });
+
+document.getElementById('btn-back').addEventListener('click', function(){ if(qIdx>0){ qIdx--; renderQ(qIdx); } });
+
+document.getElementById('btn-next').addEventListener('click', function(){
+  if(qIdx < Qs.length-1){ qIdx++; renderQ(qIdx); } else { runLoading(); }
+});
+
+document.querySelectorAll('.tab').forEach(function(tab){
+  tab.addEventListener('click',function(){
+    var t = tab.getAttribute('data-tab');
+    document.querySelectorAll('.tab').forEach(function(b){ b.classList.remove('on'); });
+    document.querySelectorAll('.tab-panel').forEach(function(p){ p.classList.remove('on'); });
+    tab.classList.add('on');
+    document.getElementById('panel-'+t).classList.add('on');
+  });
+});
+
+document.querySelectorAll('.btn-copy').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    var el=document.getElementById(btn.getAttribute('data-target'));
+    if(!el) return;
+    navigator.clipboard.writeText(el.innerText).then(function(){
+      var orig=btn.innerHTML;
+      btn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Copied';
+      btn.style.color='var(--gold)';
+      setTimeout(function(){ btn.innerHTML=orig; btn.style.color=''; },2000);
+    });
+  });
+});
+
+window.showScreen = showScreen;
+
+})();
+
+</script>
+</body>
+</html>

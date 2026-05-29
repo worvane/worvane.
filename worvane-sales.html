@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sales Script Generator &mdash; Worvane — Worvane</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --cream:#FAF8F4;
+  --cream2:#F3EFE8;
+  --cream3:#EAE4D9;
+  --ink:#1A1714;
+  --ink70:rgba(26,23,20,0.7);
+  --ink45:rgba(26,23,20,0.45);
+  --ink20:rgba(26,23,20,0.2);
+  --ink08:rgba(26,23,20,0.08);
+  --ink04:rgba(26,23,20,0.04);
+  --gold:#B8952E;
+  --gold-l:#C9A84C;
+  --gold-pale:rgba(184,149,46,0.1);
+  --gold-border:rgba(184,149,46,0.28);
+  --navy:#080F1E;
+  --navy-mid:#1a2540;
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --sans:'Outfit',sans-serif;
+  --ease:cubic-bezier(0.4,0,0.2,1);
+  --r:4px;
+}
+
+html{scroll-behavior:smooth}
+body{
+  background:var(--cream);color:var(--ink);
+  font-family:var(--sans);font-weight:300;
+  min-height:100vh;overflow-x:hidden;
+}
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;opacity:0.6;
+}
+
+/* HEADER */
+header.land-hide{display:none}
+header{
+  position:sticky;top:0;z-index:100;
+  background:rgba(250,248,244,0.97);
+  backdrop-filter:blur(12px);
+  border-bottom:3px solid var(--gold);
+  padding:0 48px;height:140px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo img{height:44px;width:auto;display:block}
+.header-pill{
+  font-family:var(--sans);font-size:12px;font-weight:500;
+  letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--cream);background:var(--navy);
+  border:1px solid var(--navy);
+  padding:10px 24px;border-radius:100px;
+}
+
+/* SCREENS */
+.screen{
+  display:none;flex-direction:column;align-items:center;
+  min-height:100vh;padding:80px 24px 120px;
+  position:relative;z-index:1;
+}
+.screen.active{display:flex}
+
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(14px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* ── LANDING — Hormozi: one headline, one line, one button ── */
+#s-land{
+  justify-content:center;padding:0;min-height:100vh;
+  background:var(--cream);
+}
+.land-wrap{
+  display:flex;flex-direction:column;align-items:center;
+  justify-content:center;
+  text-align:center;
+  min-height:100vh;
+  padding:0 24px;
+  animation:fadeIn 0.7s var(--ease) both;
+}
+.land-logo{
+  height:220px;width:auto;display:block;
+  margin:0 auto 140px;
+  opacity:1;
+  filter:drop-shadow(0 1px 3px rgba(26,23,20,0.15));
+}
+.land-title{
+  font-family:var(--serif);
+  font-size:clamp(42px,6.5vw,82px);
+  font-weight:400;line-height:1.05;
+  letter-spacing:-0.02em;
+  color:var(--ink);
+  max-width:800px;
+  margin:0 auto 40px;
+}
+.land-title em{font-style:italic;color:var(--gold)}
+.land-btn{
+  display:inline-flex;align-items:center;gap:10px;
+  background:var(--navy);color:var(--cream);
+  font-family:var(--sans);font-size:13px;font-weight:400;
+  letter-spacing:0.1em;text-transform:uppercase;
+  padding:16px 40px;border-radius:8px;
+  border:none;cursor:pointer;
+  transition:background 0.2s,transform 0.2s;
+}
+.land-btn:hover{background:var(--navy-mid);transform:translateY(-1px)}
+
+/* PROGRESS */
+.prog-wrap{max-width:640px;width:100%;margin-bottom:48px}
+.prog-top{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:10px;
+}
+.prog-label{
+  font-size:11px;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--gold);
+}
+.prog-count{font-size:12px;color:var(--gold)}
+.prog-track{height:2px;background:var(--ink08);border-radius:1px;overflow:hidden}
+.prog-fill{
+  height:100%;background:var(--navy);
+  transition:width 0.5s var(--ease);border-radius:1px;
+}
+
+/* QUESTION */
+.q-wrap{max-width:640px;width:100%}
+.q-area{
+  font-size:11px;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--gold);font-weight:400;margin-bottom:14px;
+}
+.q-text{
+  font-family:var(--serif);font-size:clamp(24px,4vw,34px);
+  font-weight:400;line-height:1.25;color:var(--ink);margin-bottom:12px;
+}
+.q-hint{
+  font-size:13px;font-weight:300;color:var(--ink70);
+  line-height:1.6;margin-bottom:28px;
+}
+
+/* Options */
+.opts{display:flex;flex-direction:column;gap:10px;margin-bottom:32px}
+.opt{
+  display:flex;align-items:center;gap:14px;
+  padding:15px 18px;border-radius:var(--r);
+  border:1.5px solid var(--ink08);background:var(--cream);
+  cursor:pointer;transition:border-color 0.18s,background 0.18s;
+  text-align:left;width:100%;font-family:var(--sans);
+}
+.opt:hover{border-color:var(--gold-border);background:var(--gold-pale)}
+.opt.sel{border-color:var(--gold);background:var(--gold-pale)}
+.opt-radio{
+  width:16px;height:16px;border-radius:50%;
+  border:1.5px solid var(--ink20);flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  transition:all 0.18s;
+}
+.opt.sel .opt-radio{border-color:var(--gold);background:var(--gold)}
+.opt.sel .opt-radio::after{
+  content:'';width:5px;height:5px;border-radius:50%;background:var(--cream);
+}
+.opt-txt{font-size:14px;color:var(--ink70);line-height:1.4;font-weight:300}
+.opt.sel .opt-txt{color:var(--ink)}
+.other-box{margin-top:8px}
+
+/* Scale */
+.scale-btns{display:flex;gap:8px;margin-bottom:10px}
+.sc-btn{
+  flex:1;padding:14px 6px;border-radius:var(--r);
+  border:1.5px solid var(--ink08);background:var(--cream);
+  cursor:pointer;font-family:var(--serif);font-size:20px;
+  color:var(--ink45);transition:all 0.18s;text-align:center;
+}
+.sc-btn:hover{border-color:var(--gold-border);color:var(--ink)}
+.sc-btn.sel{border-color:var(--gold);background:var(--gold-pale);color:var(--ink)}
+.scale-labels{display:flex;justify-content:space-between;margin-bottom:32px}
+.sc-label{font-size:11px;color:var(--ink45)}
+
+/* Yes/No */
+.yn-btns{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:32px}
+.yn-btn{
+  flex:1;min-width:120px;padding:14px 16px;border-radius:var(--r);
+  border:1.5px solid var(--ink08);background:var(--cream);
+  cursor:pointer;font-family:var(--sans);font-size:13px;
+  color:var(--ink70);transition:all 0.18s;font-weight:300;
+}
+.yn-btn:hover{border-color:var(--gold-border);background:var(--gold-pale);color:var(--ink)}
+.yn-btn.sel{border-color:var(--gold);background:var(--gold-pale);color:var(--ink)}
+
+/* Text input */
+.f-input{
+  width:100%;padding:14px 18px;
+  background:var(--cream);
+  border:1.5px solid var(--ink08);border-radius:var(--r);
+  font-family:var(--sans);font-size:14px;font-weight:300;
+  color:var(--ink);resize:vertical;line-height:1.6;
+  transition:border-color 0.15s;
+}
+.f-input:focus{outline:none;border-color:var(--gold)}
+.f-input::placeholder{color:var(--ink45)}
+
+/* Navigation */
+.q-nav{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-top:32px;width:100%;
+}
+.btn-back{
+  background:none;border:1px solid var(--ink20);cursor:pointer;
+  font-family:var(--sans);font-size:13px;font-weight:300;
+  letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--ink45);padding:12px 24px;border-radius:100px;
+  transition:border-color 0.15s,color 0.15s;
+}
+.btn-back:hover{color:var(--ink)}
+.btn-next{
+  background:var(--navy);color:var(--cream);
+  border:none;cursor:pointer;
+  font-family:var(--sans);font-size:13px;font-weight:400;
+  letter-spacing:0.1em;text-transform:uppercase;
+  padding:12px 32px;border-radius:100px;
+  transition:background 0.15s,opacity 0.15s;
+}
+.btn-next:hover{background:var(--navy-mid);transform:translateY(-1px)}
+.btn-next:disabled{opacity:0.35;cursor:not-allowed;transform:none}
+
+/* LOADING */
+.load-screen-inner{
+  display:flex;flex-direction:column;align-items:center;
+  justify-content:center;text-align:center;
+  max-width:480px;width:100%;
+}
+.load-ring{
+  width:52px;height:52px;border-radius:50%;
+  border:3px solid var(--ink08);border-top-color:var(--gold);
+  animation:spin 1s linear infinite;margin:0 auto 32px;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.load-title{
+  font-family:var(--serif);font-size:26px;font-weight:400;
+  color:var(--ink);margin-bottom:10px;
+}
+.load-sub{font-size:14px;color:var(--ink45);font-weight:300;line-height:1.7;margin-bottom:28px}
+.load-steps{width:100%;display:flex;flex-direction:column;gap:14px;text-align:left}
+.l-row{display:flex;align-items:center;gap:14px}
+.l-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;transition:background 0.3s}
+.l-dot.wait{background:var(--ink08)}
+.l-dot.act{background:var(--gold);width:10px;height:10px;animation:pulse 1s ease infinite;box-shadow:0 0 6px rgba(184,149,46,0.5)}
+.l-dot.done{background:var(--navy)}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+.l-txt{font-size:13px;font-weight:300;transition:color 0.3s}
+.l-txt.wait{color:var(--ink45)}
+.l-txt.act{color:var(--ink);font-weight:400}
+.l-txt.done{color:var(--ink45);text-decoration:line-through}
+
+/* RESULTS — shared */
+.results-inner{max-width:720px;width:100%;margin:0 auto}
+.res-head{
+  width:100%;padding-bottom:28px;
+  border-bottom:1px solid var(--ink08);margin-bottom:40px;
+}
+.res-eye{
+  font-size:11px;letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:10px;
+}
+.res-name{
+  font-family:var(--serif);font-size:clamp(26px,4vw,40px);
+  font-weight:400;color:var(--navy);margin-bottom:6px;
+}
+.res-meta{font-size:13px;color:var(--ink45)}
+
+/* Rec block */
+.rec,.rec-card{
+  background:var(--navy);color:#fff;
+  border-radius:var(--r);padding:40px;
+  margin-bottom:16px;
+}
+.rec-eye{
+  font-size:10px;letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--gold-l);margin-bottom:16px;opacity:0.85;
+}
+.rec-title{
+  font-family:var(--serif);font-size:clamp(20px,3vw,28px);
+  font-weight:400;color:#fff;margin-bottom:14px;line-height:1.25;
+}
+.rec-body{
+  font-size:14px;font-weight:300;line-height:1.75;
+  color:rgba(255,255,255,0.7);margin-bottom:28px;
+}
+.rec-actions{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.btn-rec,.btn-gold{
+  display:inline-flex;align-items:center;
+  background:var(--gold);color:var(--navy);
+  font-family:var(--sans);font-size:12px;font-weight:500;
+  letter-spacing:0.04em;padding:12px 22px;border-radius:2px;
+  text-decoration:none;transition:opacity 0.15s,transform 0.15s;
+}
+.btn-rec:hover,.btn-gold:hover{opacity:0.9;transform:translateY(-1px)}
+.btn-rec-ghost,.btn-ghost{
+  font-family:var(--sans);font-size:12px;font-weight:300;
+  color:rgba(255,255,255,0.5);text-decoration:none;
+  border-bottom:1px solid rgba(255,255,255,0.2);padding-bottom:2px;
+  transition:color 0.15s;
+}
+.btn-rec-ghost:hover,.btn-ghost:hover{color:rgba(255,255,255,0.85)}
+
+/* Pro teaser */
+.pro-teaser,.pro-card{
+  background:var(--cream2);border:1px solid var(--gold-border);
+  border-radius:var(--r);padding:32px;margin-bottom:24px;
+}
+.pro-eye{
+  font-size:10px;letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:10px;
+}
+.pro-title{
+  font-family:var(--serif);font-size:22px;font-weight:400;
+  color:var(--ink);margin-bottom:10px;
+}
+.pro-body{
+  font-size:14px;font-weight:300;line-height:1.75;
+  color:var(--ink70);
+}
+.pro-steps{margin:20px 0}
+.pro-steps-label{
+  font-size:11px;letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:14px;
+}
+.pro-step{
+  display:flex;align-items:flex-start;gap:14px;
+  padding:10px 0;border-bottom:1px solid var(--ink08);
+}
+.pro-step-circle{
+  width:24px;height:24px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;flex-shrink:0;
+  background:var(--cream3);border:1px solid var(--ink08);color:var(--ink45);
+}
+.pro-step-done-circle{background:var(--navy);border-color:var(--navy);color:#fff}
+.pro-step-text{font-size:13px;font-weight:300;color:var(--ink70);line-height:1.5;padding-top:4px}
+.pro-value{font-size:13px;color:var(--ink45);margin-bottom:20px}
+.pro-actions{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.btn-pro-join{
+  display:inline-flex;align-items:center;
+  background:var(--navy);color:var(--cream);
+  font-family:var(--sans);font-size:12px;font-weight:400;
+  letter-spacing:0.05em;padding:12px 22px;border-radius:2px;
+  text-decoration:none;transition:background 0.15s,transform 0.15s;
+}
+.btn-pro-join:hover{background:var(--navy-mid);transform:translateY(-1px)}
+.btn-pro-ghost{
+  font-family:var(--sans);font-size:12px;font-weight:300;
+  color:var(--ink45);text-decoration:none;
+  border-bottom:1px solid var(--ink20);padding-bottom:2px;
+  transition:color 0.15s;
+}
+.btn-pro-ghost:hover{color:var(--ink)}
+
+/* Disclaimer / note */
+.disclaimer,.note{
+  font-size:12px;color:var(--ink45);line-height:1.7;
+  padding-top:20px;border-top:1px solid var(--ink08);
+}
+.disclaimer a,.note a{color:var(--ink45);text-decoration:underline}
+
+/* Tabs */
+.tabs{
+  display:flex;width:100%;
+  border-bottom:2px solid var(--navy);margin-bottom:32px;
+}
+.tab{
+  background:none;border:none;cursor:pointer;
+  font-family:var(--sans);font-size:12px;font-weight:400;
+  letter-spacing:0.06em;text-transform:uppercase;
+  color:var(--ink45);padding:12px 20px;
+  border-bottom:2px solid transparent;margin-bottom:-2px;
+  transition:color 0.15s,border-color 0.15s;white-space:nowrap;
+}
+.tab:hover{color:var(--gold)}
+.tab.on{color:var(--navy);border-bottom-color:var(--navy);font-weight:500}
+.tab-panel{display:none}
+.tab-panel.on{display:block}
+
+/* Cards */
+.card{
+  background:var(--cream);border:1px solid var(--ink08);
+  border-radius:var(--r);margin-bottom:16px;overflow:hidden;
+}
+.card-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 20px 14px;border-bottom:1px solid var(--ink08);
+}
+.card-title{font-family:var(--serif);font-size:16px;font-weight:400;color:var(--ink)}
+.card-tag{
+  font-size:10px;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--gold);background:var(--gold-pale);
+  padding:4px 10px;border-radius:100px;border:1px solid var(--gold-border);
+}
+.card-body{
+  padding:20px;font-size:13px;font-weight:300;line-height:1.85;
+  color:var(--ink70);white-space:pre-wrap;min-height:60px;
+}
+.copy-bar{
+  padding:10px 20px;border-top:1px solid var(--ink08);
+  background:var(--cream2);display:flex;justify-content:flex-end;
+}
+.btn-copy{
+  display:flex;align-items:center;gap:6px;
+  background:none;border:1px solid var(--ink08);border-radius:var(--r);
+  font-family:var(--sans);font-size:11px;font-weight:400;
+  letter-spacing:0.06em;color:var(--ink45);
+  padding:6px 14px;cursor:pointer;transition:border-color 0.15s,color 0.15s;
+}
+.btn-copy:hover{border-color:var(--navy);color:var(--navy)}
+.btn-copy svg{width:13px;height:13px}
+
+/* Capture */
+.cap-ring{
+  width:64px;height:64px;border-radius:50%;
+  background:var(--gold-pale);border:1.5px solid var(--gold-border);
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:28px;
+}
+.cap-ring svg{width:26px;height:26px;stroke:var(--gold);fill:none;stroke-width:1.5}
+.cap-title{
+  font-family:var(--serif);font-size:30px;font-weight:400;
+  color:var(--ink);margin-bottom:12px;text-align:center;
+}
+.cap-sub{
+  font-size:15px;font-weight:300;line-height:1.7;
+  color:var(--ink70);text-align:center;margin-bottom:32px;
+}
+.f-group{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;width:100%}
+.f-label{font-size:12px;font-weight:400;letter-spacing:0.04em;color:var(--ink70)}
+.btn-gen{
+  width:100%;padding:15px;margin-top:8px;
+  background:var(--navy);color:var(--cream);
+  border:none;border-radius:2px;cursor:pointer;
+  font-family:var(--sans);font-size:14px;font-weight:400;
+  letter-spacing:0.05em;
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  transition:background 0.15s;
+}
+.btn-gen:hover{background:var(--navy-mid)}
+.cap-note{font-size:12px;color:var(--ink45);line-height:1.6;text-align:center;margin-top:16px}
+.cap-note a{color:var(--ink45);text-decoration:underline}
+
+/* Audit-specific results */
+.score-hero{
+  display:flex;align-items:flex-start;gap:36px;
+  background:var(--cream2);border:1px solid var(--ink08);
+  border-radius:var(--r);padding:32px;margin-bottom:28px;
+}
+.score-circle-wrap{position:relative;flex-shrink:0}
+.score-inner{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+}
+.score-n{
+  font-family:var(--serif);font-size:28px;font-weight:500;
+  line-height:1;color:var(--navy);
+}
+.score-d{font-size:11px;color:var(--ink45);margin-top:2px}
+.score-txt h3{
+  font-family:var(--serif);font-size:20px;font-weight:400;
+  color:var(--ink);margin-bottom:10px;line-height:1.3;
+}
+.score-txt p{font-size:14px;font-weight:300;line-height:1.7;color:var(--ink70)}
+.score-note{
+  font-size:12px;color:var(--ink70);line-height:1.6;
+  border-left:2px solid var(--gold);
+  padding:0 0 0 16px;margin-bottom:36px;
+}
+.areas{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:40px}
+.area-card{
+  padding:20px 22px;background:var(--cream);
+  border:1px solid var(--ink08);border-radius:var(--r);
+}
+.area-name{
+  font-size:11px;letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:10px;
+}
+.area-num{
+  font-family:var(--serif);font-size:32px;font-weight:400;
+  color:var(--navy);margin-bottom:10px;
+}
+.area-bar{height:2px;background:var(--ink08);border-radius:1px;overflow:hidden;margin-bottom:8px}
+.area-fill{height:100%;background:var(--gold);border-radius:1px;transition:width 1s var(--ease)}
+.area-status{font-size:12px;color:var(--ink45)}
+.findings{margin-bottom:40px}
+.find-title{
+  font-size:11px;letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:20px;
+}
+.finding{
+  display:flex;align-items:flex-start;gap:20px;
+  padding:18px 0;border-bottom:1px solid var(--ink08);
+}
+.find-n{
+  font-family:var(--serif);font-size:13px;color:var(--navy);
+  font-weight:400;min-width:24px;letter-spacing:0.04em;margin-top:2px;
+}
+.find-t{font-size:15px;font-weight:300;line-height:1.6;color:var(--ink)}
+
+/* Mobile */
+@media(max-width:600px){
+  header{padding:0 20px}
+  .areas{grid-template-columns:1fr}
+  .score-hero{flex-direction:column;align-items:center;text-align:center}
+  .tabs{overflow-x:auto}
+  .tab{padding:10px 14px;font-size:11px}
+  .rec-actions,.pro-actions{flex-direction:column;align-items:flex-start}
+}
+.score-hero{display:flex;align-items:flex-start;gap:36px;background:var(--cream2);border:1px solid var(--ink08);border-radius:var(--r);padding:32px;margin-bottom:28px}
+.score-circle-wrap{position:relative;flex-shrink:0}
+.score-inner{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.score-n{font-family:var(--serif);font-size:28px;font-weight:500;line-height:1;color:var(--navy)}
+.score-d{font-size:11px;color:var(--ink45);margin-top:2px}
+.score-txt h3{font-family:var(--serif);font-size:20px;font-weight:400;color:var(--ink);margin-bottom:10px;line-height:1.3}
+.score-txt p{font-size:14px;font-weight:300;line-height:1.7;color:var(--ink70)}
+.score-note{font-size:12px;color:var(--ink70);line-height:1.6;border-left:2px solid var(--gold);padding:0 0 0 16px;margin-bottom:36px}
+.areas{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:40px}
+.area-card{padding:20px 22px;background:var(--cream);border:1px solid var(--ink08);border-radius:var(--r)}
+.area-name{font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.area-num{font-family:var(--serif);font-size:32px;font-weight:400;color:var(--navy);margin-bottom:10px}
+.area-bar{height:2px;background:var(--ink08);border-radius:1px;overflow:hidden;margin-bottom:8px}
+.area-fill{height:100%;background:var(--gold);border-radius:1px;transition:width 1s}
+.area-status{font-size:12px;color:var(--ink45)}
+.findings{margin-bottom:40px}
+.find-title{font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);margin-bottom:20px}
+.finding{display:flex;align-items:flex-start;gap:20px;padding:18px 0;border-bottom:1px solid var(--ink08)}
+.find-n{font-family:var(--serif);font-size:13px;color:var(--navy);font-weight:400;min-width:24px;letter-spacing:0.04em;margin-top:2px}
+.find-t{font-size:15px;font-weight:300;line-height:1.6;color:var(--ink)}
+.cap-ring{width:64px;height:64px;border-radius:50%;background:var(--gold-pale);border:1.5px solid var(--gold-border);display:flex;align-items:center;justify-content:center;margin-bottom:28px}
+.cap-ring svg{width:26px;height:26px;stroke:var(--gold);fill:none;stroke-width:1.5}
+.cap-title{font-family:var(--serif);font-size:30px;font-weight:400;color:var(--ink);margin-bottom:12px;text-align:center}
+.cap-sub{font-size:15px;font-weight:300;line-height:1.7;color:var(--ink70);text-align:center;margin-bottom:32px}
+.f-group{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;width:100%}
+.f-label{font-size:12px;font-weight:400;letter-spacing:0.04em;color:var(--ink70)}
+.f-input{width:100%;padding:13px 16px;background:var(--cream);border:1.5px solid var(--ink08);border-radius:var(--r);font-family:var(--sans);font-size:14px;font-weight:300;color:var(--ink);transition:border-color 0.15s}
+.f-input:focus{outline:none;border-color:var(--gold)}
+.f-input::placeholder{color:var(--ink45)}
+.btn-gen{width:100%;padding:15px;margin-top:8px;background:var(--navy);color:var(--cream);border:none;border-radius:2px;cursor:pointer;font-family:var(--sans);font-size:14px;font-weight:400;letter-spacing:0.05em;display:flex;align-items:center;justify-content:center;gap:10px;transition:background 0.15s}
+.btn-gen:hover{background:var(--navy-mid)}
+.cap-note{font-size:12px;color:var(--ink45);line-height:1.6;text-align:center;margin-top:16px}
+.cap-note a{color:var(--ink45);text-decoration:underline}
+.rec{background:var(--navy);color:#fff;border-radius:var(--r);padding:40px;margin-bottom:16px}
+.rec-eye{font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold-l);margin-bottom:16px;opacity:0.85}
+.rec-title{font-family:var(--serif);font-size:clamp(20px,3vw,28px);font-weight:400;color:#fff;margin-bottom:14px;line-height:1.25}
+.rec-body{font-size:14px;font-weight:300;line-height:1.75;color:rgba(255,255,255,0.7);margin-bottom:28px}
+.rec-actions{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.btn-rec{display:inline-flex;align-items:center;background:var(--gold);color:var(--navy);font-family:var(--sans);font-size:12px;font-weight:500;letter-spacing:0.04em;padding:12px 22px;border-radius:2px;text-decoration:none;transition:opacity 0.15s,transform 0.15s}
+.btn-rec:hover{opacity:0.9;transform:translateY(-1px)}
+.btn-rec-ghost{font-family:var(--sans);font-size:12px;font-weight:300;color:rgba(255,255,255,0.5);text-decoration:none;border-bottom:1px solid rgba(255,255,255,0.2);padding-bottom:2px;transition:color 0.15s}
+.btn-rec-ghost:hover{color:rgba(255,255,255,0.85)}
+.pro-teaser{background:var(--cream2);border:1px solid var(--gold-border);border-radius:var(--r);padding:32px;margin-bottom:24px}
+.pro-eye{font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.pro-title{font-family:var(--serif);font-size:22px;font-weight:400;color:var(--ink);margin-bottom:10px}
+.pro-body{font-size:14px;font-weight:300;line-height:1.75;color:var(--ink70)}
+.disclaimer{font-size:12px;color:var(--ink45);line-height:1.7;padding-top:20px;border-top:1px solid var(--ink08)}
+.disclaimer a{color:var(--ink45);text-decoration:underline}
+@media(max-width:600px){.areas{grid-template-columns:1fr}.score-hero{flex-direction:column;align-items:center;text-align:center}}
+
+
+.header-all-tools{font-family:var(--sans);font-size:12px;font-weight:300;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink45);text-decoration:none;padding:8px 16px;border:1px solid var(--ink08);border-radius:100px;transition:all 0.15s;margin-right:12px}.header-all-tools:hover{color:var(--ink);border-color:var(--ink20)}
+</style>
+</head>
+<body>
+
+<header class="land-hide">
+  <a class="logo" href="#"><img src="Worvane_Logo.png" alt="Worvane" style="height:auto;width:180px;display:block;"></a>
+  <a href="#" class="header-all-tools">All tools</a><div class="header-pill">Sales Script Generator</div>
+</header>
+
+<div class="screen active" id="s-land"><div class="land-wrap">
+  <img src="Worvane_Logo.png" alt="Worvane" class="land-logo">
+  <h1 class="land-title">What if every sales conversation<br>felt <em>effortless?</em></h1>
+  <button class="land-btn" id="btn-start">Get my sales scripts &rarr;</button>
+</div></div>
+
+<div class="screen" id="s-intake">
+  <div class="prog-wrap">
+    <div class="prog-top"><span class="prog-label">Your details</span><span class="prog-count" id="q-count">Question 1 of 8</span></div>
+    <div class="prog-track"><div class="prog-fill" id="prog-fill" style="width:12.5%"></div></div>
+  </div>
+  <p style="font-size:12px;color:var(--ink45);font-weight:300;letter-spacing:0.02em;text-align:center;margin:28px 0 32px;padding:0 8px">The more specific your answers, the sharper your scripts. Real clients, real numbers, real context.</p>
+  <div id="q-container" style="width:100%;max-width:640px;"></div>
+</div>
+
+<div class="screen" id="s-load"><div class="load-screen-inner">
+  <div class="load-ring"></div>
+  <h2 class="load-title">Writing your sales scripts&hellip;</h2>
+  <p class="load-sub">A copywriter charges &pound;400+ for a sales script suite. You are getting one built around your business in 30 seconds.</p>
+  <p style="font-size:13px;color:var(--ink);font-weight:300;font-style:italic;line-height:1.6;margin-bottom:24px;max-width:360px">Most business owners wing their sales conversations. You are about to have a system.</p>
+  <div class="load-steps">
+    <div class="l-row"><div class="l-dot wait" id="ld1"></div><span class="l-txt wait" id="lt1">Reading your business brief</span></div>
+    <div class="l-row"><div class="l-dot wait" id="ld2"></div><span class="l-txt wait" id="lt2">Writing your cold outreach sequence</span></div>
+    <div class="l-row"><div class="l-dot wait" id="ld3"></div><span class="l-txt wait" id="lt3">Building discovery call script</span></div>
+    <div class="l-row"><div class="l-dot wait" id="ld4"></div><span class="l-txt wait" id="lt4">Creating objection handlers and follow-ups</span></div>
+  </div>
+
+  <p style="font-size:11px;color:var(--ink45);margin-top:24px;letter-spacing:0.04em">Your responses are private and never shared.</p>
+</div></div>
+
+<div class="screen" id="s-results">
+  <div class="results-inner" style="max-width:760px">
+  <div class="res-head">
+    <div class="res-eye">Sales Script Suite &middot; Worvane</div>
+    <div class="res-name" id="r-name">Your Sales Scripts</div>
+    <div class="res-meta" id="r-meta">Generated today &middot; Worvane</div>
+    <button onclick="window.location.reload()" style="margin-top:12px;background:none;border:1px solid var(--ink08);border-radius:100px;padding:7px 16px;font-family:var(--sans);font-size:12px;font-weight:300;letter-spacing:0.06em;color:var(--ink45);cursor:pointer;transition:all 0.15s" onmouseover="this.style.borderColor='var(--gold-border)';this.style.color='var(--ink)'" onmouseout="this.style.borderColor='var(--ink08)';this.style.color='var(--ink45)'">&#8635; Regenerate</button>
+  </div>
+  <div class="tabs">
+    <button class="tab on" data-tab="cold">Cold Outreach</button>
+    <button class="tab" data-tab="call">Discovery Call</button>
+    <button class="tab" data-tab="obj">Objection Handler</button>
+    <button class="tab" data-tab="fu">Follow-Up</button>
+  </div>
+  <div class="tab-panel on" id="panel-cold">
+    <div class="card"><div class="card-head"><div class="card-title">Email 1 &mdash; First touch</div><div class="card-tag">Cold outreach</div></div><div class="card-body" id="c1"></div><div class="copy-bar"><button class="btn-copy" data-target="c1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>Copy</button></div></div>
+    <div class="card"><div class="card-head"><div class="card-title">Email 2 &mdash; Value add</div><div class="card-tag">Cold outreach</div></div><div class="card-body" id="c2"></div><div class="copy-bar"><button class="btn-copy" data-target="c2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>Copy</button></div></div>
+    <div class="card"><div class="card-head"><div class="card-title">Email 3 &mdash; Final reach</div><div class="card-tag">Cold outreach</div></div><div class="card-body" id="c3"></div><div class="copy-bar"><button class="btn-copy" data-target="c3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>Copy</button></div></div>
+  </div>
+  <div class="tab-panel" id="panel-call">
+    <div class="card"><div class="card-head"><div class="card-title">Discovery call script</div><div class="card-tag">Call guide</div></div><div class="card-body" id="cc"></div><div class="copy-bar"><button class="btn-copy" data-target="cc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>Copy</button></div></div>
+  </div>
+  <div class="tab-panel" id="panel-obj">
+    <div class="card"><div class="card-head"><div class="card-title">Objection handler</div><div class="card-tag">Responses</div></div><div class="card-body" id="co"></div><div class="copy-bar"><button class="btn-copy" data-target="co"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>Copy</button></div></div>
+  </div>
+  <div class="tab-panel" id="panel-fu">
+    <div class="card"><div class="card-head"><div class="card-title">Follow-up sequence</div><div class="card-tag">Post-call</div></div><div class="card-body" id="cf"></div><div class="copy-bar"><button class="btn-copy" data-target="cf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>Copy</button></div></div>
+  </div>
+        <div class="rec-card">
+      <div class="rec-eye">Worvane Recommendation</div>
+      <div class="rec-title">Scripts convert. Brand messaging makes them want to listen.</div>
+      <div class="rec-body">Your sales scripts are ready. The next lever is making sure your brand sounds as compelling as your offer is. The Brand Messaging Framework gives you your positioning, voice, web copy, and elevator pitch — so every touchpoint before the conversation does the work of warming the client up. Every week without a brand that backs up your scripts is a week your competitors are closing clients you should have won.</div>
+      <div class="rec-actions"><a href="#" class="btn-gold">Get Brand Messaging Framework — £49 <span style="opacity:0.65;font-size:11px;font-weight:300">(replaces &pound;400+ of copywriting)</span></a><a href="#" class="btn-ghost">Get Full Diagnostic — £197</a></div>
+    </div>
+    <div class="pro-card">
+      <div class="pro-top"><div class="pro-eye">Worvane Pro</div></div>
+      <div class="pro-title">You are one purchase away from Worvane Pro</div>
+      <div class="pro-body">As a Worvane client, you are one purchase away from Pro. Purchase any one more tool and you unlock Worvane Pro &mdash; unlimited access to <strong>every tool in the suite, quarterly re-diagnostics to track your progress, and monthly strategy updates</strong> tailored to your business. All for &pound;97 per month. For most clients that is less than a single hour of consulting.</div>
+      <div class="pro-steps"><div class="pro-steps-label">Your path to Pro</div>
+        <div class="pro-step"><div class="pro-step-circle pro-step-done-circle">&#10003;</div><div class="pro-step-text">Complete your free audit &mdash; <span style="color:var(--gold)">done</span></div></div>
+        <div class="pro-step"><div class="pro-step-circle pro-step-done-circle">&#10003;</div><div class="pro-step-text">First Worvane tool purchased &mdash; <span style="color:var(--gold)">done</span></div></div>
+        <div class="pro-step"><div class="pro-step-circle">2</div><div class="pro-step-text">Purchase one more tool &mdash; Pro unlocks</div></div></div>
+      <div class="pro-value">All tools individually: <strong>&pound;586</strong>. Worvane Pro: <strong>&pound;97/month</strong>.</div>
+      <div class="pro-actions"><a href="#" class="btn-pro-join">Join Worvane Pro &mdash; &pound;97/month</a><a href="#" class="btn-pro-ghost">See everything included &rarr;</a></div>
+    </div>
+        <div class="note"><span style="color:var(--ink45);font-size:12px">AI-generated from your responses. Personalise before use. Not professional sales advice. Questions? <a href="mailto:hello@worvane.co" style="color:var(--ink45)">hello@worvane.co</a></span><div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--ink08)"><span style="font-size:13px;color:var(--ink45)">Not happy with your output? The most common reason is vague answers. Go back, add more detail, and regenerate &mdash; the difference is significant.</span></div></div>
+  </div>
+</div>
+
+<script>
+
+(function() {
+
+// ── TEXT HELPER — smooths raw answers into readable prose ──
+function clean(str, mode) {
+  if (!str) return '';
+  var s = str.split('\n')[0].trim();
+  // Take first complete sentence if multiple
+  var firstDot = s.indexOf('. ');
+  if (firstDot > 40) s = s.substring(0, firstDot);
+  // Strip leading filler phrases
+  s = s.replace(/^(e\.g\.?\s*|for example,?\s*|i\.e\.?\s*)/i, '');
+  // Strip trailing ellipsis
+  s = s.replace(/\.{2,}$/, '').replace(/\s+$/, '');
+  if (mode === 'mid') {
+    // Strip leading subject for mid-sentence insertion
+    s = s.replace(/^(I |We |My |Our )/i, '');
+    s = s.charAt(0).toLowerCase() + s.slice(1);
+  }
+  return s;
+}
+
+var ans = {};
+var qIdx = 0;
+
+var questions = [
+  { id:'q1', area:'Your business', type:'text',
+    text:'What does your business sell, and who buys it?',
+    hint:'Be as specific as possible. The more detail here, the more tailored your scripts will be.',
+    ph:'e.g. We provide bookkeeping and accounting services to small e-commerce businesses turning over \u00a3100k\u2013\u00a3500k per year...' },
+  { id:'q2', area:'Your offer', type:'text',
+    text:'What is the main problem you solve for your clients?',
+    hint:'Think about what keeps them up at night before they found you.',
+    ph:'e.g. Our clients waste hours on messy finances, miss tax deadlines, and have no clear view of their profitability...' },
+  { id:'q3', area:'Your results', type:'text',
+    text:'What results or outcomes do your clients typically get from working with you?',
+    hint:'Specific numbers and timeframes are more powerful than general statements.',
+    ph:'e.g. Most clients save 5\u20138 hours a month, never miss a deadline, and understand their margins within 90 days...' },
+  { id:'q4', area:'Your clients', type:'text',
+    text:'Who exactly is your ideal client?',
+    hint:'Job title, business type, size, location \u2014 the more specific the better.',
+    ph:'e.g. Founders of UK-based online stores with 1\u20135 staff, running Shopify or WooCommerce, 2\u20135 years in business...' },
+  { id:'q5', area:'Your sales process', type:'opts',
+    text:'How do you currently reach and approach new clients?',
+    opts:['Mostly referrals \u2014 I don\u2019t actively prospect','LinkedIn outreach or direct messaging','Cold email campaigns','In-person networking and events','A mix of outreach methods'] },
+  { id:'q6', area:'Common objections', type:'opts',
+    text:'What is the most common objection you hear when trying to win new clients?',
+    opts:['\u201cIt\u2019s too expensive / not in budget\u201d','\u201cWe\u2019re happy with our current provider\u201d','\u201cI need to think about it\u201d','\u201cI\u2019m not sure we need this yet\u201d','\u201cWe\u2019re too busy right now\u201d'] },
+  { id:'q7', area:'Your tone', type:'opts',
+    text:'How would you describe the tone you want in your sales communications?',
+    opts:['Professional and formal','Friendly and conversational','Direct and confident','Consultative and educational','Bold and energetic'] },
+  { id:'q8', area:'Your price point', type:'opts',
+    text:'What is your typical price point or engagement value?',
+    opts:['Under \u00a3500','Between \u00a3500 and \u00a32,000','Between \u00a32,000 and \u00a310,000','\u00a310,000 or more','Varies significantly by client'] }
+];
+
+function showScreen(id) {
+  var hdr=document.querySelector('header'); if(hdr){ id==='s-land'?hdr.classList.add('land-hide'):hdr.classList.remove('land-hide'); }
+  document.querySelectorAll('.screen').forEach(function(s){ s.classList.remove('active'); });
+  var el = document.getElementById(id);
+  el.classList.add('active');
+  el.style.animation = 'none';
+  void el.offsetHeight;
+  el.style.animation = 'fadeIn 0.38s ease both';
+  window.scrollTo(0, 0);
+}
+
+function renderQuestion(i) {
+  var q = questions[i];
+  document.getElementById('q-count').textContent = 'Question ' + (i+1) + ' of 8';
+  document.getElementById('prog-fill').style.width = (((i+1)/8)*100) + '%';
+
+  var saved = ans[q.id];
+  var savedOther = ans[q.id + '_other'] || '';
+  var hasAnswer = false;
+
+  if (q.type === 'text') {
+    hasAnswer = !!(saved && saved.trim());
+  } else {
+    hasAnswer = saved !== undefined && (saved !== 'other' || !!(savedOther && savedOther.trim()));
+  }
+
+  var html = '<div class="q-wrap">';
+  html += '<div class="q-area">' + q.area + '</div>';
+  html += '<div class="q-text">' + q.text + '</div>';
+  if (q.hint) html += '<div class="q-hint">' + q.hint + '</div>';
+
+  if (q.type === 'text') {
+    html += '<textarea class="f-input" id="ta-main" placeholder="' + q.ph + '" rows="4"></textarea>';
+  } else {
+    html += '<div class="opts" id="opts-list">';
+    for (var k = 0; k < q.opts.length; k++) {
+      var isSel = saved === k;
+      html += '<button class="opt' + (isSel ? ' sel' : '') + '" data-val="' + k + '">';
+      html += '<div class="opt-radio"></div><span class="opt-txt">' + q.opts[k] + '</span>';
+      html += '</button>';
+    }
+    var otherSel = saved === 'other';
+    html += '<button class="opt' + (otherSel ? ' sel' : '') + '" data-val="other">';
+    html += '<div class="opt-radio"></div><span class="opt-txt">Other \u2014 describe in your own words</span>';
+    html += '</button>';
+    html += '<div class="other-box" id="other-box" style="display:' + (otherSel ? 'block' : 'none') + '">';
+    html += '<textarea class="f-input" id="ta-other" placeholder="Describe in your own words..." rows="3"></textarea>';
+    html += '</div>';
+    html += '</div>';
+  }
+
+  html += '<div class="q-nav">';
+  if (i > 0) {
+    html += '<button class="btn-back" id="btn-back">\u2190 Back</button>';
+  } else {
+    html += '<div></div>';
+  }
+  var label = i === 7 ? 'Generate my scripts \u2192' : 'Continue \u2192';
+  html += '<button class="btn-next" id="btn-next"' + (hasAnswer ? '' : ' disabled') + '>' + label + '</button>';
+  html += '</div></div>';
+
+  var container = document.getElementById('q-container');
+  container.style.opacity = '0';
+  container.style.transform = 'translateY(10px)';
+  container.innerHTML = html;
+
+  // Restore saved values
+  if (q.type === 'text') {
+    var ta = document.getElementById('ta-main');
+    if (ta && saved) ta.value = saved;
+    ta && ta.addEventListener('input', function() {
+      ans[q.id] = ta.value;
+      document.getElementById('btn-next').disabled = !ta.value.trim();
+    });
+  } else {
+    // Restore other textarea
+    var taOther = document.getElementById('ta-other');
+    if (taOther && savedOther) taOther.value = savedOther;
+
+    // Wire up option clicks
+    var optsList = document.getElementById('opts-list');
+    optsList.addEventListener('click', function(e) {
+      var btn = e.target.closest('.opt');
+      if (!btn) return;
+      var val = btn.getAttribute('data-val');
+      // Deselect all
+      optsList.querySelectorAll('.opt').forEach(function(b){ b.classList.remove('sel'); });
+      btn.classList.add('sel');
+      var oBox = document.getElementById('other-box');
+      var tao = document.getElementById('ta-other');
+      if (val === 'other') {
+        ans[q.id] = 'other';
+        oBox.style.display = 'block';
+        tao && tao.focus();
+        document.getElementById('btn-next').disabled = !(ans[q.id + '_other'] && ans[q.id + '_other'].trim());
+      } else {
+        ans[q.id] = parseInt(val, 10);
+        delete ans[q.id + '_other'];
+        oBox.style.display = 'none';
+        document.getElementById('btn-next').disabled = false;
+      }
+    });
+
+    // Wire other textarea
+    var tao = document.getElementById('ta-other');
+    tao && tao.addEventListener('input', function() {
+      ans[q.id + '_other'] = tao.value;
+      document.getElementById('btn-next').disabled = !tao.value.trim();
+    });
+  }
+
+  // Back button
+  var backBtn = document.getElementById('btn-back');
+  backBtn && backBtn.addEventListener('click', function() {
+    qIdx--;
+    renderQuestion(qIdx);
+  });
+
+  // Next button
+  document.getElementById('btn-next').addEventListener('click', function() {
+    // Save text answer before moving
+    if (q.type === 'text') {
+      var ta = document.getElementById('ta-main');
+      if (ta) ans[q.id] = ta.value;
+    }
+    if (qIdx < 7) {
+      qIdx++;
+      renderQuestion(qIdx);
+    } else {
+      runLoading();
+    }
+  });
+
+  requestAnimationFrame(function() {
+    container.style.transition = 'opacity 0.28s ease, transform 0.28s ease';
+    container.style.opacity = '1';
+    container.style.transform = 'translateY(0)';
+  });
+}
+
+function runLoading() {
+  showScreen('s-load');
+  var steps = [
+    {d:'ld1',t:'lt1'},
+    {d:'ld2',t:'lt2'},
+    {d:'ld3',t:'lt3'},
+    {d:'ld4',t:'lt4'}
+  ];
+  steps.forEach(function(s){
+    document.getElementById(s.d).className = 'l-dot wait';
+    document.getElementById(s.t).className = 'l-txt wait';
+  });
+
+  // Animate steps with staggered timing — API call runs in parallel
+  var delays = [300, 4000, 9000, 16000];
+  steps.forEach(function(s, i){
+    setTimeout(function(){
+      if (i > 0) {
+        document.getElementById(steps[i-1].d).className = 'l-dot done';
+        document.getElementById(steps[i-1].t).className = 'l-txt done';
+      }
+      document.getElementById(s.d).className = 'l-dot act';
+      document.getElementById(s.t).className = 'l-txt act';
+    }, delays[i]);
+  });
+
+  // Trigger the API call immediately — it will call showScreen when done
+  buildOutput();
+}
+
+function getVal(id) {
+  if (ans[id] === 'other') return ans[id + '_other'] || '';
+  return ans[id];
+}
+
+function buildOutput() {
+  var biz     = ans.q1 || 'your business';
+  var prob    = ans.q2 || 'the challenges your clients face';
+  var res     = ans.q3 || 'significant results for clients';
+  var client  = ans.q4 || 'your ideal clients';
+  var diff    = ans.q5 || 'your unique approach';
+  var tried   = ans.q9 || 'nothing specific yet';
+
+  var tones = ['professional and formal','friendly and conversational','direct and confident','consultative and educational','bold and energetic'];
+  var tone  = ans.q7 === 'other' ? (ans.q7_other || 'professional') : (typeof ans.q7 === 'number' ? tones[ans.q7] : 'professional');
+
+  var objLabels = ["It's too expensive","We're happy with our current provider","I need to think about it","I'm not sure we need this yet","We're too busy right now"];
+  var objLabel  = ans.q6 === 'other' ? (ans.q6_other || 'a common objection') : (typeof ans.q6 === 'number' ? objLabels[ans.q6] : objLabels[0]);
+
+  var prices = ['under £500','£500–£2,000','£2,000–£10,000','£10,000+','varying by client'];
+  var price  = ans.q8 === 'other' ? (ans.q8_other || 'their investment') : (typeof ans.q8 === 'number' ? prices[ans.q8] : 'their investment');
+
+  // Build the prompt — the brief sent to Claude
+  var prompt = [
+    'You are a world-class B2B sales copywriter. Your task is to write a complete, professional sales script suite for a UK-based SME business owner.',
+    '',
+    'Here is everything you need to know about their business:',
+    '',
+    'WHAT THEY SELL AND WHO THEY SERVE:',
+    biz,
+    '',
+    'THE PROBLEM THEIR CLIENTS FACE BEFORE FINDING THEM:',
+    prob,
+    '',
+    'THE RESULTS THEIR CLIENTS GET:',
+    res,
+    '',
+    'THEIR IDEAL CLIENT DESCRIPTION:',
+    client,
+    '',
+    'WHAT MAKES THEM DIFFERENT FROM COMPETITORS:',
+    diff,
+    '',
+    'MOST COMMON SALES OBJECTION THEY FACE:',
+    objLabel,
+    '',
+    'TYPICAL DEAL VALUE:',
+    price,
+    '',
+    'BRAND TONE:',
+    tone,
+    '',
+    'WHAT THEY HAVE ALREADY TRIED IN SALES:',
+    tried,
+    '',
+    'CRITICAL: Return ONLY a raw JSON object. No markdown. No code blocks. No backticks. No preamble. First character must be { and last must be }. Use exactly these keys: cold_outreach, discovery_call, objection_handler, follow_up_sequence.',
+    '',
+    'COLD OUTREACH (key: cold_outreach):',
+    'Write 3 cold outreach emails as a sequence. Email 1: first touch — curiosity-led, specific to their business type, short (under 100 words), one clear ask. Email 2: value-add — share a genuine insight relevant to their world, no hard ask. Email 3: graceful exit — acknowledge no response, leave the door open warmly. Each email must have a compelling subject line of 5 words or fewer. Write the emails as a sales professional would actually send them — human, specific, not templated. Reference the business context naturally without being mechanical about it.',
+    '',
+    'DISCOVERY CALL SCRIPT (key: discovery_call):',
+    'Write a complete discovery call script with: opening (puts them at ease, frames the call as being about them), 6 discovery questions (specific to their industry and the problems described, not generic), a transition into the pitch, how to present the offer referencing their specific results, and a close. Include stage directions in brackets. Write it in the specified brand tone.',
+    '',
+    'OBJECTION HANDLER (key: objection_handler):',
+    'Write a detailed response to the objection: "' + objLabel + '". Include: the scripted response (word for word, natural and human), the psychology behind why this objection comes up, what NOT to say, and 3 follow-up questions to keep the conversation moving. Then write brief responses to 4 additional common objections relevant to their business type.',
+    '',
+    'FOLLOW-UP SEQUENCE (key: follow_up_sequence):',
+    'Write a 4-email follow-up sequence for warm leads who have gone quiet after a call or proposal. Each email: different angle, different length, increasingly lighter touch. Include timing for each. Make them feel like a real person wrote them, not a CRM sequence. Reference their business context where it adds value.',
+    '',
+    'CRITICAL FORMATTING RULES:',
+    '- Return ONLY the JSON object. No preamble, no explanation, no markdown code blocks.',
+    '- Each key maps to a single string value.',
+    '- Use \n for line breaks within strings.',
+    '- Do not use smart quotes or special characters that would break JSON parsing.',
+    '- Write as if you are a seasoned sales professional who knows this industry well.',
+    '- Every line of copy should feel like it was written for this specific business, not a template with their details dropped in.'
+  ].join('\n');
+
+  // Call via Netlify proxy function (avoids CORS)
+  fetch('/.netlify/functions/generate', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      model: 'claude-sonnet-4-5-20250929',
+      max_tokens: 4000,
+      messages: [{ role: 'user', content: prompt }]
+    })
+  })
+  .then(function(r){ return r.json(); })
+  .then(function(data){
+    var raw = data.content && data.content[0] && data.content[0].text ? data.content[0].text : '';
+
+    // Strip markdown code fences if present
+    raw = raw.replace(/^```json\s*/i, '').replace(/^```\s*/i, '').replace(/```\s*$/i, '').trim();
+
+    var parsed;
+    try {
+      parsed = JSON.parse(raw);
+    } catch(e) {
+      // Fallback: show raw text in first tab and error message
+      document.getElementById('c1').textContent = raw || 'There was an issue generating your script. Please try again.';
+      document.getElementById('cc').textContent = 'Script generation encountered an error. Please regenerate.';
+      document.getElementById('co').textContent = 'Script generation encountered an error. Please regenerate.';
+      document.getElementById('cf').textContent = 'Script generation encountered an error. Please regenerate.';
+      document.getElementById('r-name').textContent = 'Your Sales Script Suite';
+      document.getElementById('r-meta').textContent = 'Generated today · Worvane · Review before use';
+      showScreen('s-results');
+      return;
+    }
+
+    document.getElementById('c1').textContent = parsed.cold_outreach || '';
+    document.getElementById('cc').textContent = parsed.discovery_call || '';
+    document.getElementById('co').textContent = parsed.objection_handler || '';
+    document.getElementById('cf').textContent = parsed.follow_up_sequence || '';
+
+    document.getElementById('r-name').textContent = 'Your Sales Script Suite';
+    document.getElementById('r-meta').textContent = 'Generated today · Worvane · Ready to use';
+    showScreen('s-results');
+  })
+  .catch(function(err){
+    document.getElementById('c1').textContent = 'There was a connection error. Please check your internet connection and try again.';
+    showScreen('s-results');
+  });
+}
+
+// ── EVENT LISTENERS ──
+document.getElementById('btn-start').addEventListener('click', function() {
+  showScreen('s-intake');
+  renderQuestion(0);
+});
+
+document.querySelectorAll('.tab').forEach(function(tab) {
+  tab.addEventListener('click', function() {
+    var t = tab.getAttribute('data-tab');
+    document.querySelectorAll('.tab').forEach(function(b){ b.classList.remove('on'); });
+    document.querySelectorAll('.tab-panel').forEach(function(p){ p.classList.remove('on'); });
+    tab.classList.add('on');
+    document.getElementById('panel-' + t).classList.add('on');
+  });
+});
+
+document.querySelectorAll('.btn-copy').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    var target = btn.getAttribute('data-target');
+    var el = document.getElementById(target);
+    if (!el) return;
+    navigator.clipboard.writeText(el.textContent).then(function() {
+      var orig = btn.innerHTML;
+      btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Copied';
+      btn.style.color = 'var(--gold)';
+      setTimeout(function(){ btn.innerHTML = orig; btn.style.color = ''; }, 2000);
+    });
+  });
+});
+
+window.showScreen = showScreen;
+
+})();
+
+</script>
+</body>
+</html>

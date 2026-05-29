@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SOP Builder &mdash; Worvane — Worvane</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --cream:#FAF8F4;
+  --cream2:#F3EFE8;
+  --cream3:#EAE4D9;
+  --ink:#1A1714;
+  --ink70:rgba(26,23,20,0.7);
+  --ink45:rgba(26,23,20,0.45);
+  --ink20:rgba(26,23,20,0.2);
+  --ink08:rgba(26,23,20,0.08);
+  --ink04:rgba(26,23,20,0.04);
+  --gold:#B8952E;
+  --gold-l:#C9A84C;
+  --gold-pale:rgba(184,149,46,0.1);
+  --gold-border:rgba(184,149,46,0.28);
+  --navy:#080F1E;
+  --navy-mid:#1a2540;
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --sans:'Outfit',sans-serif;
+  --ease:cubic-bezier(0.4,0,0.2,1);
+  --r:4px;
+}
+
+html{scroll-behavior:smooth}
+body{
+  background:var(--cream);color:var(--ink);
+  font-family:var(--sans);font-weight:300;
+  min-height:100vh;overflow-x:hidden;
+}
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;opacity:0.6;
+}
+
+/* HEADER */
+header.land-hide{display:none}
+header{
+  position:sticky;top:0;z-index:100;
+  background:rgba(250,248,244,0.97);
+  backdrop-filter:blur(12px);
+  border-bottom:3px solid var(--gold);
+  padding:0 48px;height:140px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo img{height:44px;width:auto;display:block}
+.header-pill{
+  font-family:var(--sans);font-size:12px;font-weight:500;
+  letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--cream);background:var(--navy);
+  border:1px solid var(--navy);
+  padding:10px 24px;border-radius:100px;
+}
+
+/* SCREENS */
+.screen{
+  display:none;flex-direction:column;align-items:center;
+  min-height:100vh;padding:80px 24px 120px;
+  position:relative;z-index:1;
+}
+.screen.active{display:flex}
+
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(14px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* ── LANDING — Hormozi: one headline, one line, one button ── */
+#s-land{
+  justify-content:center;padding:0;min-height:100vh;
+  background:var(--cream);
+}
+.land-wrap{
+  display:flex;flex-direction:column;align-items:center;
+  justify-content:center;
+  text-align:center;
+  min-height:100vh;
+  padding:0 24px;
+  animation:fadeIn 0.7s var(--ease) both;
+}
+.land-logo{
+  height:220px;width:auto;display:block;
+  margin:0 auto 140px;
+  opacity:1;
+  filter:drop-shadow(0 1px 3px rgba(26,23,20,0.15));
+}
+.land-title{
+  font-family:var(--serif);
+  font-size:clamp(42px,6.5vw,82px);
+  font-weight:400;line-height:1.05;
+  letter-spacing:-0.02em;
+  color:var(--ink);
+  max-width:800px;
+  margin:0 auto 40px;
+}
+.land-title em{font-style:italic;color:var(--gold)}
+.land-btn{
+  display:inline-flex;align-items:center;gap:10px;
+  background:var(--navy);color:var(--cream);
+  font-family:var(--sans);font-size:13px;font-weight:400;
+  letter-spacing:0.1em;text-transform:uppercase;
+  padding:16px 40px;border-radius:8px;
+  border:none;cursor:pointer;
+  transition:background 0.2s,transform 0.2s;
+}
+.land-btn:hover{background:var(--navy-mid);transform:translateY(-1px)}
+
+/* PROGRESS */
+.prog-wrap{max-width:640px;width:100%;margin-bottom:48px}
+.prog-top{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:10px;
+}
+.prog-label{
+  font-size:11px;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--gold);
+}
+.prog-count{font-size:12px;color:var(--gold)}
+.prog-track{height:2px;background:var(--ink08);border-radius:1px;overflow:hidden}
+.prog-fill{
+  height:100%;background:var(--navy);
+  transition:width 0.5s var(--ease);border-radius:1px;
+}
+
+/* QUESTION */
+.q-wrap{max-width:640px;width:100%}
+.q-area{
+  font-size:11px;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--gold);font-weight:400;margin-bottom:14px;
+}
+.q-text{
+  font-family:var(--serif);font-size:clamp(24px,4vw,34px);
+  font-weight:400;line-height:1.25;color:var(--ink);margin-bottom:12px;
+}
+.q-hint{
+  font-size:13px;font-weight:300;color:var(--ink70);
+  line-height:1.6;margin-bottom:28px;
+}
+
+/* Options */
+.opts{display:flex;flex-direction:column;gap:10px;margin-bottom:32px}
+.opt{
+  display:flex;align-items:center;gap:14px;
+  padding:15px 18px;border-radius:var(--r);
+  border:1.5px solid var(--ink08);background:var(--cream);
+  cursor:pointer;transition:border-color 0.18s,background 0.18s;
+  text-align:left;width:100%;font-family:var(--sans);
+}
+.opt:hover{border-color:var(--gold-border);background:var(--gold-pale)}
+.opt.sel{border-color:var(--gold);background:var(--gold-pale)}
+.opt-radio{
+  width:16px;height:16px;border-radius:50%;
+  border:1.5px solid var(--ink20);flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  transition:all 0.18s;
+}
+.opt.sel .opt-radio{border-color:var(--gold);background:var(--gold)}
+.opt.sel .opt-radio::after{
+  content:'';width:5px;height:5px;border-radius:50%;background:var(--cream);
+}
+.opt-txt{font-size:14px;color:var(--ink70);line-height:1.4;font-weight:300}
+.opt.sel .opt-txt{color:var(--ink)}
+.other-box{margin-top:8px}
+
+/* Scale */
+.scale-btns{display:flex;gap:8px;margin-bottom:10px}
+.sc-btn{
+  flex:1;padding:14px 6px;border-radius:var(--r);
+  border:1.5px solid var(--ink08);background:var(--cream);
+  cursor:pointer;font-family:var(--serif);font-size:20px;
+  color:var(--ink45);transition:all 0.18s;text-align:center;
+}
+.sc-btn:hover{border-color:var(--gold-border);color:var(--ink)}
+.sc-btn.sel{border-color:var(--gold);background:var(--gold-pale);color:var(--ink)}
+.scale-labels{display:flex;justify-content:space-between;margin-bottom:32px}
+.sc-label{font-size:11px;color:var(--ink45)}
+
+/* Yes/No */
+.yn-btns{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:32px}
+.yn-btn{
+  flex:1;min-width:120px;padding:14px 16px;border-radius:var(--r);
+  border:1.5px solid var(--ink08);background:var(--cream);
+  cursor:pointer;font-family:var(--sans);font-size:13px;
+  color:var(--ink70);transition:all 0.18s;font-weight:300;
+}
+.yn-btn:hover{border-color:var(--gold-border);background:var(--gold-pale);color:var(--ink)}
+.yn-btn.sel{border-color:var(--gold);background:var(--gold-pale);color:var(--ink)}
+
+/* Text input */
+.f-input{
+  width:100%;padding:14px 18px;
+  background:var(--cream);
+  border:1.5px solid var(--ink08);border-radius:var(--r);
+  font-family:var(--sans);font-size:14px;font-weight:300;
+  color:var(--ink);resize:vertical;line-height:1.6;
+  transition:border-color 0.15s;
+}
+.f-input:focus{outline:none;border-color:var(--gold)}
+.f-input::placeholder{color:var(--ink45)}
+
+/* Navigation */
+.q-nav{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-top:32px;width:100%;
+}
+.btn-back{
+  background:none;border:1px solid var(--ink20);cursor:pointer;
+  font-family:var(--sans);font-size:13px;font-weight:300;
+  letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--ink45);padding:12px 24px;border-radius:100px;
+  transition:border-color 0.15s,color 0.15s;
+}
+.btn-back:hover{color:var(--ink)}
+.btn-next{
+  background:var(--navy);color:var(--cream);
+  border:none;cursor:pointer;
+  font-family:var(--sans);font-size:13px;font-weight:400;
+  letter-spacing:0.1em;text-transform:uppercase;
+  padding:12px 32px;border-radius:100px;
+  transition:background 0.15s,opacity 0.15s;
+}
+.btn-next:hover{background:var(--navy-mid);transform:translateY(-1px)}
+.btn-next:disabled{opacity:0.35;cursor:not-allowed;transform:none}
+
+/* LOADING */
+.load-screen-inner{
+  display:flex;flex-direction:column;align-items:center;
+  justify-content:center;text-align:center;
+  max-width:480px;width:100%;
+}
+.load-ring{
+  width:52px;height:52px;border-radius:50%;
+  border:3px solid var(--ink08);border-top-color:var(--gold);
+  animation:spin 1s linear infinite;margin:0 auto 32px;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.load-title{
+  font-family:var(--serif);font-size:26px;font-weight:400;
+  color:var(--ink);margin-bottom:10px;
+}
+.load-sub{font-size:14px;color:var(--ink45);font-weight:300;line-height:1.7;margin-bottom:28px}
+.load-steps{width:100%;display:flex;flex-direction:column;gap:14px;text-align:left}
+.l-row{display:flex;align-items:center;gap:14px}
+.l-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;transition:background 0.3s}
+.l-dot.wait{background:var(--ink08)}
+.l-dot.act{background:var(--gold);width:10px;height:10px;animation:pulse 1s ease infinite;box-shadow:0 0 6px rgba(184,149,46,0.5)}
+.l-dot.done{background:var(--navy)}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+.l-txt{font-size:13px;font-weight:300;transition:color 0.3s}
+.l-txt.wait{color:var(--ink45)}
+.l-txt.act{color:var(--ink);font-weight:400}
+.l-txt.done{color:var(--ink45);text-decoration:line-through}
+
+/* RESULTS — shared */
+.results-inner{max-width:720px;width:100%;margin:0 auto}
+.res-head{
+  width:100%;padding-bottom:28px;
+  border-bottom:1px solid var(--ink08);margin-bottom:40px;
+}
+.res-eye{
+  font-size:11px;letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:10px;
+}
+.res-name{
+  font-family:var(--serif);font-size:clamp(26px,4vw,40px);
+  font-weight:400;color:var(--navy);margin-bottom:6px;
+}
+.res-meta{font-size:13px;color:var(--ink45)}
+
+/* Rec block */
+.rec,.rec-card{
+  background:var(--navy);color:#fff;
+  border-radius:var(--r);padding:40px;
+  margin-bottom:16px;
+}
+.rec-eye{
+  font-size:10px;letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--gold-l);margin-bottom:16px;opacity:0.85;
+}
+.rec-title{
+  font-family:var(--serif);font-size:clamp(20px,3vw,28px);
+  font-weight:400;color:#fff;margin-bottom:14px;line-height:1.25;
+}
+.rec-body{
+  font-size:14px;font-weight:300;line-height:1.75;
+  color:rgba(255,255,255,0.7);margin-bottom:28px;
+}
+.rec-actions{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.btn-rec,.btn-gold{
+  display:inline-flex;align-items:center;
+  background:var(--gold);color:var(--navy);
+  font-family:var(--sans);font-size:12px;font-weight:500;
+  letter-spacing:0.04em;padding:12px 22px;border-radius:2px;
+  text-decoration:none;transition:opacity 0.15s,transform 0.15s;
+}
+.btn-rec:hover,.btn-gold:hover{opacity:0.9;transform:translateY(-1px)}
+.btn-rec-ghost,.btn-ghost{
+  font-family:var(--sans);font-size:12px;font-weight:300;
+  color:rgba(255,255,255,0.5);text-decoration:none;
+  border-bottom:1px solid rgba(255,255,255,0.2);padding-bottom:2px;
+  transition:color 0.15s;
+}
+.btn-rec-ghost:hover,.btn-ghost:hover{color:rgba(255,255,255,0.85)}
+
+/* Pro teaser */
+.pro-teaser,.pro-card{
+  background:var(--cream2);border:1px solid var(--gold-border);
+  border-radius:var(--r);padding:32px;margin-bottom:24px;
+}
+.pro-eye{
+  font-size:10px;letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:10px;
+}
+.pro-title{
+  font-family:var(--serif);font-size:22px;font-weight:400;
+  color:var(--ink);margin-bottom:10px;
+}
+.pro-body{
+  font-size:14px;font-weight:300;line-height:1.75;
+  color:var(--ink70);
+}
+.pro-steps{margin:20px 0}
+.pro-steps-label{
+  font-size:11px;letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:14px;
+}
+.pro-step{
+  display:flex;align-items:flex-start;gap:14px;
+  padding:10px 0;border-bottom:1px solid var(--ink08);
+}
+.pro-step-circle{
+  width:24px;height:24px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;flex-shrink:0;
+  background:var(--cream3);border:1px solid var(--ink08);color:var(--ink45);
+}
+.pro-step-done-circle{background:var(--navy);border-color:var(--navy);color:#fff}
+.pro-step-text{font-size:13px;font-weight:300;color:var(--ink70);line-height:1.5;padding-top:4px}
+.pro-value{font-size:13px;color:var(--ink45);margin-bottom:20px}
+.pro-actions{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.btn-pro-join{
+  display:inline-flex;align-items:center;
+  background:var(--navy);color:var(--cream);
+  font-family:var(--sans);font-size:12px;font-weight:400;
+  letter-spacing:0.05em;padding:12px 22px;border-radius:2px;
+  text-decoration:none;transition:background 0.15s,transform 0.15s;
+}
+.btn-pro-join:hover{background:var(--navy-mid);transform:translateY(-1px)}
+.btn-pro-ghost{
+  font-family:var(--sans);font-size:12px;font-weight:300;
+  color:var(--ink45);text-decoration:none;
+  border-bottom:1px solid var(--ink20);padding-bottom:2px;
+  transition:color 0.15s;
+}
+.btn-pro-ghost:hover{color:var(--ink)}
+
+/* Disclaimer / note */
+.disclaimer,.note{
+  font-size:12px;color:var(--ink45);line-height:1.7;
+  padding-top:20px;border-top:1px solid var(--ink08);
+}
+.disclaimer a,.note a{color:var(--ink45);text-decoration:underline}
+
+/* Tabs */
+.tabs{
+  display:flex;width:100%;
+  border-bottom:2px solid var(--navy);margin-bottom:32px;
+}
+.tab{
+  background:none;border:none;cursor:pointer;
+  font-family:var(--sans);font-size:12px;font-weight:400;
+  letter-spacing:0.06em;text-transform:uppercase;
+  color:var(--ink45);padding:12px 20px;
+  border-bottom:2px solid transparent;margin-bottom:-2px;
+  transition:color 0.15s,border-color 0.15s;white-space:nowrap;
+}
+.tab:hover{color:var(--gold)}
+.tab.on{color:var(--navy);border-bottom-color:var(--navy);font-weight:500}
+.tab-panel{display:none}
+.tab-panel.on{display:block}
+
+/* Cards */
+.card{
+  background:var(--cream);border:1px solid var(--ink08);
+  border-radius:var(--r);margin-bottom:16px;overflow:hidden;
+}
+.card-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 20px 14px;border-bottom:1px solid var(--ink08);
+}
+.card-title{font-family:var(--serif);font-size:16px;font-weight:400;color:var(--ink)}
+.card-tag{
+  font-size:10px;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--gold);background:var(--gold-pale);
+  padding:4px 10px;border-radius:100px;border:1px solid var(--gold-border);
+}
+.card-body{
+  padding:20px;font-size:13px;font-weight:300;line-height:1.85;
+  color:var(--ink70);white-space:pre-wrap;min-height:60px;
+}
+.copy-bar{
+  padding:10px 20px;border-top:1px solid var(--ink08);
+  background:var(--cream2);display:flex;justify-content:flex-end;
+}
+.btn-copy{
+  display:flex;align-items:center;gap:6px;
+  background:none;border:1px solid var(--ink08);border-radius:var(--r);
+  font-family:var(--sans);font-size:11px;font-weight:400;
+  letter-spacing:0.06em;color:var(--ink45);
+  padding:6px 14px;cursor:pointer;transition:border-color 0.15s,color 0.15s;
+}
+.btn-copy:hover{border-color:var(--navy);color:var(--navy)}
+.btn-copy svg{width:13px;height:13px}
+
+/* Capture */
+.cap-ring{
+  width:64px;height:64px;border-radius:50%;
+  background:var(--gold-pale);border:1.5px solid var(--gold-border);
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:28px;
+}
+.cap-ring svg{width:26px;height:26px;stroke:var(--gold);fill:none;stroke-width:1.5}
+.cap-title{
+  font-family:var(--serif);font-size:30px;font-weight:400;
+  color:var(--ink);margin-bottom:12px;text-align:center;
+}
+.cap-sub{
+  font-size:15px;font-weight:300;line-height:1.7;
+  color:var(--ink70);text-align:center;margin-bottom:32px;
+}
+.f-group{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;width:100%}
+.f-label{font-size:12px;font-weight:400;letter-spacing:0.04em;color:var(--ink70)}
+.btn-gen{
+  width:100%;padding:15px;margin-top:8px;
+  background:var(--navy);color:var(--cream);
+  border:none;border-radius:2px;cursor:pointer;
+  font-family:var(--sans);font-size:14px;font-weight:400;
+  letter-spacing:0.05em;
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  transition:background 0.15s;
+}
+.btn-gen:hover{background:var(--navy-mid)}
+.cap-note{font-size:12px;color:var(--ink45);line-height:1.6;text-align:center;margin-top:16px}
+.cap-note a{color:var(--ink45);text-decoration:underline}
+
+/* Audit-specific results */
+.score-hero{
+  display:flex;align-items:flex-start;gap:36px;
+  background:var(--cream2);border:1px solid var(--ink08);
+  border-radius:var(--r);padding:32px;margin-bottom:28px;
+}
+.score-circle-wrap{position:relative;flex-shrink:0}
+.score-inner{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+}
+.score-n{
+  font-family:var(--serif);font-size:28px;font-weight:500;
+  line-height:1;color:var(--navy);
+}
+.score-d{font-size:11px;color:var(--ink45);margin-top:2px}
+.score-txt h3{
+  font-family:var(--serif);font-size:20px;font-weight:400;
+  color:var(--ink);margin-bottom:10px;line-height:1.3;
+}
+.score-txt p{font-size:14px;font-weight:300;line-height:1.7;color:var(--ink70)}
+.score-note{
+  font-size:12px;color:var(--ink70);line-height:1.6;
+  border-left:2px solid var(--gold);
+  padding:0 0 0 16px;margin-bottom:36px;
+}
+.areas{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:40px}
+.area-card{
+  padding:20px 22px;background:var(--cream);
+  border:1px solid var(--ink08);border-radius:var(--r);
+}
+.area-name{
+  font-size:11px;letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:10px;
+}
+.area-num{
+  font-family:var(--serif);font-size:32px;font-weight:400;
+  color:var(--navy);margin-bottom:10px;
+}
+.area-bar{height:2px;background:var(--ink08);border-radius:1px;overflow:hidden;margin-bottom:8px}
+.area-fill{height:100%;background:var(--gold);border-radius:1px;transition:width 1s var(--ease)}
+.area-status{font-size:12px;color:var(--ink45)}
+.findings{margin-bottom:40px}
+.find-title{
+  font-size:11px;letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:20px;
+}
+.finding{
+  display:flex;align-items:flex-start;gap:20px;
+  padding:18px 0;border-bottom:1px solid var(--ink08);
+}
+.find-n{
+  font-family:var(--serif);font-size:13px;color:var(--navy);
+  font-weight:400;min-width:24px;letter-spacing:0.04em;margin-top:2px;
+}
+.find-t{font-size:15px;font-weight:300;line-height:1.6;color:var(--ink)}
+
+/* Mobile */
+@media(max-width:600px){
+  header{padding:0 20px}
+  .areas{grid-template-columns:1fr}
+  .score-hero{flex-direction:column;align-items:center;text-align:center}
+  .tabs{overflow-x:auto}
+  .tab{padding:10px 14px;font-size:11px}
+  .rec-actions,.pro-actions{flex-direction:column;align-items:flex-start}
+}
+.score-hero{display:flex;align-items:flex-start;gap:36px;background:var(--cream2);border:1px solid var(--ink08);border-radius:var(--r);padding:32px;margin-bottom:28px}
+.score-circle-wrap{position:relative;flex-shrink:0}
+.score-inner{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.score-n{font-family:var(--serif);font-size:28px;font-weight:500;line-height:1;color:var(--navy)}
+.score-d{font-size:11px;color:var(--ink45);margin-top:2px}
+.score-txt h3{font-family:var(--serif);font-size:20px;font-weight:400;color:var(--ink);margin-bottom:10px;line-height:1.3}
+.score-txt p{font-size:14px;font-weight:300;line-height:1.7;color:var(--ink70)}
+.score-note{font-size:12px;color:var(--ink70);line-height:1.6;border-left:2px solid var(--gold);padding:0 0 0 16px;margin-bottom:36px}
+.areas{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:40px}
+.area-card{padding:20px 22px;background:var(--cream);border:1px solid var(--ink08);border-radius:var(--r)}
+.area-name{font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.area-num{font-family:var(--serif);font-size:32px;font-weight:400;color:var(--navy);margin-bottom:10px}
+.area-bar{height:2px;background:var(--ink08);border-radius:1px;overflow:hidden;margin-bottom:8px}
+.area-fill{height:100%;background:var(--gold);border-radius:1px;transition:width 1s}
+.area-status{font-size:12px;color:var(--ink45)}
+.findings{margin-bottom:40px}
+.find-title{font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);margin-bottom:20px}
+.finding{display:flex;align-items:flex-start;gap:20px;padding:18px 0;border-bottom:1px solid var(--ink08)}
+.find-n{font-family:var(--serif);font-size:13px;color:var(--navy);font-weight:400;min-width:24px;letter-spacing:0.04em;margin-top:2px}
+.find-t{font-size:15px;font-weight:300;line-height:1.6;color:var(--ink)}
+.cap-ring{width:64px;height:64px;border-radius:50%;background:var(--gold-pale);border:1.5px solid var(--gold-border);display:flex;align-items:center;justify-content:center;margin-bottom:28px}
+.cap-ring svg{width:26px;height:26px;stroke:var(--gold);fill:none;stroke-width:1.5}
+.cap-title{font-family:var(--serif);font-size:30px;font-weight:400;color:var(--ink);margin-bottom:12px;text-align:center}
+.cap-sub{font-size:15px;font-weight:300;line-height:1.7;color:var(--ink70);text-align:center;margin-bottom:32px}
+.f-group{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;width:100%}
+.f-label{font-size:12px;font-weight:400;letter-spacing:0.04em;color:var(--ink70)}
+.f-input{width:100%;padding:13px 16px;background:var(--cream);border:1.5px solid var(--ink08);border-radius:var(--r);font-family:var(--sans);font-size:14px;font-weight:300;color:var(--ink);transition:border-color 0.15s}
+.f-input:focus{outline:none;border-color:var(--gold)}
+.f-input::placeholder{color:var(--ink45)}
+.btn-gen{width:100%;padding:15px;margin-top:8px;background:var(--navy);color:var(--cream);border:none;border-radius:2px;cursor:pointer;font-family:var(--sans);font-size:14px;font-weight:400;letter-spacing:0.05em;display:flex;align-items:center;justify-content:center;gap:10px;transition:background 0.15s}
+.btn-gen:hover{background:var(--navy-mid)}
+.cap-note{font-size:12px;color:var(--ink45);line-height:1.6;text-align:center;margin-top:16px}
+.cap-note a{color:var(--ink45);text-decoration:underline}
+.rec{background:var(--navy);color:#fff;border-radius:var(--r);padding:40px;margin-bottom:16px}
+.rec-eye{font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold-l);margin-bottom:16px;opacity:0.85}
+.rec-title{font-family:var(--serif);font-size:clamp(20px,3vw,28px);font-weight:400;color:#fff;margin-bottom:14px;line-height:1.25}
+.rec-body{font-size:14px;font-weight:300;line-height:1.75;color:rgba(255,255,255,0.7);margin-bottom:28px}
+.rec-actions{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.btn-rec{display:inline-flex;align-items:center;background:var(--gold);color:var(--navy);font-family:var(--sans);font-size:12px;font-weight:500;letter-spacing:0.04em;padding:12px 22px;border-radius:2px;text-decoration:none;transition:opacity 0.15s,transform 0.15s}
+.btn-rec:hover{opacity:0.9;transform:translateY(-1px)}
+.btn-rec-ghost{font-family:var(--sans);font-size:12px;font-weight:300;color:rgba(255,255,255,0.5);text-decoration:none;border-bottom:1px solid rgba(255,255,255,0.2);padding-bottom:2px;transition:color 0.15s}
+.btn-rec-ghost:hover{color:rgba(255,255,255,0.85)}
+.pro-teaser{background:var(--cream2);border:1px solid var(--gold-border);border-radius:var(--r);padding:32px;margin-bottom:24px}
+.pro-eye{font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.pro-title{font-family:var(--serif);font-size:22px;font-weight:400;color:var(--ink);margin-bottom:10px}
+.pro-body{font-size:14px;font-weight:300;line-height:1.75;color:var(--ink70)}
+.disclaimer{font-size:12px;color:var(--ink45);line-height:1.7;padding-top:20px;border-top:1px solid var(--ink08)}
+.disclaimer a{color:var(--ink45);text-decoration:underline}
+@media(max-width:600px){.areas{grid-template-columns:1fr}.score-hero{flex-direction:column;align-items:center;text-align:center}}
+
+
+.sop-card{background:var(--cream2);border:1px solid var(--ink08);border-radius:var(--r);margin-bottom:16px;overflow:hidden}
+.sop-head{padding:18px 22px;border-bottom:1px solid var(--ink08);display:flex;align-items:center;justify-content:space-between;gap:12px}
+.sop-tag{font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);padding:3px 10px;border:1px solid var(--gold-border);border-radius:20px;white-space:nowrap}
+.sop-title{font-family:var(--serif);font-size:18px;font-weight:400;color:var(--ink)}
+.sop-body{padding:0}
+.sop-step{display:flex;gap:0;border-bottom:1px solid var(--ink08)}
+.sop-step-num{width:52px;flex-shrink:0;display:flex;align-items:flex-start;justify-content:center;padding:18px 0;font-family:var(--serif);font-size:13px;color:var(--gold);font-weight:500;border-right:1px solid var(--ink08)}
+.sop-step-content{padding:16px 20px;flex:1}
+.sop-step-label{font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink45);margin-bottom:5px}
+.sop-step-text{font-size:13px;color:var(--ink70);line-height:1.7}
+.sop-main-title{font-family:var(--serif);font-size:clamp(20px,3vw,26px);font-weight:400;color:var(--navy);margin-bottom:6px}
+.copy-all{padding:0 0 16px;display:flex;justify-content:flex-end}
+
+
+.header-all-tools{font-family:var(--sans);font-size:12px;font-weight:300;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink45);text-decoration:none;padding:8px 16px;border:1px solid var(--ink08);border-radius:100px;transition:all 0.15s;margin-right:12px}.header-all-tools:hover{color:var(--ink);border-color:var(--ink20)}
+</style>
+</head>
+<body>
+
+<header class="land-hide">
+  <a class="logo" href="#"><img src="Worvane_Logo.png" alt="Worvane" style="height:auto;width:180px;display:block;"></a>
+  <a href="#" class="header-all-tools">All tools</a><div class="header-pill">SOP Builder</div>
+</header>
+
+<div class="screen active" id="s-land"><div class="land-wrap">
+  <img src="Worvane_Logo.png" alt="Worvane" class="land-logo">
+  <h1 class="land-title">Processes that run<br>without <em>you.</em></h1>
+  <button class="land-btn" id="btn-start">Build my SOP now &rarr;</button>
+</div></div>
+
+<div class="screen" id="s-intake">
+  <div class="prog-wrap">
+    <div class="prog-top"><span class="prog-label">Your process</span><span class="prog-count" id="q-count">Question 1 of 8</span></div>
+    <div class="prog-track"><div class="prog-fill" id="prog-fill" style="width:12.5%"></div></div>
+  </div>
+  <p style="font-size:12px;color:var(--ink45);font-weight:300;letter-spacing:0.02em;text-align:center;margin:28px 0 32px;padding:0 8px">The more detail you give, the more complete your SOP will be. Walk through it as if explaining to someone doing it for the first time.</p>
+  <div id="q-container" style="width:100%;max-width:640px;"></div>
+</div>
+
+<div class="screen" id="s-load"><div class="load-screen-inner">
+  <div class="load-ring"></div>
+  <h2 class="load-title">Building your SOP&hellip;</h2>
+  <p class="load-sub">A consultant charges &pound;300+ to document a single process. You are getting a complete SOP in 30 seconds.</p>
+  <p style="font-size:13px;color:var(--ink);font-weight:300;font-style:italic;line-height:1.6;margin-bottom:24px;max-width:360px">Most businesses run on tribal knowledge. You are about to have it written down.</p>
+  <div class="load-steps">
+    <div class="l-row"><div class="l-dot wait" id="ld1"></div><span class="l-txt wait" id="lt1">Reading your process details</span></div>
+    <div class="l-row"><div class="l-dot wait" id="ld2"></div><span class="l-txt wait" id="lt2">Writing the step-by-step SOP</span></div>
+    <div class="l-row"><div class="l-dot wait" id="ld3"></div><span class="l-txt wait" id="lt3">Building your quality checklist</span></div>
+    <div class="l-row"><div class="l-dot wait" id="ld4"></div><span class="l-txt wait" id="lt4">Creating onboarding and error guides</span></div>
+  </div>
+
+  <p style="font-size:11px;color:var(--ink45);margin-top:24px;letter-spacing:0.04em">Your responses are private and never shared.</p>
+</div></div>
+
+<div class="screen" id="s-results">
+  <div class="results-inner" style="max-width:760px">
+  <div class="res-head">
+    <div class="res-eye">Standard Operating Procedure &middot; Worvane</div>
+    <div class="res-name" id="r-name">Your SOP</div>
+    <div class="res-meta" id="r-meta">Generated today &middot; Worvane</div>
+    <button onclick="window.location.reload()" style="margin-top:12px;background:none;border:1px solid var(--ink08);border-radius:100px;padding:7px 16px;font-family:var(--sans);font-size:12px;font-weight:300;letter-spacing:0.06em;color:var(--ink45);cursor:pointer;transition:all 0.15s" onmouseover="this.style.borderColor='var(--gold-border)';this.style.color='var(--ink)'" onmouseout="this.style.borderColor='var(--ink08)';this.style.color='var(--ink45)'">&#8635; Regenerate</button>
+  </div>
+  <div class="sop-main-title" id="sop-main-title">Your Standard Operating Procedure</div>
+  <div class="tabs">
+    <button class="tab on" data-tab="sop">SOP Steps</button>
+    <button class="tab" data-tab="checklist">Quality Checklist</button>
+    <button class="tab" data-tab="onboarding">Onboarding</button>
+    <button class="tab" data-tab="errors">Common Errors</button>
+  </div>
+  <div class="tab-panel on" id="panel-sop">
+    <div id="sop-steps"></div>
+    <div class="copy-all"><button class="btn-copy" id="copy-sop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>Copy SOP</button></div>
+  </div>
+  <div class="tab-panel" id="panel-checklist">
+    <div class="card"><div class="card-head"><div class="card-title">Quality checklist</div><div class="card-tag">Standards</div></div><div class="card-body" id="checklist-body"></div><div class="copy-bar"><button class="btn-copy" data-target="checklist-body"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>Copy</button></div></div>
+  </div>
+  <div class="tab-panel" id="panel-onboarding">
+    <div class="card"><div class="card-head"><div class="card-title">Onboarding guide</div><div class="card-tag">New starters</div></div><div class="card-body" id="onboarding-body"></div><div class="copy-bar"><button class="btn-copy" data-target="onboarding-body"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>Copy</button></div></div>
+  </div>
+  <div class="tab-panel" id="panel-errors">
+    <div class="card"><div class="card-head"><div class="card-title">Common mistakes and fixes</div><div class="card-tag">Error guide</div></div><div class="card-body" id="errors-body"></div><div class="copy-bar"><button class="btn-copy" data-target="errors-body"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>Copy</button></div></div>
+  </div>
+        <div class="rec-card">
+      <div class="rec-eye">Worvane Recommendation</div>
+      <div class="rec-title">Process documented. Now measure whether it is working.</div>
+      <div class="rec-body">Your SOP tells your team what to do. The KPI Framework tells you whether they are doing it well — and whether the business is moving in the right direction as a result. Without measurement, a documented process is just a document. The KPI Framework Generator gives you the specific metrics, review cadence, and dashboard your business needs. Every week without measurement is a week you cannot tell whether your documented process is actually working.</div>
+      <div class="rec-actions"><a href="#" class="btn-gold">Get KPI Framework Generator — £49 <span style="opacity:0.65;font-size:11px;font-weight:300">(replaces &pound;300+ of consulting)</span></a><a href="#" class="btn-ghost">Get Full Diagnostic — £197</a></div>
+    </div>
+    <div class="pro-card">
+      <div class="pro-top"><div class="pro-eye">Worvane Pro</div></div>
+      <div class="pro-title">You are one purchase away from Worvane Pro</div>
+      <div class="pro-body">As a Worvane client, you are one purchase away from Pro. Purchase any one more tool and you unlock Worvane Pro &mdash; unlimited access to <strong>every tool in the suite, quarterly re-diagnostics to track your progress, and monthly strategy updates</strong> tailored to your business. All for &pound;97 per month. For most clients that is less than a single hour of consulting.</div>
+      <div class="pro-steps"><div class="pro-steps-label">Your path to Pro</div>
+        <div class="pro-step"><div class="pro-step-circle pro-step-done-circle">&#10003;</div><div class="pro-step-text">Complete your free audit &mdash; <span style="color:var(--gold)">done</span></div></div>
+        <div class="pro-step"><div class="pro-step-circle pro-step-done-circle">&#10003;</div><div class="pro-step-text">First Worvane tool purchased &mdash; <span style="color:var(--gold)">done</span></div></div>
+        <div class="pro-step"><div class="pro-step-circle">2</div><div class="pro-step-text">Purchase one more tool &mdash; Pro unlocks</div></div></div>
+      <div class="pro-value">All tools individually: <strong>&pound;586</strong>. Worvane Pro: <strong>&pound;97/month</strong>.</div>
+      <div class="pro-actions"><a href="#" class="btn-pro-join">Join Worvane Pro &mdash; &pound;97/month</a><a href="#" class="btn-pro-ghost">See everything included &rarr;</a></div>
+    </div>
+        <div class="note"><span style="color:var(--ink45);font-size:12px">AI-generated from your responses. Review before use. Not professional advice. Questions? <a href="mailto:hello@worvane.co" style="color:var(--ink45)">hello@worvane.co</a></span><div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--ink08)"><span style="font-size:13px;color:var(--ink45)">Not happy with your output? The most common reason is vague answers. Go back, add more detail, and regenerate &mdash; the difference is significant.</span></div></div>
+  </div>
+</div>
+
+<script>
+
+
+
+
+(function(){
+
+// ── TEXT HELPER — smooths raw answers into readable prose ──
+function clean(str, mode) {
+  if (!str) return '';
+  var s = str.split('\n')[0].trim();
+  // Take first complete sentence if multiple
+  var firstDot = s.indexOf('. ');
+  if (firstDot > 40) s = s.substring(0, firstDot);
+  // Strip leading filler phrases
+  s = s.replace(/^(e\.g\.?\s*|for example,?\s*|i\.e\.?\s*)/i, '');
+  // Strip trailing ellipsis
+  s = s.replace(/\.{2,}$/, '').replace(/\s+$/, '');
+  if (mode === 'mid') {
+    // Strip leading subject for mid-sentence insertion
+    s = s.replace(/^(I |We |My |Our )/i, '');
+    s = s.charAt(0).toLowerCase() + s.slice(1);
+  }
+  return s;
+}
+
+var ans = {};
+var qIdx = 0;
+
+var questions = [
+  { id:'q1', area:'The process', type:'text',
+    text:'What process are we documenting today?',
+    hint:'Be specific. The more clearly you describe it, the more useful your SOP will be.',
+    ph:'e.g. Client onboarding \u2014 from signed contract to first project kickoff call. Or: monthly bookkeeping and reconciliation. Or: fulfilling and dispatching a customer order...' },
+  { id:'q2', area:'The process', type:'opts',
+    text:'How often does this process happen in your business?',
+    opts:['Multiple times a day','Daily','Several times a week','Weekly','Monthly or less often'] },
+  { id:'q3', area:'The team', type:'opts',
+    text:'Who is currently responsible for carrying out this process?',
+    opts:['Just me \u2014 I do it all myself','Me, with occasional help from one other person','A small team of 2\u20134 people','A larger team \u2014 multiple people involved','It varies depending on the situation'] },
+  { id:'q4', area:'The stages', type:'text',
+    text:'Walk me through the main stages of this process, in order.',
+    hint:'Don\'t worry about being perfect \u2014 just describe what actually happens from start to finish in your own words.',
+    ph:'e.g. 1. Client signs contract and pays deposit. 2. We send a welcome email with a questionnaire. 3. We review their answers and prepare the kickoff agenda. 4. We run the kickoff call. 5. We send a summary and next steps within 24 hours...' },
+  { id:'q5', area:'The tools', type:'text',
+    text:'What tools, software, or resources are used to carry out this process?',
+    hint:'List everything that\'s involved \u2014 software, documents, templates, platforms, physical tools.',
+    ph:'e.g. Notion (project management), Gmail, Calendly (scheduling), Google Drive (file storage), our client portal, Stripe (payments), our proposal template in Google Docs...' },
+  { id:'q6', area:'Quality standards', type:'text',
+    text:'What does a successful outcome look like? How do you know when this process has been done properly?',
+    hint:'Think about what the client or end result looks like when this goes well.',
+    ph:'e.g. The client feels welcomed, has everything they need to get started, and replies positively to the kickoff summary. Internally, all project details are in Notion and the first milestone is scheduled...' },
+  { id:'q7', area:'Common problems', type:'text',
+    text:'What goes wrong most often with this process? What mistakes do people make?',
+    hint:'Be honest. These become your error-prevention checklist.',
+    ph:'e.g. We forget to send the welcome email promptly. The questionnaire sometimes gets ignored. Kickoff call notes don\'t always get filed. The next steps email often goes out late or gets skipped entirely...' },
+  { id:'q8', area:'Ownership', type:'opts',
+    text:'What is your primary goal in documenting this process?',
+    opts:['So someone else can do it \u2014 I want to delegate this','So it\'s consistent every time \u2014 regardless of who does it','So a new team member can learn it quickly','To identify where things are going wrong and fix them','To free up my own time and step back from day-to-day'] }
+];
+
+function showScreen(id){
+  var hdr=document.querySelector('header'); if(hdr){ id==='s-land'?hdr.classList.add('land-hide'):hdr.classList.remove('land-hide'); }
+  document.querySelectorAll('.screen').forEach(function(s){ s.classList.remove('active'); });
+  var el = document.getElementById(id);
+  el.classList.add('active');
+  el.style.animation='none'; void el.offsetHeight;
+  el.style.animation='fadeIn 0.38s ease both';
+  window.scrollTo(0,0);
+}
+
+function hasAnswer(q){
+  if(q.type==='text') return !!(ans[q.id] && ans[q.id].trim());
+  return ans[q.id]!==undefined && (ans[q.id]!=='other'||!!(ans[q.id+'_other']&&ans[q.id+'_other'].trim()));
+}
+
+function renderQuestion(i){
+  var q = questions[i];
+  document.getElementById('q-count').textContent = 'Question '+(i+1)+' of 8';
+  document.getElementById('prog-fill').style.width = (((i+1)/8)*100)+'%';
+
+  var html = '<div class="q-wrap"><div class="q-area">'+q.area+'</div><div class="q-text">'+q.text+'</div>';
+  if(q.hint) html += '<div class="q-hint">'+q.hint+'</div>';
+
+  if(q.type==='text'){
+    html += '<textarea class="f-input" id="ta-main" placeholder="'+q.ph+'" rows="5"></textarea>';
+  } else {
+    var saved = ans[q.id];
+    html += '<div class="opts" id="opts-list">';
+    for(var k=0;k<q.opts.length;k++){
+      var isSel = saved===k;
+      html += '<button class="opt'+(isSel?' sel':'')+'" data-val="'+k+'"><div class="opt-radio"></div><span class="opt-txt">'+q.opts[k]+'</span></button>';
+    }
+    var otherSel = saved==='other';
+    var otherVal = ans[q.id+'_other']||'';
+    html += '<button class="opt'+(otherSel?' sel':'')+'" data-val="other"><div class="opt-radio"></div><span class="opt-txt">Other \u2014 describe in your own words</span></button>';
+    html += '<div class="other-box" id="other-box" style="display:'+(otherSel?'block':'none')+'"><textarea class="f-input" id="ta-other" placeholder="Describe in your own words..." rows="3">'+otherVal+'</textarea></div>';
+    html += '</div>';
+  }
+
+  html += '<div class="q-nav">';
+  html += i>0 ? '<button class="btn-back" id="btn-back">\u2190 Back</button>' : '<div></div>';
+  html += '<button class="btn-next" id="btn-next"'+(hasAnswer(q)?'':' disabled')+'>'+(i===7?'Build my SOP \u2192':'Continue \u2192')+'</button>';
+  html += '</div></div>';
+
+  var container = document.getElementById('q-container');
+  container.style.opacity='0'; container.style.transform='translateY(10px)';
+  container.innerHTML = html;
+
+  if(q.type==='text'){
+    var ta = document.getElementById('ta-main');
+    if(ans[q.id]) ta.value = ans[q.id];
+    ta.addEventListener('input', function(){
+      ans[q.id] = ta.value;
+      document.getElementById('btn-next').disabled = !ta.value.trim();
+    });
+  } else {
+    var optsList = document.getElementById('opts-list');
+    var taOther = document.getElementById('ta-other');
+    if(taOther && ans[q.id+'_other']) taOther.value = ans[q.id+'_other'];
+    optsList.addEventListener('click', function(e){
+      var btn = e.target.closest('.opt');
+      if(!btn) return;
+      var val = btn.getAttribute('data-val');
+      optsList.querySelectorAll('.opt').forEach(function(b){ b.classList.remove('sel'); });
+      btn.classList.add('sel');
+      var oBox = document.getElementById('other-box');
+      var tao = document.getElementById('ta-other');
+      if(val==='other'){
+        ans[q.id]='other';
+        oBox.style.display='block';
+        tao && tao.focus();
+        document.getElementById('btn-next').disabled = !(ans[q.id+'_other']&&ans[q.id+'_other'].trim());
+      } else {
+        ans[q.id]=parseInt(val,10);
+        delete ans[q.id+'_other'];
+        oBox.style.display='none';
+        document.getElementById('btn-next').disabled=false;
+      }
+    });
+    taOther && taOther.addEventListener('input', function(){
+      ans[q.id+'_other']=taOther.value;
+      document.getElementById('btn-next').disabled=!taOther.value.trim();
+    });
+  }
+
+  var backBtn = document.getElementById('btn-back');
+  backBtn && backBtn.addEventListener('click', function(){ qIdx--; renderQuestion(qIdx); });
+
+  document.getElementById('btn-next').addEventListener('click', function(){
+    if(q.type==='text'){ var ta=document.getElementById('ta-main'); if(ta) ans[q.id]=ta.value; }
+    if(qIdx<7){ qIdx++; renderQuestion(qIdx); } else { runLoading(); }
+  });
+
+  requestAnimationFrame(function(){
+    container.style.transition='opacity 0.28s ease, transform 0.28s ease';
+    container.style.opacity='1'; container.style.transform='translateY(0)';
+  });
+}
+
+function runLoading(){
+  showScreen('s-load');
+  var steps=[{d:'ld1',t:'lt1',delay:500},{d:'ld2',t:'lt2',delay:2000},{d:'ld3',t:'lt3',delay:3600},{d:'ld4',t:'lt4',delay:5200}];
+  steps.forEach(function(s){ document.getElementById(s.d).className='l-dot wait'; document.getElementById(s.t).className='l-txt wait'; });
+  steps.forEach(function(s,i){
+    setTimeout(function(){
+      if(i>0){ document.getElementById(steps[i-1].d).className='l-dot done'; document.getElementById(steps[i-1].t).className='l-txt done'; }
+      document.getElementById(s.d).className='l-dot act'; document.getElementById(s.t).className='l-txt act';
+    }, s.delay);
+  });
+  setTimeout(function(){
+    document.getElementById('ld4').className='l-dot done'; document.getElementById('lt4').className='l-txt done';
+    buildOutput();
+  }, 7000);
+}
+
+function buildOutput(){
+  var process  = ans.q1 || 'your core process';
+  var stages   = ans.q4 || 'the key stages of the process';
+  var tools    = ans.q5 || 'your tools and resources';
+  var success  = ans.q6 || 'the process has been completed correctly';
+  var mistakes = ans.q7 || 'common issues that arise';
+
+  var freqMap = ['multiple times daily','daily','several times a week','weekly','monthly or less often'];
+  var freq = ans.q2==='other'?(ans.q2_other||'regularly'):(typeof ans.q2==='number'?freqMap[ans.q2]:'regularly');
+
+  var whoMap = ['you alone','you with occasional help','a small team','a larger team','varying people'];
+  var who = ans.q3==='other'?(ans.q3_other||'your team'):(typeof ans.q3==='number'?whoMap[ans.q3]:'your team');
+
+  var goalMap = ['delegate this process','ensure consistency','train new team members','identify and fix problems','free up your time'];
+  var goal = ans.q8==='other'?(ans.q8_other||'improve this process'):(typeof ans.q8==='number'?goalMap[ans.q8]:'improve this process');
+
+  var prompt = [
+    'You are an expert business operations consultant. Write a complete, professional Standard Operating Procedure (SOP) package for a UK SME business owner.',
+    '',
+    'PROCESS BEING DOCUMENTED:',
+    process,
+    '',
+    'HOW OFTEN IT HAPPENS: ' + freq,
+    'WHO CURRENTLY DOES IT: ' + who,
+    'PRIMARY GOAL FOR DOCUMENTING THIS: ' + goal,
+    '',
+    'THE STAGES OF THE PROCESS (as described by the owner):',
+    stages,
+    '',
+    'TOOLS AND RESOURCES INVOLVED:',
+    tools,
+    '',
+    'WHAT SUCCESS LOOKS LIKE:',
+    success,
+    '',
+    'COMMON MISTAKES OR PROBLEMS:',
+    mistakes,
+    '',
+    'Write the following four sections. Return ONLY a valid JSON object with exactly these keys: sop_steps, quality_checklist, onboarding_guide, common_mistakes.',
+    '',
+    'SOP STEPS (key: sop_steps):',
+    'Write a numbered step-by-step procedure. Each step must have: a step number, a short action title (verb-led, under 6 words), and a clear description of exactly what to do and how to do it well. Extract and expand on the stages provided — do not just restate them. Add context, decision points, and quality guidance where relevant. Write it so someone doing this process for the first time could follow it without asking questions. End with a "Process complete" confirmation step.',
+    '',
+    'QUALITY CHECKLIST (key: quality_checklist):',
+    'Write a practical checklist to be completed at the end of every run of this process. Group checks into: Pre-start checks, During process, and Completion checks. Each item must be specific and verifiable — not vague. Frame as checkbox items. Include a sign-off line at the end.',
+    '',
+    'ONBOARDING GUIDE (key: onboarding_guide):',
+    'Write a complete onboarding guide for a new team member learning this process. Include: what this process is and why it matters, what they need before starting (tools, access, knowledge), a plain-English walkthrough of the process, common mistakes to avoid, how to know when they have done it right, and how to get help if unsure. Write it warmly and practically — like a senior colleague explaining it over coffee, not a corporate manual.',
+    '',
+    'COMMON MISTAKES (key: common_mistakes):',
+    'Write a detailed guide to the most common mistakes in this process and how to prevent them. For each mistake: describe what goes wrong, why it happens (the root cause), what the consequence is if uncaught, and the specific prevention or fix. Base this on the mistakes described by the owner but expand each one with professional insight. Add 2-3 mistakes not mentioned that are common for this type of process.',
+    '',
+    'CRITICAL RULES:',
+    '- CRITICAL: Return ONLY a raw JSON object. No markdown. No code blocks. No backticks. No explanation before or after. The very first character of your response must be { and the last must be }.',
+    '- Use \n for line breaks within strings.',
+    '- Write as a professional operations consultant — specific, clear, practical.',
+    '- Every section must feel written for this specific process, not a generic template.',
+    '- The SOP should be detailed enough that someone new to the business could follow it independently.'
+  ].join('\n');
+
+  fetch('/.netlify/functions/generate', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ model: 'claude-sonnet-4-5-20250929', max_tokens: 4000, messages: [{ role: 'user', content: prompt }] })
+  })
+  .then(function(r){ return r.json(); })
+  .then(function(data){
+    var raw = data.content&&data.content[0]&&data.content[0].text ? data.content[0].text : '';
+    raw = raw.replace(/^```json\s*/i,'').replace(/^```\s*/i,'').replace(/```\s*$/i,'').trim();
+    var parsed;
+    try { parsed = JSON.parse(raw); }
+    catch(e) {
+      document.getElementById('sop-steps').innerHTML = '<p style="color:var(--w60);padding:16px">Generation error. Please try again.</p>';
+      showScreen('s-results'); return;
+    }
+
+    // SOP steps — parse numbered steps into visual step blocks
+    var stepsRaw = parsed.sop_steps || '';
+    var stepsLines = stepsRaw.split('\n');
+    var stepsHtml = '';
+    var stepNum = 0;
+    var currentTitle = '';
+    var currentBody = [];
+
+    function flushStep(){
+      if(!currentTitle) return;
+      stepNum++;
+      stepsHtml += '<div class="sop-step">';
+      stepsHtml += '<div class="sop-step-num">0'+stepNum+'</div>';
+      stepsHtml += '<div class="sop-step-content"><div class="sop-step-label">Step '+stepNum+'</div>';
+      stepsHtml += '<div class="sop-step-text"><strong>'+currentTitle+'</strong>\n'+currentBody.join('\n')+'</div>';
+      stepsHtml += '</div></div>';
+      currentTitle=''; currentBody=[];
+    }
+
+    stepsLines.forEach(function(line){
+      var stepMatch = line.match(/^\d+[\.\)\:]\s*(.+)/);
+      if(stepMatch){
+        flushStep();
+        currentTitle = stepMatch[1].trim();
+      } else if(line.trim() && currentTitle){
+        currentBody.push(line.trim());
+      }
+    });
+    flushStep();
+
+    if(!stepsHtml){
+      stepsHtml = '<div class="sop-step"><div class="sop-step-num">01</div><div class="sop-step-content"><div class="sop-step-text">'+stepsRaw+'</div></div></div>';
+    }
+
+    document.getElementById('sop-steps').innerHTML = stepsHtml;
+    document.getElementById('checklist-body').textContent = parsed.quality_checklist||'';
+    document.getElementById('onboarding-body').textContent = parsed.onboarding_guide||'';
+    document.getElementById('errors-body').textContent = parsed.common_mistakes||'';
+
+    // Extract process name for header
+    var procName = process.split('\n')[0].split('.')[0].trim();
+    if(procName.length>60) procName=procName.substring(0,60);
+    document.getElementById('sop-main-title').textContent = procName;
+    document.getElementById('r-name').textContent = procName + ' \u2014 SOP';
+    document.getElementById('r-meta').textContent = 'Generated today \u00b7 Worvane \u00b7 Frequency: ' + freq;
+
+    showScreen('s-results');
+
+    // Copy SOP button
+    document.getElementById('copy-sop').addEventListener('click',function(){
+      var btn=this, orig=btn.innerHTML;
+      var text = procName+' \u2014 Standard Operating Procedure\nGenerated by Worvane\n\n';
+      document.querySelectorAll('.sop-step').forEach(function(step){
+        text += step.querySelector('.sop-step-text').innerText + '\n\n';
+      });
+      navigator.clipboard.writeText(text).then(function(){
+        btn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Copied';
+        btn.style.color='var(--gold)';
+        setTimeout(function(){btn.innerHTML=orig;btn.style.color='';},2000);
+      });
+    });
+
+
+
+})
+  .catch(function(){
+    document.getElementById('sop-steps').innerHTML = '<p style="padding:16px;color:var(--ink45)">Connection error. Please try again.</p>';
+    showScreen('s-results');
+  });
+}
+
+document.getElementById('btn-start').addEventListener('click', function() {
+  showScreen('s-intake');
+  renderQuestion(0);
+});
+
+document.querySelectorAll('.tab').forEach(function(tab) {
+  tab.addEventListener('click', function() {
+    var t = tab.getAttribute('data-tab');
+    document.querySelectorAll('.tab').forEach(function(b){ b.classList.remove('on'); });
+    document.querySelectorAll('.tab-panel').forEach(function(p){ p.classList.remove('on'); });
+    tab.classList.add('on');
+    document.getElementById('panel-' + t).classList.add('on');
+  });
+});
+
+document.querySelectorAll('.btn-copy').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    var el=document.getElementById(btn.getAttribute('data-target'));
+    if(!el) return;
+    navigator.clipboard.writeText(el.innerText).then(function(){
+      var orig=btn.innerHTML;
+      btn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Copied';
+      btn.style.color='var(--gold)';
+      setTimeout(function(){ btn.innerHTML=orig; btn.style.color=''; },2000);
+    });
+  });
+});
+window.showScreen = showScreen;
+
+})();
+
+
+</script>
+</body>
+</html>

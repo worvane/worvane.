@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Free Business Health Audit — Worvane</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --cream:#FAF8F4;
+  --cream2:#F3EFE8;
+  --cream3:#EAE4D9;
+  --ink:#1A1714;
+  --ink70:rgba(26,23,20,0.7);
+  --ink45:rgba(26,23,20,0.45);
+  --ink20:rgba(26,23,20,0.2);
+  --ink08:rgba(26,23,20,0.08);
+  --ink04:rgba(26,23,20,0.04);
+  --gold:#B8952E;
+  --gold-l:#C9A84C;
+  --gold-pale:rgba(184,149,46,0.1);
+  --gold-border:rgba(184,149,46,0.28);
+  --navy:#080F1E;
+  --navy-mid:#1a2540;
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --sans:'Outfit',sans-serif;
+  --ease:cubic-bezier(0.4,0,0.2,1);
+  --r:4px;
+}
+
+html{scroll-behavior:smooth}
+body{
+  background:var(--cream);color:var(--ink);
+  font-family:var(--sans);font-weight:300;
+  min-height:100vh;overflow-x:hidden;
+}
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;opacity:0.6;
+}
+
+/* HEADER */
+header.land-hide{display:none}
+header{
+  position:sticky;top:0;z-index:100;
+  background:rgba(250,248,244,0.97);
+  backdrop-filter:blur(12px);
+  border-bottom:3px solid var(--gold);
+  padding:0 48px;height:140px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo img{height:44px;width:auto;display:block}
+.header-pill{
+  font-family:var(--sans);font-size:12px;font-weight:500;
+  letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--cream);background:var(--navy);
+  border:1px solid var(--navy);
+  padding:10px 24px;border-radius:100px;
+}
+
+/* SCREENS */
+.screen{
+  display:none;flex-direction:column;align-items:center;
+  min-height:100vh;padding:80px 24px 120px;
+  position:relative;z-index:1;
+}
+.screen.active{display:flex}
+
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(14px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* ── LANDING — Hormozi: one headline, one line, one button ── */
+#s-land{
+  justify-content:center;padding:0;min-height:100vh;
+  background:var(--cream);
+}
+.land-wrap{
+  display:flex;flex-direction:column;align-items:center;
+  justify-content:center;
+  text-align:center;
+  min-height:100vh;
+  padding:0 24px;
+  animation:fadeIn 0.7s var(--ease) both;
+}
+.land-logo{
+  height:220px;width:auto;display:block;
+  margin:0 auto 140px;
+  opacity:1;
+  filter:drop-shadow(0 1px 3px rgba(26,23,20,0.15));
+}
+.land-title{
+  font-family:var(--serif);
+  font-size:clamp(42px,6.5vw,82px);
+  font-weight:400;line-height:1.05;
+  letter-spacing:-0.02em;
+  color:var(--ink);
+  max-width:800px;
+  margin:0 auto 40px;
+}
+.land-title em{font-style:italic;color:var(--gold)}
+.land-btn{
+  display:inline-flex;align-items:center;gap:10px;
+  background:var(--navy);color:var(--cream);
+  font-family:var(--sans);font-size:13px;font-weight:400;
+  letter-spacing:0.1em;text-transform:uppercase;
+  padding:16px 40px;border-radius:8px;
+  border:none;cursor:pointer;
+  transition:background 0.2s,transform 0.2s;
+}
+.land-btn:hover{background:var(--navy-mid);transform:translateY(-1px)}
+
+/* PROGRESS */
+.prog-wrap{max-width:640px;width:100%;margin-bottom:48px}
+.prog-top{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:10px;
+}
+.prog-label{
+  font-size:11px;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--gold);
+}
+.prog-count{font-size:12px;color:var(--gold)}
+.prog-track{height:2px;background:var(--ink08);border-radius:1px;overflow:hidden}
+.prog-fill{
+  height:100%;background:var(--navy);
+  transition:width 0.5s var(--ease);border-radius:1px;
+}
+
+/* QUESTION */
+.q-wrap{max-width:640px;width:100%}
+.q-area{
+  font-size:11px;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--gold);font-weight:400;margin-bottom:14px;
+}
+.q-text{
+  font-family:var(--serif);font-size:clamp(24px,4vw,34px);
+  font-weight:400;line-height:1.25;color:var(--ink);margin-bottom:12px;
+}
+.q-hint{
+  font-size:13px;font-weight:300;color:var(--ink70);
+  line-height:1.6;margin-bottom:28px;
+}
+
+/* Options */
+.opts{display:flex;flex-direction:column;gap:10px;margin-bottom:32px}
+.opt{
+  display:flex;align-items:center;gap:14px;
+  padding:15px 18px;border-radius:var(--r);
+  border:1.5px solid var(--ink08);background:var(--cream);
+  cursor:pointer;transition:border-color 0.18s,background 0.18s;
+  text-align:left;width:100%;font-family:var(--sans);
+}
+.opt:hover{border-color:var(--gold-border);background:var(--gold-pale)}
+.opt.sel{border-color:var(--gold);background:var(--gold-pale)}
+.opt-radio{
+  width:16px;height:16px;border-radius:50%;
+  border:1.5px solid var(--ink20);flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  transition:all 0.18s;
+}
+.opt.sel .opt-radio{border-color:var(--gold);background:var(--gold)}
+.opt.sel .opt-radio::after{
+  content:'';width:5px;height:5px;border-radius:50%;background:var(--cream);
+}
+.opt-txt{font-size:14px;color:var(--ink70);line-height:1.4;font-weight:300}
+.opt.sel .opt-txt{color:var(--ink)}
+.other-box{margin-top:8px}
+
+/* Scale */
+.scale-btns{display:flex;gap:8px;margin-bottom:10px}
+.sc-btn{
+  flex:1;padding:14px 6px;border-radius:var(--r);
+  border:1.5px solid var(--ink08);background:var(--cream);
+  cursor:pointer;font-family:var(--serif);font-size:20px;
+  color:var(--ink45);transition:all 0.18s;text-align:center;
+}
+.sc-btn:hover{border-color:var(--gold-border);color:var(--ink)}
+.sc-btn.sel{border-color:var(--gold);background:var(--gold-pale);color:var(--ink)}
+.scale-labels{display:flex;justify-content:space-between;margin-bottom:32px}
+.sc-label{font-size:11px;color:var(--ink45)}
+
+/* Yes/No */
+.yn-btns{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:32px}
+.yn-btn{
+  flex:1;min-width:120px;padding:14px 16px;border-radius:var(--r);
+  border:1.5px solid var(--ink08);background:var(--cream);
+  cursor:pointer;font-family:var(--sans);font-size:13px;
+  color:var(--ink70);transition:all 0.18s;font-weight:300;
+}
+.yn-btn:hover{border-color:var(--gold-border);background:var(--gold-pale);color:var(--ink)}
+.yn-btn.sel{border-color:var(--gold);background:var(--gold-pale);color:var(--ink)}
+
+/* Text input */
+.f-input{
+  width:100%;padding:14px 18px;
+  background:var(--cream);
+  border:1.5px solid var(--ink08);border-radius:var(--r);
+  font-family:var(--sans);font-size:14px;font-weight:300;
+  color:var(--ink);resize:vertical;line-height:1.6;
+  transition:border-color 0.15s;
+}
+.f-input:focus{outline:none;border-color:var(--gold)}
+.f-input::placeholder{color:var(--ink45)}
+
+/* Navigation */
+.q-nav{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-top:32px;width:100%;
+}
+.btn-back{
+  background:none;border:1px solid var(--ink20);cursor:pointer;
+  font-family:var(--sans);font-size:13px;font-weight:300;
+  letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--ink45);padding:12px 24px;border-radius:100px;
+  transition:border-color 0.15s,color 0.15s;
+}
+.btn-back:hover{color:var(--ink)}
+.btn-next{
+  background:var(--navy);color:var(--cream);
+  border:none;cursor:pointer;
+  font-family:var(--sans);font-size:13px;font-weight:400;
+  letter-spacing:0.1em;text-transform:uppercase;
+  padding:12px 32px;border-radius:100px;
+  transition:background 0.15s,opacity 0.15s;
+}
+.btn-next:hover{background:var(--navy-mid);transform:translateY(-1px)}
+.btn-next:disabled{opacity:0.35;cursor:not-allowed;transform:none}
+
+/* LOADING */
+.load-screen-inner{
+  display:flex;flex-direction:column;align-items:center;
+  justify-content:center;text-align:center;
+  max-width:480px;width:100%;
+}
+.load-ring{
+  width:52px;height:52px;border-radius:50%;
+  border:3px solid var(--ink08);border-top-color:var(--gold);
+  animation:spin 1s linear infinite;margin:0 auto 32px;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.load-title{
+  font-family:var(--serif);font-size:26px;font-weight:400;
+  color:var(--ink);margin-bottom:10px;
+}
+.load-sub{font-size:14px;color:var(--ink45);font-weight:300;line-height:1.7;margin-bottom:28px}
+.load-steps{width:100%;display:flex;flex-direction:column;gap:14px;text-align:left}
+.l-row{display:flex;align-items:center;gap:14px}
+.l-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;transition:background 0.3s}
+.l-dot.wait{background:var(--ink08)}
+.l-dot.act{background:var(--gold);width:10px;height:10px;animation:pulse 1s ease infinite;box-shadow:0 0 6px rgba(184,149,46,0.5)}
+.l-dot.done{background:var(--navy)}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+.l-txt{font-size:13px;font-weight:300;transition:color 0.3s}
+.l-txt.wait{color:var(--ink45)}
+.l-txt.act{color:var(--ink);font-weight:400}
+.l-txt.done{color:var(--ink45);text-decoration:line-through}
+
+/* RESULTS — shared */
+.results-inner{max-width:720px;width:100%;margin:0 auto}
+.res-head{
+  width:100%;padding-bottom:28px;
+  border-bottom:1px solid var(--ink08);margin-bottom:40px;
+}
+.res-eye{
+  font-size:11px;letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:10px;
+}
+.res-name{
+  font-family:var(--serif);font-size:clamp(26px,4vw,40px);
+  font-weight:400;color:var(--navy);margin-bottom:6px;
+}
+.res-meta{font-size:13px;color:var(--ink45)}
+
+/* Rec block */
+.rec,.rec-card{
+  background:var(--navy);color:#fff;
+  border-radius:var(--r);padding:40px;
+  margin-bottom:16px;
+}
+.rec-eye{
+  font-size:10px;letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--gold-l);margin-bottom:16px;opacity:0.85;
+}
+.rec-title{
+  font-family:var(--serif);font-size:clamp(20px,3vw,28px);
+  font-weight:400;color:#fff;margin-bottom:14px;line-height:1.25;
+}
+.rec-body{
+  font-size:14px;font-weight:300;line-height:1.75;
+  color:rgba(255,255,255,0.7);margin-bottom:28px;
+}
+.rec-actions{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.btn-rec,.btn-gold{
+  display:inline-flex;align-items:center;
+  background:var(--gold);color:var(--navy);
+  font-family:var(--sans);font-size:12px;font-weight:500;
+  letter-spacing:0.04em;padding:12px 22px;border-radius:2px;
+  text-decoration:none;transition:opacity 0.15s,transform 0.15s;
+}
+.btn-rec:hover,.btn-gold:hover{opacity:0.9;transform:translateY(-1px)}
+.btn-rec-ghost,.btn-ghost{
+  font-family:var(--sans);font-size:12px;font-weight:300;
+  color:rgba(255,255,255,0.5);text-decoration:none;
+  border-bottom:1px solid rgba(255,255,255,0.2);padding-bottom:2px;
+  transition:color 0.15s;
+}
+.btn-rec-ghost:hover,.btn-ghost:hover{color:rgba(255,255,255,0.85)}
+
+/* Pro teaser */
+.pro-teaser,.pro-card{
+  background:var(--cream2);border:1px solid var(--gold-border);
+  border-radius:var(--r);padding:32px;margin-bottom:24px;
+}
+.pro-eye{
+  font-size:10px;letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:10px;
+}
+.pro-title{
+  font-family:var(--serif);font-size:22px;font-weight:400;
+  color:var(--ink);margin-bottom:10px;
+}
+.pro-body{
+  font-size:14px;font-weight:300;line-height:1.75;
+  color:var(--ink70);
+}
+.pro-steps{margin:20px 0}
+.pro-steps-label{
+  font-size:11px;letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:14px;
+}
+.pro-step{
+  display:flex;align-items:flex-start;gap:14px;
+  padding:10px 0;border-bottom:1px solid var(--ink08);
+}
+.pro-step-circle{
+  width:24px;height:24px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;flex-shrink:0;
+  background:var(--cream3);border:1px solid var(--ink08);color:var(--ink45);
+}
+.pro-step-done-circle{background:var(--navy);border-color:var(--navy);color:#fff}
+.pro-step-text{font-size:13px;font-weight:300;color:var(--ink70);line-height:1.5;padding-top:4px}
+.pro-value{font-size:13px;color:var(--ink45);margin-bottom:20px}
+.pro-actions{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.btn-pro-join{
+  display:inline-flex;align-items:center;
+  background:var(--navy);color:var(--cream);
+  font-family:var(--sans);font-size:12px;font-weight:400;
+  letter-spacing:0.05em;padding:12px 22px;border-radius:2px;
+  text-decoration:none;transition:background 0.15s,transform 0.15s;
+}
+.btn-pro-join:hover{background:var(--navy-mid);transform:translateY(-1px)}
+.btn-pro-ghost{
+  font-family:var(--sans);font-size:12px;font-weight:300;
+  color:var(--ink45);text-decoration:none;
+  border-bottom:1px solid var(--ink20);padding-bottom:2px;
+  transition:color 0.15s;
+}
+.btn-pro-ghost:hover{color:var(--ink)}
+
+/* Disclaimer / note */
+.disclaimer,.note{
+  font-size:12px;color:var(--ink45);line-height:1.7;
+  padding-top:20px;border-top:1px solid var(--ink08);
+}
+.disclaimer a,.note a{color:var(--ink45);text-decoration:underline}
+
+/* Tabs */
+.tabs{
+  display:flex;width:100%;
+  border-bottom:2px solid var(--navy);margin-bottom:32px;
+}
+.tab{
+  background:none;border:none;cursor:pointer;
+  font-family:var(--sans);font-size:12px;font-weight:400;
+  letter-spacing:0.06em;text-transform:uppercase;
+  color:var(--ink45);padding:12px 20px;
+  border-bottom:2px solid transparent;margin-bottom:-2px;
+  transition:color 0.15s,border-color 0.15s;white-space:nowrap;
+}
+.tab:hover{color:var(--gold)}
+.tab.on{color:var(--navy);border-bottom-color:var(--navy);font-weight:500}
+.tab-panel{display:none}
+.tab-panel.on{display:block}
+
+/* Cards */
+.card{
+  background:var(--cream);border:1px solid var(--ink08);
+  border-radius:var(--r);margin-bottom:16px;overflow:hidden;
+}
+.card-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 20px 14px;border-bottom:1px solid var(--ink08);
+}
+.card-title{font-family:var(--serif);font-size:16px;font-weight:400;color:var(--ink)}
+.card-tag{
+  font-size:10px;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--gold);background:var(--gold-pale);
+  padding:4px 10px;border-radius:100px;border:1px solid var(--gold-border);
+}
+.card-body{
+  padding:20px;font-size:13px;font-weight:300;line-height:1.85;
+  color:var(--ink70);white-space:pre-wrap;min-height:60px;
+}
+.copy-bar{
+  padding:10px 20px;border-top:1px solid var(--ink08);
+  background:var(--cream2);display:flex;justify-content:flex-end;
+}
+.btn-copy{
+  display:flex;align-items:center;gap:6px;
+  background:none;border:1px solid var(--ink08);border-radius:var(--r);
+  font-family:var(--sans);font-size:11px;font-weight:400;
+  letter-spacing:0.06em;color:var(--ink45);
+  padding:6px 14px;cursor:pointer;transition:border-color 0.15s,color 0.15s;
+}
+.btn-copy:hover{border-color:var(--navy);color:var(--navy)}
+.btn-copy svg{width:13px;height:13px}
+
+/* Capture */
+.cap-ring{
+  width:64px;height:64px;border-radius:50%;
+  background:var(--gold-pale);border:1.5px solid var(--gold-border);
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:28px;
+}
+.cap-ring svg{width:26px;height:26px;stroke:var(--gold);fill:none;stroke-width:1.5}
+.cap-title{
+  font-family:var(--serif);font-size:30px;font-weight:400;
+  color:var(--ink);margin-bottom:12px;text-align:center;
+}
+.cap-sub{
+  font-size:15px;font-weight:300;line-height:1.7;
+  color:var(--ink70);text-align:center;margin-bottom:32px;
+}
+.f-group{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;width:100%}
+.f-label{font-size:12px;font-weight:400;letter-spacing:0.04em;color:var(--ink70)}
+.btn-gen{
+  width:100%;padding:15px;margin-top:8px;
+  background:var(--navy);color:var(--cream);
+  border:none;border-radius:100px;cursor:pointer;
+  font-family:var(--sans);font-size:14px;font-weight:400;
+  letter-spacing:0.1em;text-transform:uppercase;
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  transition:background 0.15s,opacity 0.15s;
+}
+.btn-gen:hover{background:var(--navy-mid)}
+.cap-note{font-size:12px;color:var(--ink45);line-height:1.6;text-align:center;margin-top:16px}
+.cap-note a{color:var(--ink45);text-decoration:underline}
+
+/* Audit-specific results */
+.score-hero{
+  display:flex;align-items:flex-start;gap:36px;
+  background:var(--cream2);border:1px solid var(--ink08);
+  border-radius:var(--r);padding:32px;margin-bottom:28px;
+}
+.score-circle-wrap{position:relative;flex-shrink:0}
+.score-inner{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+}
+.score-n{
+  font-family:var(--serif);font-size:28px;font-weight:500;
+  line-height:1;color:var(--navy);
+}
+.score-d{font-size:11px;color:var(--ink45);margin-top:2px}
+.score-txt h3{
+  font-family:var(--serif);font-size:20px;font-weight:400;
+  color:var(--ink);margin-bottom:10px;line-height:1.3;
+}
+.score-txt p{font-size:14px;font-weight:300;line-height:1.7;color:var(--ink70)}
+.score-note{
+  font-size:12px;color:var(--ink70);line-height:1.6;
+  border-left:2px solid var(--gold);
+  padding:0 0 0 16px;margin-bottom:36px;
+}
+.areas{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:40px}
+.area-card{
+  padding:20px 22px;background:var(--cream);
+  border:1px solid var(--ink08);border-radius:var(--r);
+}
+.area-name{
+  font-size:11px;letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:10px;
+}
+.area-num{
+  font-family:var(--serif);font-size:32px;font-weight:400;
+  color:var(--navy);margin-bottom:10px;
+}
+.area-bar{height:2px;background:var(--ink08);border-radius:1px;overflow:hidden;margin-bottom:8px}
+.area-fill{height:100%;background:var(--gold);border-radius:1px;transition:width 1s var(--ease)}
+.area-status{font-size:12px;color:var(--ink45)}
+.findings{margin-bottom:40px}
+.find-title{
+  font-size:11px;letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:20px;
+}
+.finding{
+  display:flex;align-items:flex-start;gap:20px;
+  padding:18px 0;border-bottom:1px solid var(--ink08);
+}
+.find-n{
+  font-family:var(--serif);font-size:13px;color:var(--navy);
+  font-weight:400;min-width:24px;letter-spacing:0.04em;margin-top:2px;
+}
+.find-t{font-size:15px;font-weight:300;line-height:1.6;color:var(--ink)}
+
+/* Mobile */
+@media(max-width:600px){
+  header{padding:0 20px}
+  .areas{grid-template-columns:1fr}
+  .score-hero{flex-direction:column;align-items:center;text-align:center}
+  .tabs{overflow-x:auto}
+  .tab{padding:10px 14px;font-size:11px}
+  .rec-actions,.pro-actions{flex-direction:column;align-items:flex-start}
+}
+.score-hero{display:flex;align-items:flex-start;gap:36px;background:var(--cream2);border:1px solid var(--ink08);border-radius:var(--r);padding:32px;margin-bottom:28px}
+.score-circle-wrap{position:relative;flex-shrink:0}
+.score-inner{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.score-n{font-family:var(--serif);font-size:28px;font-weight:500;line-height:1;color:var(--navy)}
+.score-d{font-size:11px;color:var(--ink45);margin-top:2px}
+.score-txt h3{font-family:var(--serif);font-size:20px;font-weight:400;color:var(--ink);margin-bottom:10px;line-height:1.3}
+.score-txt p{font-size:14px;font-weight:300;line-height:1.7;color:var(--ink70)}
+.score-note{font-size:12px;color:var(--ink70);line-height:1.6;border-left:2px solid var(--gold);padding:0 0 0 16px;margin-bottom:36px}
+.areas{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:40px}
+.area-card{padding:20px 22px;background:var(--cream);border:1px solid var(--ink08);border-radius:var(--r)}
+.area-name{font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.area-num{font-family:var(--serif);font-size:32px;font-weight:400;color:var(--navy);margin-bottom:10px}
+.area-bar{height:2px;background:var(--ink08);border-radius:1px;overflow:hidden;margin-bottom:8px}
+.area-fill{height:100%;background:var(--gold);border-radius:1px;transition:width 1s}
+.area-status{font-size:12px;color:var(--ink45)}
+.findings{margin-bottom:40px}
+.find-title{font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);margin-bottom:20px}
+.finding{display:flex;align-items:flex-start;gap:20px;padding:18px 0;border-bottom:1px solid var(--ink08)}
+.find-n{font-family:var(--serif);font-size:13px;color:var(--navy);font-weight:400;min-width:24px;letter-spacing:0.04em;margin-top:2px}
+.find-t{font-size:15px;font-weight:300;line-height:1.6;color:var(--ink)}
+.cap-ring{width:64px;height:64px;border-radius:50%;background:var(--gold-pale);border:1.5px solid var(--gold-border);display:flex;align-items:center;justify-content:center;margin-bottom:28px}
+.cap-ring svg{width:26px;height:26px;stroke:var(--gold);fill:none;stroke-width:1.5}
+.cap-title{font-family:var(--serif);font-size:30px;font-weight:400;color:var(--ink);margin-bottom:12px;text-align:center}
+.cap-sub{font-size:15px;font-weight:300;line-height:1.7;color:var(--ink70);text-align:center;margin-bottom:32px}
+.f-group{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;width:100%}
+.f-label{font-size:12px;font-weight:400;letter-spacing:0.04em;color:var(--ink70)}
+.f-input{width:100%;padding:13px 16px;background:var(--cream);border:1.5px solid var(--ink08);border-radius:var(--r);font-family:var(--sans);font-size:14px;font-weight:300;color:var(--ink);transition:border-color 0.15s}
+.f-input:focus{outline:none;border-color:var(--gold)}
+.f-input::placeholder{color:var(--ink45)}
+
+.btn-gen:hover{background:var(--navy-mid)}
+.cap-note{font-size:12px;color:var(--ink45);line-height:1.6;text-align:center;margin-top:16px}
+.cap-note a{color:var(--ink45);text-decoration:underline}
+.rec{background:var(--navy);color:#fff;border-radius:var(--r);padding:40px;margin-bottom:16px}
+.rec-eye{font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold-l);margin-bottom:16px;opacity:0.85}
+.rec-title{font-family:var(--serif);font-size:clamp(20px,3vw,28px);font-weight:400;color:#fff;margin-bottom:14px;line-height:1.25}
+.rec-body{font-size:14px;font-weight:300;line-height:1.75;color:rgba(255,255,255,0.7);margin-bottom:28px}
+.rec-actions{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.btn-rec{display:inline-flex;align-items:center;background:var(--gold);color:var(--navy);font-family:var(--sans);font-size:12px;font-weight:500;letter-spacing:0.04em;padding:12px 22px;border-radius:2px;text-decoration:none;transition:opacity 0.15s,transform 0.15s}
+.btn-rec:hover{opacity:0.9;transform:translateY(-1px)}
+.btn-rec-ghost{font-family:var(--sans);font-size:12px;font-weight:300;color:rgba(255,255,255,0.5);text-decoration:none;border-bottom:1px solid rgba(255,255,255,0.2);padding-bottom:2px;transition:color 0.15s}
+.btn-rec-ghost:hover{color:rgba(255,255,255,0.85)}
+.pro-teaser{background:var(--cream2);border:1px solid var(--gold-border);border-radius:var(--r);padding:32px;margin-bottom:24px}
+.pro-eye{font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.pro-title{font-family:var(--serif);font-size:22px;font-weight:400;color:var(--ink);margin-bottom:10px}
+.pro-body{font-size:14px;font-weight:300;line-height:1.75;color:var(--ink70)}
+.disclaimer{font-size:12px;color:var(--ink45);line-height:1.7;padding-top:20px;border-top:1px solid var(--ink08)}
+.disclaimer a{color:var(--ink45);text-decoration:underline}
+@media(max-width:600px){.areas{grid-template-columns:1fr}.score-hero{flex-direction:column;align-items:center;text-align:center}}
+
+
+.header-all-tools{font-family:var(--sans);font-size:12px;font-weight:300;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink45);text-decoration:none;padding:8px 16px;border:1px solid var(--ink08);border-radius:100px;transition:all 0.15s;margin-right:12px}.header-all-tools:hover{color:var(--ink);border-color:var(--ink20)}
+</style>
+</head>
+<body>
+
+<header class="land-hide">
+  <a class="logo" href="#"><img src="Worvane_Logo.png" alt="Worvane" style="height:auto;width:180px;display:block;"></a>
+  <a href="#" class="header-all-tools">All tools</a><div class="header-pill">Free Business Audit</div>
+</header>
+
+<div class="screen active" id="s-land"><div class="land-wrap">
+  <img src="Worvane_Logo.png" alt="Worvane" class="land-logo">
+  <h1 class="land-title">Your business has<br><em>blind spots.</em></h1>
+  <button class="land-btn" onclick="startAudit()">Get my free audit &rarr;</button>
+</div></div>
+
+<div class="screen" id="s-intake">
+  <div class="prog-wrap">
+    <div class="prog-top"><span class="prog-label">Your audit</span><span class="prog-count" id="q-count">Question 1 of 8</span></div>
+    <div class="prog-track"><div class="prog-fill" id="prog-fill" style="width:12.5%"></div></div>
+  </div>
+  <p style="font-size:12px;color:var(--ink45);font-weight:300;letter-spacing:0.02em;text-align:center;margin:28px 0 32px;padding:0 8px">The more honestly you answer, the more useful your results will be.</p>
+  <div id="q-container" style="width:100%;max-width:640px;"></div>
+</div>
+
+<div class="screen" id="s-capture">
+  <div class="cap-ring"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+  <h2 class="cap-title">Almost there</h2>
+  <p class="cap-sub">Your health score is ready. Enter your details and we’ll deliver your results instantly.</p>
+  <div class="f-group"><label class="f-label" for="f-name">First name</label><input class="f-input" id="f-name" type="text" placeholder="Sarah"></div>
+  <div class="f-group"><label class="f-label" for="f-email">Email address</label><input class="f-input" id="f-email" type="email" placeholder="sarah@yourbusiness.co.uk"></div>
+  <div class="f-group"><label class="f-label" for="f-biz">What type of business do you run?</label><input class="f-input" id="f-biz" type="text" placeholder="e.g. Marketing agency, plumbing company..."></div>
+  <button class="btn-gen" onclick="startLoading()">Generate my health score</button>
+  <p class="cap-note">No spam &mdash; unsubscribe anytime. <a href="#">Privacy Policy</a>.</p>
+</div>
+
+<div class="screen" id="s-load"><div class="load-screen-inner">
+  <div class="load-ring"></div>
+  <h2 class="load-title">Analysing your responses</h2>
+  <p class="load-sub">Calculating your scores across four business areas&hellip;</p>
+  <div class="load-steps">
+    <div class="l-row"><div class="l-dot wait" id="ld1"></div><span class="l-txt wait" id="lt1">Reading your answers</span></div>
+    <div class="l-row"><div class="l-dot wait" id="ld2"></div><span class="l-txt wait" id="lt2">Scoring each business area</span></div>
+    <div class="l-row"><div class="l-dot wait" id="ld3"></div><span class="l-txt wait" id="lt3">Identifying your key findings</span></div>
+    <div class="l-row"><div class="l-dot wait" id="ld4"></div><span class="l-txt wait" id="lt4">Preparing your recommendation</span></div>
+  </div>
+
+  <p style="font-size:11px;color:var(--ink45);margin-top:24px;letter-spacing:0.04em">Your responses are private and never shared.</p>
+</div></div>
+
+<div class="screen" id="s-results"><div class="results-inner">
+  <div class="res-head"><div class="res-eye">Business Health Report &middot; Worvane</div><div class="res-name" id="r-name">Your Business</div><div class="res-meta" id="r-meta">Completed today</div>
+    <button onclick="window.location.reload()" style="margin-top:12px;background:none;border:1px solid var(--ink08);border-radius:100px;padding:7px 16px;font-family:var(--sans);font-size:12px;font-weight:300;letter-spacing:0.06em;color:var(--ink45);cursor:pointer;transition:all 0.15s" onmouseover="this.style.borderColor='var(--gold-border)';this.style.color='var(--ink)'" onmouseout="this.style.borderColor='var(--ink08)';this.style.color='var(--ink45)'">&#8635; Regenerate</button></div>
+  <div class="score-hero"><div class="score-circle-wrap"><svg width="96" height="96" viewBox="0 0 96 96"><circle cx="48" cy="48" r="42" fill="none" stroke="var(--ink08)" stroke-width="3"/><circle cx="48" cy="48" r="42" fill="none" stroke="#B8952E" stroke-width="3" stroke-dasharray="263.9" stroke-dashoffset="263.9" id="score-arc" stroke-linecap="round"/></svg><div class="score-inner"><div class="score-n" id="r-score">&mdash;</div><div class="score-d">/ 100</div></div></div><div class="score-txt"><h3 id="r-headline">Your results are ready</h3><p id="r-summary">Based on your responses, we’ve identified your key strengths and the areas with the greatest opportunity for growth.</p></div></div>
+  <div class="score-note">Your scores reflect the business practices and systems you described. Scores are calculated directly from your responses &mdash; not adjusted to recommend products.</div>
+  <div class="areas"><div class="area-card"><div class="area-name">Sales &amp; Revenue</div><div class="area-num" id="a-sales">&mdash;</div><div class="area-bar"><div class="area-fill" id="b-sales" style="width:0%"></div></div><div class="area-status" id="s-sales"></div></div><div class="area-card"><div class="area-name">Marketing</div><div class="area-num" id="a-mkt">&mdash;</div><div class="area-bar"><div class="area-fill" id="b-mkt" style="width:0%"></div></div><div class="area-status" id="s-mkt"></div></div><div class="area-card"><div class="area-name">Operations</div><div class="area-num" id="a-ops">&mdash;</div><div class="area-bar"><div class="area-fill" id="b-ops" style="width:0%"></div></div><div class="area-status" id="s-ops"></div></div><div class="area-card"><div class="area-name">Strategy &amp; Goals</div><div class="area-num" id="a-str">&mdash;</div><div class="area-bar"><div class="area-fill" id="b-str" style="width:0%"></div></div><div class="area-status" id="s-str"></div></div></div>
+  <div class="findings"><div class="find-title">Your three key findings</div><div class="finding"><div class="find-n">01</div><div class="find-t" id="f1">&mdash;</div></div><div class="finding"><div class="find-n">02</div><div class="find-t" id="f2">&mdash;</div></div><div class="finding"><div class="find-n">03</div><div class="find-t" id="f3">&mdash;</div></div></div>
+  <div class="rec"><div class="rec-eye">Worvane Recommendation</div><div class="rec-title" id="rec-title">Your recommended next step</div><div class="rec-body" id="rec-body">Based on your results, here is your personalised recommendation.</div><div class="rec-actions"><a href="#" class="btn-rec" id="rec-cta-1">Get started &rarr;</a><a href="#" class="btn-rec-ghost">View full diagnostic &mdash; &pound;197</a></div></div>
+  <div style="text-align:center;margin:24px 0;padding:20px;background:var(--cream2);border-radius:var(--r);border:1px solid var(--ink08)"><p style="font-size:13px;color:var(--ink70);margin:0">Know a business owner with blind spots? <strong style="color:var(--ink)">Send them this audit &mdash; it is free.</strong> <a href="mailto:?subject=Free%20Business%20Health%20Audit&body=I%20just%20did%20this%20free%20business%20audit%20and%20thought%20you%20might%20find%20it%20useful%3A%20https%3A%2F%2Fworvane.co%2Fworvane-audit.html" style="color:var(--gold);text-decoration:none;margin-left:8px">Share &rarr;</a></p></div><div class="pro-teaser"><div class="pro-eye">Worvane Pro</div><div class="pro-title">For clients who mean business</div><div class="pro-body">Our valued clients gain access to Worvane Pro &mdash; a monthly membership giving you <strong>unlimited access to all tools, quarterly re-diagnostics, and monthly strategy updates</strong>, all for &pound;97 per month. Available after your first Worvane purchase.</div></div>
+  <div class="disclaimer"><span><strong style="color:var(--ink45);font-weight:400">Please note:</strong> This report is generated based solely on your responses and is provided for strategic guidance only. It does not constitute professional legal, financial, or business advice. Questions? Contact us at <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="95fdf0f9f9fad5e2fae7e3f4fbf0bbf6fa">[email&#160;protected]</a></span><div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--ink08)"><span style="font-size:13px;color:var(--ink45)">Most business owners read a report like this and do nothing. The ones who grow are the ones who act on it this week.</span></div></div>
+</div></div>
+
+<script>
+
+// ── QUESTIONS DATA ──
+const Qs = [
+  {
+    id:'q1',area:'About your business',
+    text:'How long has your business been running, and roughly how many people work in it?',
+    type:'opts',
+    opts:['Less than 1 year — just getting started','1–3 years, just me or one other','2–5 years, small team of 3–10','5+ years, established team of 10–15','5+ years, growing team of 15+'],
+    // Score weights: later options = more established = higher ops/strategy score
+    scores:{ops:[10,20,40,65,80],str:[10,20,40,60,75]}
+  },
+  {
+    id:'q2',area:'About your business',
+    text:'Which best describes how your business gets <em>most of its revenue</em> right now?',
+    type:'opts',
+    opts:['Almost entirely referrals — word of mouth only','Repeat clients who keep coming back','One-off projects or single purchases','A mix of repeat and new clients from active marketing','Diversified — multiple reliable revenue streams'],
+    scores:{sales:[25,55,35,70,85]}
+  },
+  {
+    id:'q3',area:'Your biggest challenge',
+    text:'What\'s the <em>single biggest thing</em> holding your business back right now?',
+    type:'opts',
+    opts:['Not enough leads or enquiries coming in','Inconsistent or unpredictable revenue','Too much on my plate — I can\'t step away','No clear plan or direction for growth','Difficulty converting leads into paying clients'],
+    scores:{mkt:[10,30,50,20,40],ops:[30,20,10,40,50],str:[30,30,50,10,40]}
+  },
+  {
+    id:'q4',area:'Sales & revenue',
+    text:'When it comes to sales and winning new clients — which feels most true for you?',
+    type:'opts',
+    opts:['I rely on word of mouth and hope for the best','I have no consistent process or system for sales','I follow up with leads but rarely convert them','I have a sales process but it needs improvement','My sales approach is consistent and working well'],
+    scores:{sales:[15,20,35,60,85]}
+  },
+  {
+    id:'q5',area:'Operations',
+    text:'How well does your business run <em>without you</em> personally involved in everything?',
+    type:'scale',
+    labels:['Falls apart completely','Runs very well without me'],
+    scores:{ops:[10,25,45,65,85]}
+  },
+  {
+    id:'q6',area:'Strategy & goals',
+    text:'Do you have clear goals for your business for the next 12 months — written down and actively worked towards?',
+    type:'yn',
+    opts:['Yes — clearly defined and tracked','Sort of — in my head but not written','Not really','No clear goals at all'],
+    scores:{str:[85,50,25,10]}
+  },
+  {
+    id:'q7',area:'Marketing',
+    text:'How would you describe your current marketing effort?',
+    type:'opts',
+    opts:['We barely do any marketing at all','We post occasionally but see little return','Inconsistent and unplanned — it comes and goes','We do some marketing but it\'s not strategic enough','We have a consistent, working marketing approach'],
+    scores:{mkt:[10,25,35,55,85]}
+  },
+  {
+    id:'q8',area:'Your priorities',
+    text:'If you could fix <em>one area</em> of your business in the next 90 days, what would have the biggest impact?',
+    type:'opts',
+    opts:['Getting more leads and new clients','Building a proper, repeatable sales process','Creating systems so I\'m not doing everything','Setting a clear strategy and 12-month plan','Improving my marketing and content presence'],
+    scores:{mkt:[10,30,50,30,10],sales:[30,10,40,30,50],ops:[40,30,10,40,50],str:[30,40,60,10,30]}
+  }
+];
+
+let answers = {};
+let currentQ = 0;
+
+// ── SCREEN MANAGEMENT ──
+function show(id){
+  var hdr=document.querySelector('header'); if(hdr){ id==='s-land'?hdr.classList.add('land-hide'):hdr.classList.remove('land-hide'); }
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  const el=document.getElementById(id);
+  el.classList.add('active');
+  el.style.animation='none';
+  el.offsetHeight;
+  el.style.animation='fadeIn 0.38s ease both';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function startAudit(){show('s-intake');renderQ(0)}
+
+// ── RENDER QUESTION ──
+function renderQ(idx){
+  const q=Qs[idx];
+  const pct=((idx+1)/8)*100;
+  document.getElementById('q-count').textContent=`Question ${idx+1} of 8`;
+  document.getElementById('prog-fill').style.width=pct+'%';
+
+  let html=`<div class="q-wrap">
+    <div class="q-area">${q.area}</div>
+    <div class="q-text">${q.text}</div>`;
+
+  if(q.type==='opts'){
+    html+=`<div class="opts">`;
+    q.opts.forEach((o,i)=>{
+      const sel=answers[q.id]===i?'sel':'';
+      html+=`<button class="opt ${sel}" onclick="pickOpt('${q.id}',${i},this)">
+        <div class="opt-radio"></div><span class="opt-txt">${o}</span>
+      </button>`;
+    });
+    html+=`</div>`;
+  } else if(q.type==='scale'){
+    html+=`<div class="scale-btns">`;
+    for(let i=0;i<5;i++){
+      const sel=answers[q.id]===i?'sel':'';
+      html+=`<button class="sc-btn ${sel}" onclick="pickScale('${q.id}',${i},this)">${i+1}</button>`;
+    }
+    html+=`</div><div class="scale-labels"><span class="sc-label">${q.labels[0]}</span><span class="sc-label">${q.labels[1]}</span></div>`;
+  } else if(q.type==='yn'){
+    html+=`<div class="yn-btns">`;
+    q.opts.forEach((o,i)=>{
+      const sel=answers[q.id]===i?'sel':'';
+      html+=`<button class="yn-btn ${sel}" onclick="pickYN('${q.id}',${i},this)">${o}</button>`;
+    });
+    html+=`</div>`;
+  }
+
+  const hasAns=answers[q.id]!==undefined;
+  const isLast=idx===7;
+  html+=`<div class="q-nav">`;
+  if(idx>0) html+=`<button class="btn-back" onclick="goBack()">← Back</button>`;
+  else html+=`<div></div>`;
+  html+=`<button class="btn-next" id="btn-next" ${hasAns?'':'disabled'} onclick="nextQ()">
+    ${isLast?'See my results →':'Continue →'}
+  </button></div></div>`;
+
+  const c=document.getElementById('q-container');
+  c.style.opacity='0';c.style.transform='translateY(10px)';
+  c.innerHTML=html;
+  requestAnimationFrame(()=>{
+    c.style.transition='opacity 0.28s ease, transform 0.28s ease';
+    c.style.opacity='1';c.style.transform='translateY(0)';
+  });
+}
+
+function pickOpt(id,idx,el){
+  answers[id]=idx;
+  document.querySelectorAll('.opt').forEach(b=>b.classList.remove('sel'));
+  el.classList.add('sel');
+  document.getElementById('btn-next').disabled=false;
+}
+function pickScale(id,idx,el){
+  answers[id]=idx;
+  document.querySelectorAll('.sc-btn').forEach(b=>b.classList.remove('sel'));
+  el.classList.add('sel');
+  document.getElementById('btn-next').disabled=false;
+}
+function pickYN(id,idx,el){
+  answers[id]=idx;
+  document.querySelectorAll('.yn-btn').forEach(b=>b.classList.remove('sel'));
+  el.classList.add('sel');
+  document.getElementById('btn-next').disabled=false;
+}
+function goBack(){if(currentQ>0){currentQ--;renderQ(currentQ)}}
+function nextQ(){
+  if(currentQ<7){currentQ++;renderQ(currentQ)}
+  else{show('s-capture')}
+}
+
+// ── LOADING ──
+function startLoading(){
+  const name=document.getElementById('f-name').value||'there';
+  const biz=document.getElementById('f-biz').value||'your business';
+  window._name=name;window._biz=biz;
+  show('s-load');
+
+  const steps=[
+    {d:'ld1',t:'lt1',at:300},
+    {d:'ld2',t:'lt2',at:1300},
+    {d:'ld3',t:'lt3',at:2500},
+    {d:'ld4',t:'lt4',at:3700}
+  ];
+
+  steps.forEach(s=>{
+    document.getElementById(s.d).className='l-dot wait';
+    document.getElementById(s.t).className='l-txt wait';
+  });
+
+  steps.forEach((s,i)=>{
+    setTimeout(()=>{
+      if(i>0){
+        document.getElementById(steps[i-1].d).className='l-dot done';
+        document.getElementById(steps[i-1].t).className='l-txt done';
+      }
+      document.getElementById(s.d).className='l-dot act';
+      document.getElementById(s.t).className='l-txt act';
+    },s.at);
+  });
+
+  setTimeout(()=>{
+    document.getElementById('ld4').className='l-dot done';
+    document.getElementById('lt4').className='l-txt done';
+    buildResults();
+  },5000);
+}
+
+// ── SCORING ENGINE — honest, directly from answers ──
+function calcScores(){
+  // Accumulate weighted scores per area
+  const raw={sales:[],mkt:[],ops:[],str:[]};
+
+  Qs.forEach(q=>{
+    const ans=answers[q.id];
+    if(ans===undefined||!q.scores) return;
+    Object.entries(q.scores).forEach(([area,scoreArr])=>{
+      if(raw[area]) raw[area].push(scoreArr[ans]);
+    });
+  });
+
+  // Average each area, clamp 5-95
+  const avg=(arr)=>arr.length?Math.round(arr.reduce((a,b)=>a+b,0)/arr.length):50;
+  const clamp=(v)=>Math.min(95,Math.max(5,v));
+
+  return{
+    sales:clamp(avg(raw.sales)),
+    mkt:clamp(avg(raw.mkt)),
+    ops:clamp(avg(raw.ops)),
+    str:clamp(avg(raw.str))
+  };
+}
+
+// ── BUILD RESULTS ──
+function buildResults(){
+  const name=window._name||'there';
+  const biz=window._biz||'your business';
+  const sc=calcScores();
+  const overall=Math.round((sc.sales+sc.mkt+sc.ops+sc.str)/4);
+
+  // Header
+  document.getElementById('r-name').textContent=
+    "Business Health Report";
+  document.getElementById('r-meta').textContent=`${biz} · Completed today · Worvane`;
+
+  // Overall score
+  document.getElementById('r-score').textContent=overall;
+  const circ=263.9;
+  const offset=circ-(overall/100)*circ;
+  setTimeout(()=>{
+    const arc=document.getElementById('score-arc');
+    arc.style.transition='stroke-dashoffset 1.3s cubic-bezier(0,0,0.2,1)';
+    arc.style.strokeDashoffset=offset;
+  },200);
+
+  // Headline
+  const headlines=[
+    'Significant room to grow — and clear where to start',
+    'Good foundations — here\'s how to build on them',
+    'Strong position — let\'s sharpen what\'s working'
+  ];
+  const hi=overall<45?0:overall<72?1:2;
+  document.getElementById('r-headline').textContent=headlines[hi];
+  document.getElementById('r-summary').textContent=
+    `Based on your responses, we've scored your business across four key areas. Your results and recommendations below are specific to what you told us.`;
+
+  // Area cards
+  function setArea(nId,bId,sId,val){
+    document.getElementById(nId).textContent=val+'/100';
+    setTimeout(()=>document.getElementById(bId).style.width=val+'%',300);
+    const el=document.getElementById(sId);
+    if(val<40){el.textContent='High priority';el.className='area-status st-hi'}
+    else if(val<65){el.textContent='Needs attention';el.className='area-status st-md'}
+    else{el.textContent='Good foundation';el.className='area-status st-ok'}
+  }
+  setArea('a-sales','b-sales','s-sales',sc.sales);
+  setArea('a-mkt','b-mkt','s-mkt',sc.mkt);
+  setArea('a-ops','b-ops','s-ops',sc.ops);
+  setArea('a-str','b-str','s-str',sc.str);
+
+  // Findings — based on actual scores
+  const areas=[
+    {name:'Sales & Revenue',score:sc.sales,
+      findings:{
+        low:'Your business has <strong>no consistent sales process</strong> — revenue relies heavily on who happens to find you, rather than a repeatable system for winning new clients.',
+        mid:'Your sales approach is <strong>partially developed</strong> but inconsistent. You\'re winning clients, but not reliably enough to forecast revenue with confidence.',
+        hi:'Your sales foundations are <strong>solid</strong>. The opportunity now is optimising your conversion rate and expanding into new channels.'
+      }
+    },
+    {name:'Marketing',score:sc.mkt,
+      findings:{
+        low:'Your business is <strong>largely invisible</strong> to potential clients who don\'t already know you. Without a marketing presence, growth depends on luck rather than a system.',
+        mid:'Your marketing activity exists but it\'s <strong>inconsistent and unstrategic</strong>. You\'re putting in effort without a clear return.',
+        hi:'Your marketing is <strong>working reasonably well</strong>. The next step is making it more systematic and measurable.'
+      }
+    },
+    {name:'Operations',score:sc.ops,
+      findings:{
+        low:'Your business is <strong>heavily dependent on you personally</strong>. This creates a ceiling on growth and significant risk if you step away even briefly.',
+        mid:'You have some systems in place but <strong>key processes still run through you</strong>. Documenting and delegating more would unlock the next level of growth.',
+        hi:'Your operations are <strong>well structured</strong>. The business can function without you in most situations — a strong foundation for scaling.'
+      }
+    },
+    {name:'Strategy & Goals',score:sc.str,
+      findings:{
+        low:'Without clearly defined goals, your energy is <strong>spread across too many priorities</strong>. Growth is happening reactively rather than by design.',
+        mid:'You have a general sense of direction but <strong>no structured plan to get there</strong>. Clarity on priorities and milestones would accelerate progress significantly.',
+        hi:'You have <strong>clear goals and a working strategy</strong>. The focus now is on execution consistency and measuring progress against targets.'
+      }
+    }
+  ];
+
+  // Sort by score ascending to find priorities
+  const sorted=[...areas].sort((a,b)=>a.score-b.score);
+
+  function getFinding(a){
+    if(a.score<40) return a.findings.low;
+    if(a.score<65) return a.findings.mid;
+    return a.findings.hi;
+  }
+
+  document.getElementById('f1').innerHTML=getFinding(sorted[0]);
+  document.getElementById('f2').innerHTML=getFinding(sorted[1]);
+  // Finding 3: their strongest area as a positive
+  const strongest=sorted[sorted.length-1];
+  document.getElementById('f3').innerHTML=
+    `Your strongest area is <strong>${strongest.name}</strong> — this is your foundation to build from and leverage as you address other priorities.`;
+
+  // Recommendation — based on lowest scoring area
+  const lowest=sorted[0];
+  const recs={
+    'Sales & Revenue':{
+      title:'Your priority: build a consistent sales process',
+      body:'Your sales score is your lowest area — which means this is where the most growth is available to you right now. A business that cannot generate new clients predictably will always feel fragile, regardless of how good the work is. The Sales Script Generator gives you a complete outreach sequence, discovery call framework, and objection handler, built around your specific clients and the challenge you described.',
+      cta:'Get Sales Script Generator — £49',
+      alt:'View full diagnostic — £197'
+    },
+    'Marketing':{
+      title:'Your priority: build a visible marketing presence',
+      body:'Your marketing score is your lowest area — which means potential clients who do not already know you cannot currently find you. Every month without a consistent presence is a month your competitors are building the visibility you are not. The Marketing Content Engine gives you 30 days of ready-to-use content, an email sequence, and ad copy — all built around your business and the clients you described.',
+      cta:'Get Marketing Content Engine — £49',
+      alt:'View full diagnostic — £197'
+    },
+    'Operations':{
+      title:'Your priority: build systems that work without you',
+      body:'Your operations score is your lowest area — which means too much of what makes this business work depends on you personally. That creates a ceiling on growth that no amount of sales or marketing can break through. The SOP Builder will help you document your core processes in a structured, professional format, so your business can function and grow without everything running through you.',
+      cta:'Get SOP Builder — £69',
+      alt:'View full diagnostic — £197'
+    },
+    'Strategy & Goals':{
+      title:'Your priority: build a clear 90-day plan',
+      body:'Your strategy score is your lowest area — which means decisions in the business are being made reactively rather than against a clear plan. The urgent keeps winning against the important, and the structural issues stay unresolved. The 90-Day Business Plan gives you a specific, structured action plan with weekly milestones, turning the goal you described into something you work against daily rather than something you hope toward.',
+      cta:'Get 90-Day Business Plan — £69',
+      alt:'View full diagnostic — £197'
+    }
+  };
+
+  const rec=recs[lowest.name];
+  document.getElementById('rec-title').textContent=rec.title;
+  document.getElementById('rec-body').textContent=rec.body;
+  document.getElementById('rec-cta-1').textContent=rec.cta;
+
+  show('s-results');
+}
+
+window.startAudit = startAudit;
+window.showScreen = show;
+
+</script>
+</body>
+</html>

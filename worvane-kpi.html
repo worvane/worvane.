@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>KPI Framework Generator &mdash; Worvane — Worvane</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --cream:#FAF8F4;
+  --cream2:#F3EFE8;
+  --cream3:#EAE4D9;
+  --ink:#1A1714;
+  --ink70:rgba(26,23,20,0.7);
+  --ink45:rgba(26,23,20,0.45);
+  --ink20:rgba(26,23,20,0.2);
+  --ink08:rgba(26,23,20,0.08);
+  --ink04:rgba(26,23,20,0.04);
+  --gold:#B8952E;
+  --gold-l:#C9A84C;
+  --gold-pale:rgba(184,149,46,0.1);
+  --gold-border:rgba(184,149,46,0.28);
+  --navy:#080F1E;
+  --navy-mid:#1a2540;
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --sans:'Outfit',sans-serif;
+  --ease:cubic-bezier(0.4,0,0.2,1);
+  --r:4px;
+}
+
+html{scroll-behavior:smooth}
+body{
+  background:var(--cream);color:var(--ink);
+  font-family:var(--sans);font-weight:300;
+  min-height:100vh;overflow-x:hidden;
+}
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;opacity:0.6;
+}
+
+/* HEADER */
+header.land-hide{display:none}
+header{
+  position:sticky;top:0;z-index:100;
+  background:rgba(250,248,244,0.97);
+  backdrop-filter:blur(12px);
+  border-bottom:3px solid var(--gold);
+  padding:0 48px;height:140px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo img{height:44px;width:auto;display:block}
+.header-pill{
+  font-family:var(--sans);font-size:12px;font-weight:500;
+  letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--cream);background:var(--navy);
+  border:1px solid var(--navy);
+  padding:10px 24px;border-radius:100px;
+}
+
+/* SCREENS */
+.screen{
+  display:none;flex-direction:column;align-items:center;
+  min-height:100vh;padding:80px 24px 120px;
+  position:relative;z-index:1;
+}
+.screen.active{display:flex}
+
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(14px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* ── LANDING — Hormozi: one headline, one line, one button ── */
+#s-land{
+  justify-content:center;padding:0;min-height:100vh;
+  background:var(--cream);
+}
+.land-wrap{
+  display:flex;flex-direction:column;align-items:center;
+  justify-content:center;
+  text-align:center;
+  min-height:100vh;
+  padding:0 24px;
+  animation:fadeIn 0.7s var(--ease) both;
+}
+.land-logo{
+  height:220px;width:auto;display:block;
+  margin:0 auto 140px;
+  opacity:1;
+  filter:drop-shadow(0 1px 3px rgba(26,23,20,0.15));
+}
+.land-title{
+  font-family:var(--serif);
+  font-size:clamp(42px,6.5vw,82px);
+  font-weight:400;line-height:1.05;
+  letter-spacing:-0.02em;
+  color:var(--ink);
+  max-width:800px;
+  margin:0 auto 40px;
+}
+.land-title em{font-style:italic;color:var(--gold)}
+.land-btn{
+  display:inline-flex;align-items:center;gap:10px;
+  background:var(--navy);color:var(--cream);
+  font-family:var(--sans);font-size:13px;font-weight:400;
+  letter-spacing:0.1em;text-transform:uppercase;
+  padding:16px 40px;border-radius:8px;
+  border:none;cursor:pointer;
+  transition:background 0.2s,transform 0.2s;
+}
+.land-btn:hover{background:var(--navy-mid);transform:translateY(-1px)}
+
+/* PROGRESS */
+.prog-wrap{max-width:640px;width:100%;margin-bottom:48px}
+.prog-top{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:10px;
+}
+.prog-label{
+  font-size:11px;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--gold);
+}
+.prog-count{font-size:12px;color:var(--gold)}
+.prog-track{height:2px;background:var(--ink08);border-radius:1px;overflow:hidden}
+.prog-fill{
+  height:100%;background:var(--navy);
+  transition:width 0.5s var(--ease);border-radius:1px;
+}
+
+/* QUESTION */
+.q-wrap{max-width:640px;width:100%}
+.q-area{
+  font-size:11px;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--gold);font-weight:400;margin-bottom:14px;
+}
+.q-text{
+  font-family:var(--serif);font-size:clamp(24px,4vw,34px);
+  font-weight:400;line-height:1.25;color:var(--ink);margin-bottom:12px;
+}
+.q-hint{
+  font-size:13px;font-weight:300;color:var(--ink70);
+  line-height:1.6;margin-bottom:28px;
+}
+
+/* Options */
+.opts{display:flex;flex-direction:column;gap:10px;margin-bottom:32px}
+.opt{
+  display:flex;align-items:center;gap:14px;
+  padding:15px 18px;border-radius:var(--r);
+  border:1.5px solid var(--ink08);background:var(--cream);
+  cursor:pointer;transition:border-color 0.18s,background 0.18s;
+  text-align:left;width:100%;font-family:var(--sans);
+}
+.opt:hover{border-color:var(--gold-border);background:var(--gold-pale)}
+.opt.sel{border-color:var(--gold);background:var(--gold-pale)}
+.opt-radio{
+  width:16px;height:16px;border-radius:50%;
+  border:1.5px solid var(--ink20);flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  transition:all 0.18s;
+}
+.opt.sel .opt-radio{border-color:var(--gold);background:var(--gold)}
+.opt.sel .opt-radio::after{
+  content:'';width:5px;height:5px;border-radius:50%;background:var(--cream);
+}
+.opt-txt{font-size:14px;color:var(--ink70);line-height:1.4;font-weight:300}
+.opt.sel .opt-txt{color:var(--ink)}
+.other-box{margin-top:8px}
+
+/* Scale */
+.scale-btns{display:flex;gap:8px;margin-bottom:10px}
+.sc-btn{
+  flex:1;padding:14px 6px;border-radius:var(--r);
+  border:1.5px solid var(--ink08);background:var(--cream);
+  cursor:pointer;font-family:var(--serif);font-size:20px;
+  color:var(--ink45);transition:all 0.18s;text-align:center;
+}
+.sc-btn:hover{border-color:var(--gold-border);color:var(--ink)}
+.sc-btn.sel{border-color:var(--gold);background:var(--gold-pale);color:var(--ink)}
+.scale-labels{display:flex;justify-content:space-between;margin-bottom:32px}
+.sc-label{font-size:11px;color:var(--ink45)}
+
+/* Yes/No */
+.yn-btns{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:32px}
+.yn-btn{
+  flex:1;min-width:120px;padding:14px 16px;border-radius:var(--r);
+  border:1.5px solid var(--ink08);background:var(--cream);
+  cursor:pointer;font-family:var(--sans);font-size:13px;
+  color:var(--ink70);transition:all 0.18s;font-weight:300;
+}
+.yn-btn:hover{border-color:var(--gold-border);background:var(--gold-pale);color:var(--ink)}
+.yn-btn.sel{border-color:var(--gold);background:var(--gold-pale);color:var(--ink)}
+
+/* Text input */
+.f-input{
+  width:100%;padding:14px 18px;
+  background:var(--cream);
+  border:1.5px solid var(--ink08);border-radius:var(--r);
+  font-family:var(--sans);font-size:14px;font-weight:300;
+  color:var(--ink);resize:vertical;line-height:1.6;
+  transition:border-color 0.15s;
+}
+.f-input:focus{outline:none;border-color:var(--gold)}
+.f-input::placeholder{color:var(--ink45)}
+
+/* Navigation */
+.q-nav{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-top:32px;width:100%;
+}
+.btn-back{
+  background:none;border:1px solid var(--ink20);cursor:pointer;
+  font-family:var(--sans);font-size:13px;font-weight:300;
+  letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--ink45);padding:12px 24px;border-radius:100px;
+  transition:border-color 0.15s,color 0.15s;
+}
+.btn-back:hover{color:var(--ink)}
+.btn-next{
+  background:var(--navy);color:var(--cream);
+  border:none;cursor:pointer;
+  font-family:var(--sans);font-size:13px;font-weight:400;
+  letter-spacing:0.1em;text-transform:uppercase;
+  padding:12px 32px;border-radius:100px;
+  transition:background 0.15s,opacity 0.15s;
+}
+.btn-next:hover{background:var(--navy-mid);transform:translateY(-1px)}
+.btn-next:disabled{opacity:0.35;cursor:not-allowed;transform:none}
+
+/* LOADING */
+.load-screen-inner{
+  display:flex;flex-direction:column;align-items:center;
+  justify-content:center;text-align:center;
+  max-width:480px;width:100%;
+}
+.load-ring{
+  width:52px;height:52px;border-radius:50%;
+  border:3px solid var(--ink08);border-top-color:var(--gold);
+  animation:spin 1s linear infinite;margin:0 auto 32px;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.load-title{
+  font-family:var(--serif);font-size:26px;font-weight:400;
+  color:var(--ink);margin-bottom:10px;
+}
+.load-sub{font-size:14px;color:var(--ink45);font-weight:300;line-height:1.7;margin-bottom:28px}
+.load-steps{width:100%;display:flex;flex-direction:column;gap:14px;text-align:left}
+.l-row{display:flex;align-items:center;gap:14px}
+.l-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;transition:background 0.3s}
+.l-dot.wait{background:var(--ink08)}
+.l-dot.act{background:var(--gold);width:10px;height:10px;animation:pulse 1s ease infinite;box-shadow:0 0 6px rgba(184,149,46,0.5)}
+.l-dot.done{background:var(--navy)}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+.l-txt{font-size:13px;font-weight:300;transition:color 0.3s}
+.l-txt.wait{color:var(--ink45)}
+.l-txt.act{color:var(--ink);font-weight:400}
+.l-txt.done{color:var(--ink45);text-decoration:line-through}
+
+/* RESULTS — shared */
+.results-inner{max-width:720px;width:100%;margin:0 auto}
+.res-head{
+  width:100%;padding-bottom:28px;
+  border-bottom:1px solid var(--ink08);margin-bottom:40px;
+}
+.res-eye{
+  font-size:11px;letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:10px;
+}
+.res-name{
+  font-family:var(--serif);font-size:clamp(26px,4vw,40px);
+  font-weight:400;color:var(--navy);margin-bottom:6px;
+}
+.res-meta{font-size:13px;color:var(--ink45)}
+
+/* Rec block */
+.rec,.rec-card{
+  background:var(--navy);color:#fff;
+  border-radius:var(--r);padding:40px;
+  margin-bottom:16px;
+}
+.rec-eye{
+  font-size:10px;letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--gold-l);margin-bottom:16px;opacity:0.85;
+}
+.rec-title{
+  font-family:var(--serif);font-size:clamp(20px,3vw,28px);
+  font-weight:400;color:#fff;margin-bottom:14px;line-height:1.25;
+}
+.rec-body{
+  font-size:14px;font-weight:300;line-height:1.75;
+  color:rgba(255,255,255,0.7);margin-bottom:28px;
+}
+.rec-actions{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.btn-rec,.btn-gold{
+  display:inline-flex;align-items:center;
+  background:var(--gold);color:var(--navy);
+  font-family:var(--sans);font-size:12px;font-weight:500;
+  letter-spacing:0.04em;padding:12px 22px;border-radius:2px;
+  text-decoration:none;transition:opacity 0.15s,transform 0.15s;
+}
+.btn-rec:hover,.btn-gold:hover{opacity:0.9;transform:translateY(-1px)}
+.btn-rec-ghost,.btn-ghost{
+  font-family:var(--sans);font-size:12px;font-weight:300;
+  color:rgba(255,255,255,0.5);text-decoration:none;
+  border-bottom:1px solid rgba(255,255,255,0.2);padding-bottom:2px;
+  transition:color 0.15s;
+}
+.btn-rec-ghost:hover,.btn-ghost:hover{color:rgba(255,255,255,0.85)}
+
+/* Pro teaser */
+.pro-teaser,.pro-card{
+  background:var(--cream2);border:1px solid var(--gold-border);
+  border-radius:var(--r);padding:32px;margin-bottom:24px;
+}
+.pro-eye{
+  font-size:10px;letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:10px;
+}
+.pro-title{
+  font-family:var(--serif);font-size:22px;font-weight:400;
+  color:var(--ink);margin-bottom:10px;
+}
+.pro-body{
+  font-size:14px;font-weight:300;line-height:1.75;
+  color:var(--ink70);
+}
+.pro-steps{margin:20px 0}
+.pro-steps-label{
+  font-size:11px;letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:14px;
+}
+.pro-step{
+  display:flex;align-items:flex-start;gap:14px;
+  padding:10px 0;border-bottom:1px solid var(--ink08);
+}
+.pro-step-circle{
+  width:24px;height:24px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;flex-shrink:0;
+  background:var(--cream3);border:1px solid var(--ink08);color:var(--ink45);
+}
+.pro-step-done-circle{background:var(--navy);border-color:var(--navy);color:#fff}
+.pro-step-text{font-size:13px;font-weight:300;color:var(--ink70);line-height:1.5;padding-top:4px}
+.pro-value{font-size:13px;color:var(--ink45);margin-bottom:20px}
+.pro-actions{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.btn-pro-join{
+  display:inline-flex;align-items:center;
+  background:var(--navy);color:var(--cream);
+  font-family:var(--sans);font-size:12px;font-weight:400;
+  letter-spacing:0.05em;padding:12px 22px;border-radius:2px;
+  text-decoration:none;transition:background 0.15s,transform 0.15s;
+}
+.btn-pro-join:hover{background:var(--navy-mid);transform:translateY(-1px)}
+.btn-pro-ghost{
+  font-family:var(--sans);font-size:12px;font-weight:300;
+  color:var(--ink45);text-decoration:none;
+  border-bottom:1px solid var(--ink20);padding-bottom:2px;
+  transition:color 0.15s;
+}
+.btn-pro-ghost:hover{color:var(--ink)}
+
+/* Disclaimer / note */
+.disclaimer,.note{
+  font-size:12px;color:var(--ink45);line-height:1.7;
+  padding-top:20px;border-top:1px solid var(--ink08);
+}
+.disclaimer a,.note a{color:var(--ink45);text-decoration:underline}
+
+/* Tabs */
+.tabs{
+  display:flex;width:100%;
+  border-bottom:2px solid var(--navy);margin-bottom:32px;
+}
+.tab{
+  background:none;border:none;cursor:pointer;
+  font-family:var(--sans);font-size:12px;font-weight:400;
+  letter-spacing:0.06em;text-transform:uppercase;
+  color:var(--ink45);padding:12px 20px;
+  border-bottom:2px solid transparent;margin-bottom:-2px;
+  transition:color 0.15s,border-color 0.15s;white-space:nowrap;
+}
+.tab:hover{color:var(--gold)}
+.tab.on{color:var(--navy);border-bottom-color:var(--navy);font-weight:500}
+.tab-panel{display:none}
+.tab-panel.on{display:block}
+
+/* Cards */
+.card{
+  background:var(--cream);border:1px solid var(--ink08);
+  border-radius:var(--r);margin-bottom:16px;overflow:hidden;
+}
+.card-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 20px 14px;border-bottom:1px solid var(--ink08);
+}
+.card-title{font-family:var(--serif);font-size:16px;font-weight:400;color:var(--ink)}
+.card-tag{
+  font-size:10px;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--gold);background:var(--gold-pale);
+  padding:4px 10px;border-radius:100px;border:1px solid var(--gold-border);
+}
+.card-body{
+  padding:20px;font-size:13px;font-weight:300;line-height:1.85;
+  color:var(--ink70);white-space:pre-wrap;min-height:60px;
+}
+.copy-bar{
+  padding:10px 20px;border-top:1px solid var(--ink08);
+  background:var(--cream2);display:flex;justify-content:flex-end;
+}
+.btn-copy{
+  display:flex;align-items:center;gap:6px;
+  background:none;border:1px solid var(--ink08);border-radius:var(--r);
+  font-family:var(--sans);font-size:11px;font-weight:400;
+  letter-spacing:0.06em;color:var(--ink45);
+  padding:6px 14px;cursor:pointer;transition:border-color 0.15s,color 0.15s;
+}
+.btn-copy:hover{border-color:var(--navy);color:var(--navy)}
+.btn-copy svg{width:13px;height:13px}
+
+/* Capture */
+.cap-ring{
+  width:64px;height:64px;border-radius:50%;
+  background:var(--gold-pale);border:1.5px solid var(--gold-border);
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:28px;
+}
+.cap-ring svg{width:26px;height:26px;stroke:var(--gold);fill:none;stroke-width:1.5}
+.cap-title{
+  font-family:var(--serif);font-size:30px;font-weight:400;
+  color:var(--ink);margin-bottom:12px;text-align:center;
+}
+.cap-sub{
+  font-size:15px;font-weight:300;line-height:1.7;
+  color:var(--ink70);text-align:center;margin-bottom:32px;
+}
+.f-group{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;width:100%}
+.f-label{font-size:12px;font-weight:400;letter-spacing:0.04em;color:var(--ink70)}
+.btn-gen{
+  width:100%;padding:15px;margin-top:8px;
+  background:var(--navy);color:var(--cream);
+  border:none;border-radius:2px;cursor:pointer;
+  font-family:var(--sans);font-size:14px;font-weight:400;
+  letter-spacing:0.05em;
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  transition:background 0.15s;
+}
+.btn-gen:hover{background:var(--navy-mid)}
+.cap-note{font-size:12px;color:var(--ink45);line-height:1.6;text-align:center;margin-top:16px}
+.cap-note a{color:var(--ink45);text-decoration:underline}
+
+/* Audit-specific results */
+.score-hero{
+  display:flex;align-items:flex-start;gap:36px;
+  background:var(--cream2);border:1px solid var(--ink08);
+  border-radius:var(--r);padding:32px;margin-bottom:28px;
+}
+.score-circle-wrap{position:relative;flex-shrink:0}
+.score-inner{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+}
+.score-n{
+  font-family:var(--serif);font-size:28px;font-weight:500;
+  line-height:1;color:var(--navy);
+}
+.score-d{font-size:11px;color:var(--ink45);margin-top:2px}
+.score-txt h3{
+  font-family:var(--serif);font-size:20px;font-weight:400;
+  color:var(--ink);margin-bottom:10px;line-height:1.3;
+}
+.score-txt p{font-size:14px;font-weight:300;line-height:1.7;color:var(--ink70)}
+.score-note{
+  font-size:12px;color:var(--ink70);line-height:1.6;
+  border-left:2px solid var(--gold);
+  padding:0 0 0 16px;margin-bottom:36px;
+}
+.areas{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:40px}
+.area-card{
+  padding:20px 22px;background:var(--cream);
+  border:1px solid var(--ink08);border-radius:var(--r);
+}
+.area-name{
+  font-size:11px;letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:10px;
+}
+.area-num{
+  font-family:var(--serif);font-size:32px;font-weight:400;
+  color:var(--navy);margin-bottom:10px;
+}
+.area-bar{height:2px;background:var(--ink08);border-radius:1px;overflow:hidden;margin-bottom:8px}
+.area-fill{height:100%;background:var(--gold);border-radius:1px;transition:width 1s var(--ease)}
+.area-status{font-size:12px;color:var(--ink45)}
+.findings{margin-bottom:40px}
+.find-title{
+  font-size:11px;letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:20px;
+}
+.finding{
+  display:flex;align-items:flex-start;gap:20px;
+  padding:18px 0;border-bottom:1px solid var(--ink08);
+}
+.find-n{
+  font-family:var(--serif);font-size:13px;color:var(--navy);
+  font-weight:400;min-width:24px;letter-spacing:0.04em;margin-top:2px;
+}
+.find-t{font-size:15px;font-weight:300;line-height:1.6;color:var(--ink)}
+
+/* Mobile */
+@media(max-width:600px){
+  header{padding:0 20px}
+  .areas{grid-template-columns:1fr}
+  .score-hero{flex-direction:column;align-items:center;text-align:center}
+  .tabs{overflow-x:auto}
+  .tab{padding:10px 14px;font-size:11px}
+  .rec-actions,.pro-actions{flex-direction:column;align-items:flex-start}
+}
+.score-hero{display:flex;align-items:flex-start;gap:36px;background:var(--cream2);border:1px solid var(--ink08);border-radius:var(--r);padding:32px;margin-bottom:28px}
+.score-circle-wrap{position:relative;flex-shrink:0}
+.score-inner{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.score-n{font-family:var(--serif);font-size:28px;font-weight:500;line-height:1;color:var(--navy)}
+.score-d{font-size:11px;color:var(--ink45);margin-top:2px}
+.score-txt h3{font-family:var(--serif);font-size:20px;font-weight:400;color:var(--ink);margin-bottom:10px;line-height:1.3}
+.score-txt p{font-size:14px;font-weight:300;line-height:1.7;color:var(--ink70)}
+.score-note{font-size:12px;color:var(--ink70);line-height:1.6;border-left:2px solid var(--gold);padding:0 0 0 16px;margin-bottom:36px}
+.areas{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:40px}
+.area-card{padding:20px 22px;background:var(--cream);border:1px solid var(--ink08);border-radius:var(--r)}
+.area-name{font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.area-num{font-family:var(--serif);font-size:32px;font-weight:400;color:var(--navy);margin-bottom:10px}
+.area-bar{height:2px;background:var(--ink08);border-radius:1px;overflow:hidden;margin-bottom:8px}
+.area-fill{height:100%;background:var(--gold);border-radius:1px;transition:width 1s}
+.area-status{font-size:12px;color:var(--ink45)}
+.findings{margin-bottom:40px}
+.find-title{font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);margin-bottom:20px}
+.finding{display:flex;align-items:flex-start;gap:20px;padding:18px 0;border-bottom:1px solid var(--ink08)}
+.find-n{font-family:var(--serif);font-size:13px;color:var(--navy);font-weight:400;min-width:24px;letter-spacing:0.04em;margin-top:2px}
+.find-t{font-size:15px;font-weight:300;line-height:1.6;color:var(--ink)}
+.cap-ring{width:64px;height:64px;border-radius:50%;background:var(--gold-pale);border:1.5px solid var(--gold-border);display:flex;align-items:center;justify-content:center;margin-bottom:28px}
+.cap-ring svg{width:26px;height:26px;stroke:var(--gold);fill:none;stroke-width:1.5}
+.cap-title{font-family:var(--serif);font-size:30px;font-weight:400;color:var(--ink);margin-bottom:12px;text-align:center}
+.cap-sub{font-size:15px;font-weight:300;line-height:1.7;color:var(--ink70);text-align:center;margin-bottom:32px}
+.f-group{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;width:100%}
+.f-label{font-size:12px;font-weight:400;letter-spacing:0.04em;color:var(--ink70)}
+.f-input{width:100%;padding:13px 16px;background:var(--cream);border:1.5px solid var(--ink08);border-radius:var(--r);font-family:var(--sans);font-size:14px;font-weight:300;color:var(--ink);transition:border-color 0.15s}
+.f-input:focus{outline:none;border-color:var(--gold)}
+.f-input::placeholder{color:var(--ink45)}
+.btn-gen{width:100%;padding:15px;margin-top:8px;background:var(--navy);color:var(--cream);border:none;border-radius:2px;cursor:pointer;font-family:var(--sans);font-size:14px;font-weight:400;letter-spacing:0.05em;display:flex;align-items:center;justify-content:center;gap:10px;transition:background 0.15s}
+.btn-gen:hover{background:var(--navy-mid)}
+.cap-note{font-size:12px;color:var(--ink45);line-height:1.6;text-align:center;margin-top:16px}
+.cap-note a{color:var(--ink45);text-decoration:underline}
+.rec{background:var(--navy);color:#fff;border-radius:var(--r);padding:40px;margin-bottom:16px}
+.rec-eye{font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold-l);margin-bottom:16px;opacity:0.85}
+.rec-title{font-family:var(--serif);font-size:clamp(20px,3vw,28px);font-weight:400;color:#fff;margin-bottom:14px;line-height:1.25}
+.rec-body{font-size:14px;font-weight:300;line-height:1.75;color:rgba(255,255,255,0.7);margin-bottom:28px}
+.rec-actions{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.btn-rec{display:inline-flex;align-items:center;background:var(--gold);color:var(--navy);font-family:var(--sans);font-size:12px;font-weight:500;letter-spacing:0.04em;padding:12px 22px;border-radius:2px;text-decoration:none;transition:opacity 0.15s,transform 0.15s}
+.btn-rec:hover{opacity:0.9;transform:translateY(-1px)}
+.btn-rec-ghost{font-family:var(--sans);font-size:12px;font-weight:300;color:rgba(255,255,255,0.5);text-decoration:none;border-bottom:1px solid rgba(255,255,255,0.2);padding-bottom:2px;transition:color 0.15s}
+.btn-rec-ghost:hover{color:rgba(255,255,255,0.85)}
+.pro-teaser{background:var(--cream2);border:1px solid var(--gold-border);border-radius:var(--r);padding:32px;margin-bottom:24px}
+.pro-eye{font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.pro-title{font-family:var(--serif);font-size:22px;font-weight:400;color:var(--ink);margin-bottom:10px}
+.pro-body{font-size:14px;font-weight:300;line-height:1.75;color:var(--ink70)}
+.disclaimer{font-size:12px;color:var(--ink45);line-height:1.7;padding-top:20px;border-top:1px solid var(--ink08)}
+.disclaimer a{color:var(--ink45);text-decoration:underline}
+@media(max-width:600px){.areas{grid-template-columns:1fr}.score-hero{flex-direction:column;align-items:center;text-align:center}}
+
+
+.kpi-area{margin-bottom:20px}
+.kpi-area-label{font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;font-weight:400}
+.kpi-table{width:100%;border-collapse:collapse;font-size:13px}
+.kpi-table th{text-align:left;padding:10px 14px;border-bottom:2px solid var(--navy);font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--gold);font-weight:400}
+.kpi-table td{padding:10px 14px;border-bottom:1px solid var(--ink08);color:var(--ink70);font-weight:300;line-height:1.5}
+.copy-all{padding:0 0 16px;display:flex;justify-content:flex-end}
+.dash-card{background:var(--cream2);border:1px solid var(--ink08);border-radius:var(--r);margin-bottom:16px;overflow:hidden}
+.dash-head{padding:16px 20px;border-bottom:1px solid var(--ink08);display:flex;align-items:center;justify-content:space-between}
+.dash-title{font-family:var(--serif);font-size:17px;font-weight:400;color:var(--ink)}
+.dash-tag{font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);padding:3px 10px;border:1px solid var(--gold-border);border-radius:20px}
+.dash-body{padding:20px;font-size:13px;color:var(--ink70);line-height:1.8;white-space:pre-wrap}
+
+
+.header-all-tools{font-family:var(--sans);font-size:12px;font-weight:300;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink45);text-decoration:none;padding:8px 16px;border:1px solid var(--ink08);border-radius:100px;transition:all 0.15s;margin-right:12px}.header-all-tools:hover{color:var(--ink);border-color:var(--ink20)}
+</style>
+</head>
+<body>
+
+<header class="land-hide">
+  <a class="logo" href="#"><img src="Worvane_Logo.png" alt="Worvane" style="height:auto;width:180px;display:block;"></a>
+  <a href="#" class="header-all-tools">All tools</a><div class="header-pill">KPI Framework Generator</div>
+</header>
+
+<div class="screen active" id="s-land"><div class="land-wrap">
+  <img src="Worvane_Logo.png" alt="Worvane" class="land-logo">
+  <h1 class="land-title">The numbers that<br>actually <em>matter.</em></h1>
+  <button class="land-btn" id="btn-start">Build my KPI framework &rarr;</button>
+</div></div>
+
+<div class="screen" id="s-intake">
+  <div class="prog-wrap">
+    <div class="prog-top"><span class="prog-label">Your business</span><span class="prog-count" id="q-count">Question 1 of 8</span></div>
+    <div class="prog-track"><div class="prog-fill" id="prog-fill" style="width:12.5%"></div></div>
+  </div>
+  <p style="font-size:12px;color:var(--ink45);font-weight:300;letter-spacing:0.02em;text-align:center;margin:28px 0 32px;padding:0 8px">The more specific your answers, the more grounded your KPIs will be. Real numbers, real goals.</p>
+  <div id="q-container" style="width:100%;max-width:640px;"></div>
+</div>
+
+<div class="screen" id="s-load"><div class="load-screen-inner">
+  <div class="load-ring"></div>
+  <h2 class="load-title">Building your KPI framework&hellip;</h2>
+  <p class="load-sub">A business coach charges &pound;300+ to build a KPI framework. You are getting yours in 30 seconds.</p>
+  <p style="font-size:13px;color:var(--ink);font-weight:300;font-style:italic;line-height:1.6;margin-bottom:24px;max-width:360px">Most business owners check their bank balance and call it tracking. You are about to have real visibility.</p>
+  <div class="load-steps">
+    <div class="l-row"><div class="l-dot wait" id="ld1"></div><span class="l-txt wait" id="lt1">Analysing your business model</span></div>
+    <div class="l-row"><div class="l-dot wait" id="ld2"></div><span class="l-txt wait" id="lt2">Selecting your core KPIs</span></div>
+    <div class="l-row"><div class="l-dot wait" id="ld3"></div><span class="l-txt wait" id="lt3">Building your dashboard structure</span></div>
+    <div class="l-row"><div class="l-dot wait" id="ld4"></div><span class="l-txt wait" id="lt4">Creating your implementation guide</span></div>
+  </div>
+
+  <p style="font-size:11px;color:var(--ink45);margin-top:24px;letter-spacing:0.04em">Your responses are private and never shared.</p>
+</div></div>
+
+<div class="screen" id="s-results">
+  <div class="results-inner" style="max-width:760px">
+  <div class="res-head">
+    <div class="res-eye">KPI Framework &middot; Worvane</div>
+    <div class="res-name" id="r-name">Your KPI Framework</div>
+    <div class="res-meta" id="r-meta">Generated today &middot; Worvane</div>
+    <button onclick="window.location.reload()" style="margin-top:12px;background:none;border:1px solid var(--ink08);border-radius:100px;padding:7px 16px;font-family:var(--sans);font-size:12px;font-weight:300;letter-spacing:0.06em;color:var(--ink45);cursor:pointer;transition:all 0.15s" onmouseover="this.style.borderColor='var(--gold-border)';this.style.color='var(--ink)'" onmouseout="this.style.borderColor='var(--ink08)';this.style.color='var(--ink45)'">&#8635; Regenerate</button>
+  </div>
+  <div class="tabs">
+    <button class="tab on" data-tab="kpis">Your KPIs</button>
+    <button class="tab" data-tab="dashboard">Review Dashboard</button>
+    <button class="tab" data-tab="leading">Leading Indicators</button>
+    <button class="tab" data-tab="guide">How to Use This</button>
+  </div>
+  <div class="tab-panel on" id="panel-kpis">
+    <div id="kpi-sales-area" class="kpi-area"></div>
+    <div id="kpi-mkt-area" class="kpi-area"></div>
+    <div id="kpi-ops-area" class="kpi-area"></div>
+    <div id="kpi-fin-area" class="kpi-area"></div>
+    <div class="copy-all"><button class="btn-copy" id="copy-all-kpis"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>Copy all KPIs</button></div>
+  </div>
+  <div class="tab-panel" id="panel-dashboard">
+    <div class="dash-card"><div class="dash-head"><div class="dash-title">Weekly review template</div><div class="dash-tag">Every Monday</div></div><div class="dash-body" id="weekly-dash"></div><div class="copy-bar"><button class="btn-copy" data-target="weekly-dash"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>Copy</button></div></div>
+    <div class="dash-card"><div class="dash-head"><div class="dash-title">Monthly review template</div><div class="dash-tag">First of each month</div></div><div class="dash-body" id="monthly-dash"></div><div class="copy-bar"><button class="btn-copy" data-target="monthly-dash"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>Copy</button></div></div>
+  </div>
+  <div class="tab-panel" id="panel-leading">
+    <div class="dash-card"><div class="dash-head"><div class="dash-title">Leading vs lagging indicators</div><div class="dash-tag">Know the difference</div></div><div class="dash-body" id="leading-body"></div><div class="copy-bar"><button class="btn-copy" data-target="leading-body"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>Copy</button></div></div>
+  </div>
+  <div class="tab-panel" id="panel-guide">
+    <div class="dash-card"><div class="dash-head"><div class="dash-title">How to implement this framework</div><div class="dash-tag">Getting started</div></div><div class="dash-body" id="guide-body"></div><div class="copy-bar"><button class="btn-copy" data-target="guide-body"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>Copy</button></div></div>
+  </div>
+        <div class="rec-card">
+      <div class="rec-eye">Worvane Recommendation</div>
+      <div class="rec-title">You know what to measure. Now build a plan around the numbers.</div>
+      <div class="rec-body">Your KPI framework gives you the visibility. The next step is building a structured 90-day plan that uses those numbers as the basis for every decision and priority. The 90-Day Business Plan gives you a weekly action plan, monthly milestones, and a review template — all grounded in the goals and gaps your metrics have identified. Every week without a plan is a week your KPI data sits in a dashboard with no direction attached to it.</div>
+      <div class="rec-actions"><a href="#" class="btn-gold">Get 90-Day Business Plan — £69 <span style="opacity:0.65;font-size:11px;font-weight:300">(replaces &pound;300+ of coaching)</span></a><a href="#" class="btn-ghost">Get Full Diagnostic — £197</a></div>
+    </div>
+    <div class="pro-card">
+      <div class="pro-top"><div class="pro-eye">Worvane Pro</div></div>
+      <div class="pro-title">You are one purchase away from Worvane Pro</div>
+      <div class="pro-body">As a Worvane client, you are one purchase away from Pro. Purchase any one more tool and you unlock Worvane Pro &mdash; unlimited access to <strong>every tool in the suite, quarterly re-diagnostics to track your progress, and monthly strategy updates</strong> tailored to your business. All for &pound;97 per month. For most clients that is less than a single hour of consulting.</div>
+      <div class="pro-steps"><div class="pro-steps-label">Your path to Pro</div>
+        <div class="pro-step"><div class="pro-step-circle pro-step-done-circle">&#10003;</div><div class="pro-step-text">Complete your free audit &mdash; <span style="color:var(--gold)">done</span></div></div>
+        <div class="pro-step"><div class="pro-step-circle pro-step-done-circle">&#10003;</div><div class="pro-step-text">First Worvane tool purchased &mdash; <span style="color:var(--gold)">done</span></div></div>
+        <div class="pro-step"><div class="pro-step-circle">2</div><div class="pro-step-text">Purchase one more tool &mdash; Pro unlocks</div></div></div>
+      <div class="pro-value">All tools individually: <strong>&pound;586</strong>. Worvane Pro: <strong>&pound;97/month</strong>.</div>
+      <div class="pro-actions"><a href="#" class="btn-pro-join">Join Worvane Pro &mdash; &pound;97/month</a><a href="#" class="btn-pro-ghost">See everything included &rarr;</a></div>
+    </div>
+        <div class="note"><span style="color:var(--ink45);font-size:12px">AI-generated from your responses. Validate targets against your own data. Not professional financial advice. Questions? <a href="mailto:hello@worvane.co" style="color:var(--ink45)">hello@worvane.co</a></span><div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--ink08)"><span style="font-size:13px;color:var(--ink45)">Not happy with your output? The most common reason is vague answers. Go back, add more detail, and regenerate &mdash; the difference is significant.</span></div></div>
+  </div>
+</div>
+
+<script>
+
+
+
+
+(function(){
+
+// ── TEXT HELPER — smooths raw answers into readable prose ──
+function clean(str, mode) {
+  if (!str) return '';
+  var s = str.split('\n')[0].trim();
+  // Take first complete sentence if multiple
+  var firstDot = s.indexOf('. ');
+  if (firstDot > 40) s = s.substring(0, firstDot);
+  // Strip leading filler phrases
+  s = s.replace(/^(e\.g\.?\s*|for example,?\s*|i\.e\.?\s*)/i, '');
+  // Strip trailing ellipsis
+  s = s.replace(/\.{2,}$/, '').replace(/\s+$/, '');
+  if (mode === 'mid') {
+    // Strip leading subject for mid-sentence insertion
+    s = s.replace(/^(I |We |My |Our )/i, '');
+    s = s.charAt(0).toLowerCase() + s.slice(1);
+  }
+  return s;
+}
+
+var ans = {};
+var qIdx = 0;
+
+var questions = [
+  { id:'q1', area:'Your business', type:'text',
+    text:'Describe your business and how it makes money.',
+    hint:'Include your revenue model, how clients pay you, and roughly how many clients or transactions you handle.',
+    ph:'e.g. A digital marketing agency. We charge monthly retainers of \u00a32,000\u2013\u00a35,000 to 8\u201312 clients at a time. Occasionally we take on one-off project work at \u00a35,000\u2013\u00a315,000...' },
+  { id:'q2', area:'Your goals', type:'text',
+    text:'What are your most important business goals for the next 12 months?',
+    hint:'Be as specific as possible. Numbers and timeframes make for much more useful KPIs.',
+    ph:'e.g. Grow monthly revenue from \u00a330k to \u00a345k. Increase client base from 8 to 12. Reduce my personal involvement in delivery from 80% to 40%. Hit 30% profit margin...' },
+  { id:'q3', area:'Your revenue', type:'opts',
+    text:'Which best describes your current revenue situation?',
+    opts:[
+      'Growing steadily \u2014 revenue increases most months',
+      'Inconsistent \u2014 good months and bad months with no clear pattern',
+      'Plateaued \u2014 revenue has been flat for a while',
+      'Declining \u2014 revenue has been falling',
+      'Early stage \u2014 still building towards consistent revenue'
+    ]},
+  { id:'q4', area:'Your focus', type:'opts',
+    text:'Which area of your business do you most need to improve right now?',
+    opts:[
+      'Sales \u2014 winning more clients and closing more deals',
+      'Marketing \u2014 generating more leads and awareness',
+      'Operations \u2014 delivering more consistently and efficiently',
+      'Finance \u2014 understanding profitability and managing cash',
+      'Strategy \u2014 clarity on direction and priorities'
+    ]},
+  { id:'q5', area:'Your current tracking', type:'opts',
+    text:'How well do you currently track your business performance?',
+    opts:[
+      'I track nothing formally \u2014 I go by feel',
+      'I check revenue occasionally but nothing else',
+      'I track a few things but inconsistently',
+      'I have some metrics but no structured review process',
+      'I track things regularly but want a better framework'
+    ]},
+  { id:'q6', area:'Your revenue', type:'text',
+    text:'What is your current monthly revenue, and what would you like it to be in 12 months?',
+    hint:'Approximate figures are fine. This helps us set realistic KPI targets.',
+    ph:'e.g. Currently around \u00a328,000 per month. Target is \u00a342,000 per month in 12 months. Profit margin is currently about 22% and I want it at 30%...' },
+  { id:'q7', area:'Your team', type:'opts',
+    text:'How many people work in the business, including you?',
+    opts:[
+      'Just me',
+      '2\u20133 people including me',
+      '4\u20136 people',
+      '7\u201315 people',
+      'More than 15'
+    ]},
+  { id:'q8', area:'Your biggest gap', type:'text',
+    text:'What is the one thing you most wish you had better visibility on in your business?',
+    hint:'This becomes the foundation of your most important KPI.',
+    ph:'e.g. I never know if we\'re actually making money on each client. Or: I have no idea where my leads come from so I can\'t do more of what works. Or: I don\'t know how much of my time goes on what...' }
+];
+
+function showScreen(id){
+  var hdr=document.querySelector('header'); if(hdr){ id==='s-land'?hdr.classList.add('land-hide'):hdr.classList.remove('land-hide'); }
+  document.querySelectorAll('.screen').forEach(function(s){ s.classList.remove('active'); });
+  var el=document.getElementById(id);
+  el.classList.add('active'); el.style.animation='none'; void el.offsetHeight;
+  el.style.animation='fadeIn 0.38s ease both'; window.scrollTo(0,0);
+}
+
+function hasAnswer(q){
+  if(q.type==='text') return !!(ans[q.id]&&ans[q.id].trim());
+  return ans[q.id]!==undefined&&(ans[q.id]!=='other'||!!(ans[q.id+'_other']&&ans[q.id+'_other'].trim()));
+}
+
+function renderQuestion(i){
+  var q=questions[i];
+  document.getElementById('q-count').textContent='Question '+(i+1)+' of 8';
+  document.getElementById('prog-fill').style.width=(((i+1)/8)*100)+'%';
+
+  var html='<div class="q-wrap"><div class="q-area">'+q.area+'</div><div class="q-text">'+q.text+'</div>';
+  if(q.hint) html+='<div class="q-hint">'+q.hint+'</div>';
+
+  if(q.type==='text'){
+    html+='<textarea class="f-input" id="ta-main" placeholder="'+q.ph+'" rows="4"></textarea>';
+  } else {
+    var saved=ans[q.id]; var savedOther=ans[q.id+'_other']||'';
+    html+='<div class="opts" id="opts-list">';
+    for(var k=0;k<q.opts.length;k++){
+      html+='<button class="opt'+(saved===k?' sel':'')+'" data-val="'+k+'"><div class="opt-radio"></div><span class="opt-txt">'+q.opts[k]+'</span></button>';
+    }
+    html+='<button class="opt'+(saved==='other'?' sel':'')+'" data-val="other"><div class="opt-radio"></div><span class="opt-txt">Other \u2014 describe in your own words</span></button>';
+    html+='<div class="other-box" id="other-box" style="display:'+(saved==='other'?'block':'none')+'"><textarea class="f-input" id="ta-other" placeholder="Describe in your own words..." rows="3">'+savedOther+'</textarea></div>';
+    html+='</div>';
+  }
+
+  html+='<div class="q-nav">';
+  html+=i>0?'<button class="btn-back" id="btn-back">\u2190 Back</button>':'<div></div>';
+  html+='<button class="btn-next" id="btn-next"'+(hasAnswer(q)?'':' disabled')+'>'+(i===7?'Build my framework \u2192':'Continue \u2192')+'</button>';
+  html+='</div></div>';
+
+  var c=document.getElementById('q-container');
+  c.style.opacity='0'; c.style.transform='translateY(10px)'; c.innerHTML=html;
+
+  if(q.type==='text'){
+    var ta=document.getElementById('ta-main');
+    if(ans[q.id]) ta.value=ans[q.id];
+    ta.addEventListener('input',function(){ ans[q.id]=ta.value; document.getElementById('btn-next').disabled=!ta.value.trim(); });
+  } else {
+    var ol=document.getElementById('opts-list');
+    var tao=document.getElementById('ta-other');
+    if(tao&&ans[q.id+'_other']) tao.value=ans[q.id+'_other'];
+    ol.addEventListener('click',function(e){
+      var btn=e.target.closest('.opt'); if(!btn) return;
+      var val=btn.getAttribute('data-val');
+      ol.querySelectorAll('.opt').forEach(function(b){ b.classList.remove('sel'); }); btn.classList.add('sel');
+      var ob=document.getElementById('other-box'); var tao2=document.getElementById('ta-other');
+      if(val==='other'){ ans[q.id]='other'; ob.style.display='block'; tao2&&tao2.focus(); document.getElementById('btn-next').disabled=!(ans[q.id+'_other']&&ans[q.id+'_other'].trim()); }
+      else { ans[q.id]=parseInt(val,10); delete ans[q.id+'_other']; ob.style.display='none'; document.getElementById('btn-next').disabled=false; }
+    });
+    tao&&tao.addEventListener('input',function(){ ans[q.id+'_other']=tao.value; document.getElementById('btn-next').disabled=!tao.value.trim(); });
+  }
+
+  var bb=document.getElementById('btn-back');
+  bb&&bb.addEventListener('click',function(){ qIdx--; renderQuestion(qIdx); });
+  document.getElementById('btn-next').addEventListener('click',function(){
+    if(q.type==='text'){ var ta=document.getElementById('ta-main'); if(ta) ans[q.id]=ta.value; }
+    if(qIdx<7){ qIdx++; renderQuestion(qIdx); } else { runLoading(); }
+  });
+
+  requestAnimationFrame(function(){ c.style.transition='opacity 0.28s ease, transform 0.28s ease'; c.style.opacity='1'; c.style.transform='translateY(0)'; });
+}
+
+function runLoading(){
+  showScreen('s-load');
+  var steps=[{d:'ld1',t:'lt1',delay:500},{d:'ld2',t:'lt2',delay:2000},{d:'ld3',t:'lt3',delay:3600},{d:'ld4',t:'lt4',delay:5200}];
+  steps.forEach(function(s){ document.getElementById(s.d).className='l-dot wait'; document.getElementById(s.t).className='l-txt wait'; });
+  steps.forEach(function(s,i){
+    setTimeout(function(){
+      if(i>0){ document.getElementById(steps[i-1].d).className='l-dot done'; document.getElementById(steps[i-1].t).className='l-txt done'; }
+      document.getElementById(s.d).className='l-dot act'; document.getElementById(s.t).className='l-txt act';
+    },s.delay);
+  });
+  buildOutput();
+}
+
+function buildKpiTable(areaId, label, kpis){
+  var el=document.getElementById(areaId);
+  var html='<div class="kpi-area-label">'+label+'</div>';
+  html+='<table class="kpi-table"><thead><tr><th>Metric</th><th>What it measures</th><th>Target</th><th>Review</th></tr></thead><tbody>';
+  kpis.forEach(function(k){
+    html+='<tr><td>'+k.name+'</td><td>'+k.what+'</td><td class="target">'+k.target+'</td><td class="freq">'+k.freq+'</td></tr>';
+  });
+  html+='</tbody></table>';
+  el.innerHTML=html;
+}
+
+function buildOutput(){
+  var biz    = ans.q1 || 'your business';
+  var goals  = ans.q2 || 'grow the business';
+  var rev    = ans.q6 || 'current revenue';
+  var gap    = ans.q8 || 'overall business performance';
+
+  var focusMap=['sales','marketing','operations','finance','strategy'];
+  var focus=ans.q4==='other'?(ans.q4_other||'growth'):(typeof ans.q4==='number'?focusMap[ans.q4]:'growth');
+
+  var revMap=['growing consistently','inconsistent','plateaued','declining','early stage'];
+  var revState=ans.q3==='other'?(ans.q3_other||'varied'):(typeof ans.q3==='number'?revMap[ans.q3]:'varied');
+
+  var trackMap=['nothing formally','revenue only occasionally','a few things inconsistently','some metrics without structure','regularly but want a better framework'];
+  var tracking=ans.q5==='other'?(ans.q5_other||'informally'):(typeof ans.q5==='number'?trackMap[ans.q5]:'informally');
+
+  var teamMap=['1','2-3','4-6','7-15','15+'];
+  var team=ans.q7==='other'?(ans.q7_other||'small team'):(typeof ans.q7==='number'?teamMap[ans.q7]:'small team');
+
+  var prompt = [
+    'You are a senior business performance consultant. Create a complete, tailored KPI framework for a UK SME business owner.',
+    '',
+    'BUSINESS DESCRIPTION:',
+    biz,
+    '',
+    '12-MONTH GOALS:',
+    goals,
+    '',
+    'CURRENT REVENUE SITUATION: ' + revState,
+    'REVENUE AND TARGETS: ' + rev,
+    'PRIMARY FOCUS AREA: ' + focus,
+    'CURRENT TRACKING: ' + tracking,
+    'TEAM SIZE: ' + team,
+    '',
+    'BIGGEST VISIBILITY GAP (what they most wish they could measure):',
+    gap,
+    '',
+    'Write the following four sections. Return ONLY a valid JSON object with exactly these keys: kpi_framework, review_dashboard, leading_indicators, implementation_guide.',
+    '',
+    'KPI FRAMEWORK (key: kpi_framework):',
+    'Write a structured KPI framework across four business areas: Sales & Revenue, Marketing, Operations, and Finance. For each area provide 4-5 KPIs. Each KPI must include: the metric name, what it measures in plain English, a specific target (use their revenue and goals to set realistic numbers where possible — do not use generic placeholders), and review frequency. Make the targets genuinely specific to their situation. Format each area clearly with headers. This should read like a management dashboard spec, not a generic list.',
+    '',
+    'REVIEW DASHBOARD (key: review_dashboard):',
+    'Write two review templates: a weekly review (15-20 minutes, Monday morning) and a monthly review (45-60 minutes, first of each month). Each template must be specific to their business — reference their focus area (' + focus + ') and their goals. Include actual questions to answer, not just blanks to fill. The weekly should be fast and action-focused. The monthly should be reflective and strategic. Write them as documents the owner would actually open and use.',
+    '',
+    'LEADING INDICATORS (key: leading_indicators):',
+    'Write a clear, practical explanation of leading vs lagging indicators specifically for this business. Identify their 4 most important leading indicators given their focus on ' + focus + ' and their goal of ' + goals + '. For each: explain what it predicts, what the target should be, and what action to take if it falls below target. Then give them a rule of thumb they will actually remember.',
+    '',
+    'IMPLEMENTATION GUIDE (key: implementation_guide):',
+    'Write a practical 5-step guide to implementing this KPI framework. Be specific to their situation — they currently track ' + tracking + ', so start from there. Include: where to start (their biggest gap is ' + gap + '), how to set baselines, how to set targets from their goals, the review cadence, and what to do when a metric is off track. End with tool recommendations (free and paid options) appropriate for a ' + team + ' person business.',
+    '',
+    'CRITICAL RULES:',
+    '- CRITICAL: Return ONLY a raw JSON object. No markdown. No code blocks. No backticks. No explanation before or after. The very first character of your response must be { and the last must be }.',
+    '- Use \n for line breaks within strings.',
+    '- Be specific — use their actual numbers and goals where possible, not generic placeholders.',
+    '- Write as a consultant who has reviewed this specific business, not a generic framework generator.',
+    '- The targets must feel achievable and grounded in their stated situation.'
+  ].join('\n');
+
+  fetch('/.netlify/functions/generate', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ model: 'claude-sonnet-4-5-20250929', max_tokens: 4000, messages: [{ role: 'user', content: prompt }] })
+  })
+  .then(function(r){ return r.json(); })
+  .then(function(data){
+    var raw = data.content&&data.content[0]&&data.content[0].text ? data.content[0].text : '';
+    raw = raw.replace(/^```json\s*/i,'').replace(/^```\s*/i,'').replace(/```\s*$/i,'').trim();
+    var parsed;
+    try { parsed = JSON.parse(raw); }
+    catch(e) {
+      document.getElementById('kpi-sales-area').innerHTML='<p style="padding:16px;color:var(--ink45)">Generation error. Please try again.</p>';
+      showScreen('s-results'); return;
+    }
+
+    // Render KPI framework as plain text in area divs
+    function setArea(id, text){
+      var el = document.getElementById(id);
+      if(el){ el.innerHTML = '<div style="font-size:13px;color:var(--ink70);line-height:1.8;white-space:pre-wrap;padding:20px">'+text+'</div>'; }
+    }
+
+    // Split the framework by area headers
+    var framework = parsed.kpi_framework || '';
+    var salesMatch = framework.match(/sales[\s\S]*?(?=marketing|$)/i);
+    var mktMatch   = framework.match(/marketing[\s\S]*?(?=operations|$)/i);
+    var opsMatch   = framework.match(/operations[\s\S]*?(?=finance|$)/i);
+    var finMatch   = framework.match(/finance[\s\S]*?(?=$)/i);
+
+    setArea('kpi-sales-area', salesMatch ? salesMatch[0] : framework);
+    setArea('kpi-mkt-area',   mktMatch   ? mktMatch[0]   : '');
+    setArea('kpi-ops-area',   opsMatch   ? opsMatch[0]   : '');
+    setArea('kpi-fin-area',   finMatch   ? finMatch[0]   : '');
+
+    document.getElementById('weekly-dash').textContent  = parsed.review_dashboard || '';
+    document.getElementById('monthly-dash').textContent = '';
+    document.getElementById('leading-body').textContent = parsed.leading_indicators || '';
+    document.getElementById('guide-body').textContent   = parsed.implementation_guide || '';
+
+    showScreen('s-results');
+
+    // Copy all KPIs
+    document.getElementById('copy-all-kpis').addEventListener('click',function(){
+      var btn=this, orig=btn.innerHTML;
+      navigator.clipboard.writeText(parsed.kpi_framework||'').then(function(){
+        btn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Copied';
+      btn.style.color='var(--gold)';
+      setTimeout(function(){btn.innerHTML=orig;btn.style.color='';},2000);
+    });
+  });
+})
+  .catch(function(){
+    document.getElementById('kpi-sales-area').innerHTML = '<p style="padding:16px;color:var(--ink45)">Connection error. Please check your connection and try again.</p>';
+    showScreen('s-results');
+  });
+}
+document.getElementById('btn-start').addEventListener('click', function() {
+  showScreen('s-intake');
+  renderQuestion(0);
+});
+
+document.querySelectorAll('.tab').forEach(function(tab) {
+  tab.addEventListener('click', function() {
+    var t = tab.getAttribute('data-tab');
+    document.querySelectorAll('.tab').forEach(function(b){ b.classList.remove('on'); });
+    document.querySelectorAll('.tab-panel').forEach(function(p){ p.classList.remove('on'); });
+    tab.classList.add('on');
+    document.getElementById('panel-' + t).classList.add('on');
+  });
+});
+
+document.querySelectorAll('.btn-copy').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    var el=document.getElementById(btn.getAttribute('data-target'));
+    if(!el) return;
+    navigator.clipboard.writeText(el.innerText).then(function(){
+      var orig=btn.innerHTML;
+      btn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Copied';
+      btn.style.color='var(--gold)';
+      setTimeout(function(){ btn.innerHTML=orig; btn.style.color=''; },2000);
+    });
+  });
+});
+window.showScreen = showScreen;
+
+})();
+
+
+</script>
+</body>
+</html>
